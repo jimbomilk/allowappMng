@@ -1,0 +1,1 @@
+<a href="{{ url("$name/$route/$var->id") }}" class="btn btn-sm btn-success" title="{{trans("label.$name.$label")}}"><span class="glyphicon {{$icon}}"></span> </a>

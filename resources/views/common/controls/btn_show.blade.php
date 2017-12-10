@@ -1,0 +1,1 @@
+<a href="{{ url("$name/$var->id") }}" class="btn btn-sm btn-primary" title="{{trans('label.'.$name.'.show')}}"><span class="glyphicon glyphicon-list-alt"></span> </a>

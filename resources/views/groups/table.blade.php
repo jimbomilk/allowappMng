@@ -1,0 +1,32 @@
+<table class="table table-responsive table-striped">
+    <tr>
+        <th>#</th>
+        <th>{{Lang::get('label.groups.name')}}</th>
+        <th>{{Lang::get('label.groups.user_id')}}</th>
+        <th>{{Lang::get('label.groups.count')}}</th>
+        <th></th>
+
+    </tr>
+
+    @foreach($set as $element)
+        <tr data-id="{{$element->id}}">
+            <td>{{$element->id}}</td>
+            <td>{{$element->name}}</td>
+            <th>{{$element->user->name}}</th>
+            <td>{{count($element->persons)}}</td>
+            <td>
+                @include("common.controls.btn_edit",array('var'=>$element))
+
+                @include("common.controls.btn_show",array('var'=>$element))
+
+                @include("common.controls.btn_other",array('route'=> 'publicationsites','icon'=>'glyphicon-thumbs-up','var'=>$element,'label'=>'sites','style'=>'btn-info'))
+
+
+                @include("common.controls.btn_delete",array('var'=>$element))
+            </td>
+
+
+        </tr>
+    @endforeach
+
+</table>

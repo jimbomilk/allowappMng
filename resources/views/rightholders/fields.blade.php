@@ -1,0 +1,5 @@
+@include("common.controls.input_select",array('var'=>'person_id','col'=>$persons))
+@include("common.controls.input_text",array('var'=>'name'))
+@include("common.controls.input_select",array('var'=>'title','col'=>$titles))
+@include("common.controls.input_text",array('var'=>'email'))
+@include("common.controls.input_text",array('var'=>'phone'))

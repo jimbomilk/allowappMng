@@ -1,0 +1,55 @@
+Rolling back: 2017_11_12_094136_acks
+Rolled back:  2017_11_12_094136_acks
+Rolling back: 2017_11_12_093814_photosites
+Rolled back:  2017_11_12_093814_photosites
+Rolling back: 2017_11_11_110443_contracts
+Rolled back:  2017_11_11_110443_contracts
+Rolling back: 2017_11_11_110338_publicationsites
+Rolled back:  2017_11_11_110338_publicationsites
+Rolling back: 2017_11_11_110324_rightholders
+Rolled back:  2017_11_11_110324_rightholders
+Rolling back: 2017_11_11_101055_photos
+Rolled back:  2017_11_11_101055_photos
+Rolling back: 2017_11_11_101012_persons
+Rolled back:  2017_11_11_101012_persons
+Rolling back: 2017_11_11_100923_groups
+Rolled back:  2017_11_11_100923_groups
+Rolling back: 2017_11_11_100756_profiles
+Rolled back:  2017_11_11_100756_profiles
+Rolling back: 2017_11_11_083734_locations
+Rolled back:  2017_11_11_083734_locations
+Rolling back: 2014_10_12_100000_create_password_resets_table
+Rolled back:  2014_10_12_100000_create_password_resets_table
+Rolling back: 2014_10_12_000000_create_users_table
+Rolled back:  2014_10_12_000000_create_users_table
+Migrating: 2014_10_12_000000_create_users_table
+Migrated:  2014_10_12_000000_create_users_table
+Migrating: 2014_10_12_100000_create_password_resets_table
+Migrated:  2014_10_12_100000_create_password_resets_table
+Migrating: 2017_11_11_083734_locations
+Migrated:  2017_11_11_083734_locations
+Migrating: 2017_11_11_100756_profiles
+Migrated:  2017_11_11_100756_profiles
+Migrating: 2017_11_11_100923_groups
+Migrated:  2017_11_11_100923_groups
+Migrating: 2017_11_11_101012_persons
+Migrated:  2017_11_11_101012_persons
+Migrating: 2017_11_11_101055_photos
+Migrated:  2017_11_11_101055_photos
+Migrating: 2017_11_11_110324_rightholders
+Migrated:  2017_11_11_110324_rightholders
+Migrating: 2017_11_11_110338_publicationsites
+Migrated:  2017_11_11_110338_publicationsites
+Migrating: 2017_11_11_110443_contracts
+Migrated:  2017_11_11_110443_contracts
+Migrating: 2017_11_12_093814_photosites
+Migrated:  2017_11_12_093814_photosites
+Migrating: 2017_11_12_094136_acks
+Migrated:  2017_11_12_094136_acks
+Seeding: MainSeeder
+
+                                                           
+  [Symfony\Component\Debug\Exception\FatalErrorException]  
+  Class 'App/Rightholder' not found                        
+                                                           
+
