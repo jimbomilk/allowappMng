@@ -11,7 +11,7 @@
 |
 */
 
-
+Route::resource('/', 'HomeController');
 
 Route::group(['domain' => 'allowapp.test'], function () {
     Route::resource('/', 'HomeController');

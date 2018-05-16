@@ -59,18 +59,7 @@ class AcksController extends Controller
         $ack = Ack::find($id);
         if (isset ($ack))
         {
-            //recoger la photo
-            $photo = $ack->contract->photo;
 
-
-            $img = Image::make($photo->photo);
-            $img->pixelate(12);
-            //$img->save('./public/img/temp.jpg');
-            $filename = $request->saveImage('photo',$ack->path,$img->stream()->__toString(),'jpg');
-            if (isset($filename)){
-                $ack->photo = $filename;
-                $ack->save();
-            }
 
             return $this->sendView($ack);
         }

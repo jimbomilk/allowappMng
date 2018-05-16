@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Ack;
 use App\Contract;
+use App\Face;
 use App\General;
 use App\Http\Requests\CreatePhotoRequest;
 use App\Http\Requests\EditPhotoRequest;
@@ -16,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 use Larareko\Rekognition\Rekognition;
 
 class PhotosController extends Controller
@@ -47,10 +49,12 @@ class PhotosController extends Controller
     public function store(CreatePhotoRequest $request,$location)
     {
         $photo = new Photo($request->all());
-        $filename = $request->saveFile('photo',$photo->path);
+        $filename = $request->saveFile('origen',$photo->path);
         $photo->location_id = $request->get('location');
-        if (isset($filename))
+        if (isset($filename)) {
+            $photo->origen = $filename;
             $photo->photo = $filename;
+        }
         $photo->save();
 
         return redirect('photos');
@@ -77,9 +81,11 @@ class PhotosController extends Controller
         $photo = Photo::find($id);
         if (isset($photo)) {
             $photo->fill($request->all());
-            $filename = $request->saveFile('photo',$photo->path);
-            if (isset($filename))
+            $filename = $request->saveFile('origen',$photo->path);
+            if (isset($filename)) {
+                $photo->origen = $filename;
                 $photo->photo = $filename;
+            }
             $photo->save();
         }
 
@@ -108,7 +114,7 @@ class PhotosController extends Controller
         return redirect()->back();
     }
 
-    public function contracts($location,$id){
+    public function contracts(CreatePhotoRequest $req, $location,$id){
 
         $photo = Photo::find($id);
         if (isset ($photo)) {
@@ -138,13 +144,14 @@ class PhotosController extends Controller
     {
         $photo = Photo::find($id);
 
-        return view('photos.faces', ['name' => 'photos', 'element' => $photo, 'contracts'=>$photo->contracts]);
+        return view('photos.faces', ['name' => 'photos', 'element' => $photo]);
 
     }
 
     public function makeRecognition(Request $req,$location,$photo_id){
 
         $photo = Photo::find($photo_id);
+
         if (isset ($photo))
         {
             try {
@@ -154,23 +161,40 @@ class PhotosController extends Controller
                 \Rekognition::createCollection($photo->collection);
             }catch(Exception  $t){}
 
+            // borrar todas las faces de la imagen
+            $photo->deleteFaces();
+
             $result= \Rekognition::indexFaces([ 'CollectionId'=>$photo->group->collection,
                                                 'DetectionAttributes'=>['DEFAULT'],
                                                 'Image'=>['S3Object'=>[
                                                     'Bucket'=>env('AWS_BUCKET'),
                                                     'Name'=>$photo->photopath]]]);
 
+            //dd($result);
+
+            $img = Image::make($photo->origen);
+
             $faces = $result['FaceRecords'];
             $matches=array();
 
             // Recorremos por cada cara encontrada en la imagen
             foreach($faces as $i=>$face){
+                $x = $face['Face']['BoundingBox']['Left']*$img->width();
+                $y = $face['Face']['BoundingBox']['Top']*$img->height();
+                $w = $face['Face']['BoundingBox']['Width']*$img->width();
+                $h = $face['Face']['BoundingBox']['Height']*$img->height();
+
+
+                $img->rectangle($x,$y,$x+$w,$y+$h, function ($draw) {
+                    $draw->background('rgba(255, 255, 255, 0.2)');
+                    $draw->border(2, '#000');
+                });
+
+                $faceObj = $photo->newFace($x,$y,$w,$h);
 
                 $params = \Rekognition::setSearchFacesParams($photo->group->collection,$face['Face']['FaceId'],40,100);
                 $results= \Rekognition::searchFaces($params);
                 // Nos devuelve una matriz de coincidencias
-                //dd(count($results['FaceMatches']));
-
                 if (count($results['FaceMatches'])>0) {
 
                     $faceID=$results['FaceMatches'][0]['Face']['FaceId']; // OJO sólo cojo el primero!!!
@@ -179,13 +203,19 @@ class PhotosController extends Controller
                     //dd($req->get('location'));
                     if (isset($person)) {
                         $this->newContract($req->get('location'),$photo->id,$person->id);
+                        $faceObj->person_id = $person->id;
 
+                        $faceObj->save();
                     }
                     $matches[] = $results;
 
                 }
             }
-            $photo->faces=count($faces);
+            $filename = General::saveImage('photo',$photo->path,$img->stream()->__toString(),'jpg');
+            //dd($filename);
+            if(isset($filename))
+                $photo->photo = $filename;
+
             $photo->findings=count($matches);
             $photo->save();
 
@@ -224,6 +254,18 @@ class PhotosController extends Controller
         foreach($contract->acks as $ack){
             $token_key = str_random(16);
             $ack->token = $token_key;
+
+            //recoger la photo
+            $photo = $contract->photo;
+
+            $img = Image::make($photo->photo);
+            $img->pixelate(12);
+            //$img->save('./public/img/temp.jpg');
+            $filename = General::saveImage('photo',$ack->path,$img->stream()->__toString(),'jpg');
+            if (isset($filename)){
+                $ack->photo = $filename;
+            }
+
             $ack->save();
 
             $linkyes = "http://colegio1.allowapp.test/validatephoto/id=".$contract->photo->id."&ack=".$ack->id."&token=".$token_key;

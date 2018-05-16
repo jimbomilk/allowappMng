@@ -21,8 +21,8 @@
             <td>{{$element->createdate}}</td>
             <td>{{$element->group->name}}</td>
             <td>{{$element->name}}</td>
-            <td>{!! Html::image($element->photo, 'photo',array( 'width' => 100, 'height' => 100 )) !!}</td>
-            <td>{{$element->faces}}</td>
+            <td>{!! Html::image($element->origen, 'photo',array( 'width' => 100, 'height' => 100 )) !!}</td>
+            <td>{{count($element->faces)}}</td>
             <td>{{$element->findings}}</td>
             <td>{{count($element->acksOk).'/'.count($element->acks)}}</td>
             <td>

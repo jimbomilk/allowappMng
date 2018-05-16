@@ -13,13 +13,7 @@
 
                     @include("common.controls.input_image",array('var'=>$element->photo,'width'=>'full','height'=>'300'))
 
-                    <div class="price-slider">
-                        <h4 class="great">Amount</h4>
-                        <span>Minimum 10 is required</span>
-                        <div class="col-sm-12">
-                            <div id="slider"></div>
-                        </div>
-                    </div>
+
 
                 </div>
                 <div class="col-md-5 panel panel-default">
@@ -39,9 +33,9 @@
             <div class="col-md-12 panel panel-default">
                 <div class="panel-heading">{{ trans('labels.face_detected')}} </div>
                 <div class="panel-body" style="padding: 8px" >
-                    @foreach($contracts as $contract)
-                        <div style="float: left">
-                        @include("common.controls.input_image",array('var'=>$contract->person->photo,'url'=>"deleteContract/$contract->id",'width'=>'full','height'=>'80'))
+                    @foreach($element->faces as $face)
+                        <div style="float: left" class="face{{($face->person_id!=null)?'On':'Off'}}">
+                        @include("common.controls.input_image",array('var'=>$face->face,'url'=>"deleteContract/$contract->id",'width'=>'full','height'=>'80'))
                         </div>
                     @endforeach
                 </div>

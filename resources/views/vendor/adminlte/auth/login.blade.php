@@ -5,11 +5,11 @@
 @endsection
 
 @section('content')
-<body class="hold-transition login-page" style="background-image:url('./img/back.jpg');background-size: cover">
+<body class="hold-transition login-page" style="background-color:white;background-size: cover">
     <div id="app" v-cloak>
         <div class="login-box">
             <div class="login-logo" style="color: white">
-                <b>Allow</b>App
+                <img class="img-responsive" src="{{ asset('/img/allowapp400x100.png') }}" alt="">
             </div><!-- /.login-logo -->
 
         @if (count($errors) > 0)
@@ -24,7 +24,6 @@
         @endif
 
         <div class="login-box-body">
-        <p class="login-box-msg"> {{ trans('adminlte_lang::message.siginsession') }} </p>
 
         <login-form name="{{ config('auth.providers.users.field','email') }}"
                     domain="{{ config('auth.defaults.domain','') }}"></login-form>

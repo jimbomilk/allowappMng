@@ -10,3 +10,11 @@
     color: #FFFFFF;
     font-size: 15px;
 }
+
+.faceOn{
+    border: 6px #00ff00;
+}
+
+.faceOff{
+    border: 6px #ff0000;
+}

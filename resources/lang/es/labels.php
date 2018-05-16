@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'allowapp' => 'Primero pregunta. Tú decides',
     'header' => 'MENU',
     'users' => 'Usuarios',
     'groups' => 'Clases',

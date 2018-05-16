@@ -13,7 +13,7 @@ class Request extends FormRequest
     {
         if (!isset($field) || $field == '')
             return null;
-        dd($folder);
+        //dd($folder);
         $file = $this->file($field);
 
         $filename = null;
@@ -30,20 +30,7 @@ class Request extends FormRequest
         return null;
     }
 
-    public function saveImage($field,$folder,$image,$extension)
-    {
-        if (!isset($field) || $field == '')
-            return null;
 
-        $filename = $folder . '/' . $field .Carbon::now(). '.' . $extension;
-        if (Storage::disk('s3')->put($filename, $image,'public')) {
-            return Storage::disk('s3')->url($filename);
-        }
-
-        if ($this->input($field) == "")
-            return "";
-        return null;
-    }
 
 
 }

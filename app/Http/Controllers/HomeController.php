@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
 
     /**
@@ -34,7 +34,7 @@ class HomeController extends Controller
      */
     public function index(Request $req)
     {
-        //$location = $req->get('location');
+        $location = $req->get('location');
 
         return view('adminlte::home');
     }

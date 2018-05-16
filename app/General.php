@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 
 class General extends Model{
@@ -70,6 +71,18 @@ class General extends Model{
         return $ret;
     }
 
+
+    public static function saveImage($field,$folder,$image,$extension)
+    {
+        if (!isset($field) || $field == '')
+            return null;
+
+        $filename = $folder . '/' . $field .Carbon::now(). '.' . $extension;
+        if (Storage::disk('s3')->put($filename, $image,'public')) {
+            return Storage::disk('s3')->url($filename);
+        }
+        return null;
+    }
 
 }
 
