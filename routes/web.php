@@ -16,13 +16,6 @@
 Route::group([
     'domain' => '{location}.allowapp.com',
     'middleware' => ['auth','location']], function ($location) {
-    // Customer home page route
-    // All routes in this group will receive $account as first parameter
-    // Use route–model binding to have $account be an Account instance
-    if ($location === "www")
-        return redirect()->away('http://www.allowapp.es');
-
-
 
     Route::resource('/', 'HomeController');
     Route::resource('users', 'UsersController');
