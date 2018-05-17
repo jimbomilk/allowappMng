@@ -14,7 +14,7 @@
 
 // Customer routes
 Route::group([
-    'domain' => '{location}.allowapp.test',
+    'domain' => '{location}.allowapp.com',
     'middleware' => ['auth','location']], function ($location) {
     // Customer home page route
     // All routes in this group will receive $account as first parameter
