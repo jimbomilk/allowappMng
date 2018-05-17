@@ -11,11 +11,6 @@
 |
 */
 
-Route::resource('/', 'HomeController');
-
-Route::group(['domain' => 'allowapp.test'], function () {
-    Route::resource('/', 'HomeController');
-});
 
 // Customer routes
 Route::group([
@@ -24,6 +19,7 @@ Route::group([
     // Customer home page route
     // All routes in this group will receive $account as first parameter
     // Use route–model binding to have $account be an Account instance
+
     Route::resource('/', 'HomeController');
     Route::resource('users', 'UsersController');
     Route::resource('profiles', 'ProfilesController');
@@ -49,3 +45,7 @@ Route::get('/validatephoto/id={id}&ack={ack}&token={token}','ValidateController@
 Route::get('/rejectphoto/id={id}&ack={ack}&token={token}','ValidateController@reject');
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
