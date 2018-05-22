@@ -68,7 +68,7 @@ return [
     'photos.requests' => 'Solicitar aprobación',
     'photos.date' => 'Fecha',
     'photos.requests_received' => 'Aprobaciones',
-    'photos.recognition' => 'Buscar coincidencias',
+    'photos.recognition' => 'Buscar coincidencias mediante reconocimiento facial',
 
 
     //CONTRACTS

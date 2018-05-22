@@ -63,11 +63,11 @@ class User extends Authenticatable
     public function getPhotos(){
 
         if ($this->profile->type == 'admin') {
-            return $this->location->photos;
+            return $this->location->photos()->paginate(15);
         }
         else {
             //dd($this->location->groups->where('user_id', $this->id));
-            return $this->location->photos->whereIn('group_id', $this->getGroups()->pluck('id'));
+            return $this->location->photos->whereIn('group_id', $this->getGroups()->pluck('id'))->paginate(15);
         }
     }
 

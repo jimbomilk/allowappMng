@@ -1,51 +1,60 @@
 @extends('adminlte::layouts.app')
 
 @section('htmlheader_title')
-    {{ trans('labels.$name') }}
+    {{ trans("labels.$name") }}
 @endsection
 
 @section('main-content')
     <div class="container-fluid spark-screen">
+
         <div class="row">
-                <div class="col-md-7 panel panel-default">
-                    <div class="panel-heading">{{ trans('labels.recognition')}}: {{$element->name}}</div>
-
-
-                    @include("common.controls.input_image",array('var'=>$element->photo,'width'=>'full','height'=>'300'))
-
-
-
+            <div class="col-md-7 panel panel-default">
+                <div class="row">
+                    <div class="col-xs-6"><span style="padding-top: 15px">{{$element->label}}#{{$element->id}}</span></div>
+                    <div class="col-xs-6"> <span style="margin: 10px" class="label {{$element->statuscolor}} pull-right">{{$element->statustext}}</span> </div>
                 </div>
-                <div class="col-md-5 panel panel-default">
+
+                  <img class="img-responsive" src={{$element->getData('src')}}>
+                <div class="pull-right" style="margin: 12px">
+                @include("common.controls.btn_other",array('route'=> 'run','icon'=>'glyphicon-eye-open', 'var'=>$element,'label'=>'recognition','style'=>'btn-info'))
+                </div>
+            </div>
+            <div class="col-md-5 panel panel-default">
+                <div class="panel-heading">{{ trans('labels.group')}}</div>
+                @if($element->group )
                     <div class="panel-heading">{{ trans('labels.persons')." ".$element->group->name}} </div>
                     <div class="panel-body" style="padding: 8px">
                         @foreach($element->group->persons as $person)
                             <div style="float: left">
-                                @include("common.controls.input_image",array('var'=>$person->photo,'url'=>"addContract/$element->id/$person->id",'width'=>'full','height'=>'80'))
+                                <div class="person" data-personid="{{$person->id}}" data-imagenid="{{$element->id}}" style="margin: 2px">
+                                    <img width="60px" height="60px" src="{{$person->photo}}">
+                                    <div>{{$person->name}}</div>
+                                </div>
                             </div>
                         @endforeach
                     </div>
+                @else
+                    <div> <p> La foto no está asociada a ningún grupo</p></div>
+                @endif
 
-
-                </div>
+            </div>
         </div>
-        <div class="row">
+        <div  class="row">
             <div class="col-md-12 panel panel-default">
                 <div class="panel-heading">{{ trans('labels.face_detected')}} </div>
-                <div class="panel-body" style="padding: 8px" >
-                    @foreach($element->faces as $face)
-                        <div style="float: left" class="face{{($face->person_id!=null)?'On':'Off'}}">
-                        @include("common.controls.input_image",array('var'=>$face->face,'url'=>"deleteContract/$contract->id",'width'=>'full','height'=>'80'))
+                <div id="detected" class="panel-body" style="padding: 8px" >
+                    @foreach($element->people as $person)
+                        <div style="float: left">
+                        @include("common.controls.input_image",array('var'=>$person->photo,'url'=>"deleteContract/$person->id",'width'=>'full','height'=>'80'))
                         </div>
                     @endforeach
                 </div>
+                <div class="pull-right" style="margin: 12px">
+                @include("common.controls.btn_other",array('route'=> 'contracts','icon'=>'glyphicon-envelope','var'=>$element,'label'=>'requests','style'=>'btn-danger'))
+                </div>
             </div>
         </div>
-        <div class="box-tools pull-right">
-            @include("common.controls.btn_other",array('route'=> 'run','icon'=>'glyphicon-eye-open', 'var'=>$element,'label'=>'recognition','style'=>'btn-info'))
 
-            @include("common.controls.btn_other",array('route'=> 'contracts','icon'=>'glyphicon-envelope','var'=>$element,'label'=>'requests','style'=>'btn-danger'))
-        </div>
     </div>
 @endsection
 
@@ -54,33 +63,29 @@
 @parent
 <script>
     $(document).ready(function() {
-        $("#slider").slider({
-            animate: true,
-            value:1,
-            min: 0,
-            max: 1000,
-            step: 10,
-            slide: function(event, ui) {
-                update(1,ui.value); //changed
-            }
-        });
 
+        $(".person").click(function () {
+            imagenId = $(this).data("imagenid");
+            personId = $(this).data("personid");
+            var form = $(this);
+            var detected = $("#detected");
+            $.ajax({
+                type: "GET",
+                url: '/addContract/'+imagenId+'/'+personId,
+                data: "",
+                success: function (res) {
+                    $(form).fadeOut(800, function(){
+                        $("#detected").load(location.href + " #detected");
 
-        //Added, set initial value.
-        $("#amount").val(0);
-        $("#duration").val(0);
-        $("#amount-label").text(0);
-        $("#duration-label").text(0);
-
-        update();
-    });
-
-    function update(slider,val) {
-        var $amount = slider == 1?val:$("#amount").val();
-        $( "#amount" ).val($amount);
-        $( "#amount-label" ).text($amount);
-        $('#slider a').html('<label><span class="glyphicon glyphicon-chevron-left"></span> '+$amount+' <span class="glyphicon glyphicon-chevron-right"></span></label>');
-    }
+                    });
+                    console.log("añadido con exito:"+res);
+                },
+                error: function () {
+                    console.log("error al añadir persona");
+                }
+            })
+        })
+    })
 </script>
 @endsection
 

@@ -21,7 +21,6 @@
 
                 @include("common.controls.btn_other",array('route'=> 'publicationsites','icon'=>'glyphicon-thumbs-up','var'=>$element,'label'=>'sites','style'=>'btn-info'))
 
-
                 @include("common.controls.btn_delete",array('var'=>$element))
             </td>
 

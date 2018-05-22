@@ -1,4 +1,4 @@
-const { mix } = require('laravel-mix');
+let mix = require('laravel-mix');
 
 /*
  |--------------------------------------------------------------------------
@@ -21,12 +21,15 @@ mix.js('resources/assets/js/app.js', 'public/js')
        'public/css/app.css',
        'node_modules/admin-lte/dist/css/skins/_all-skins.css',
        'public/css/adminlte-app.css',
+        'public/css/allowapp.css',
        'node_modules/icheck/skins/square/blue.css',
-       'public/css/toastr.css'
+       'public/css/toastr.css',
+        'resources/assets/css/cards.css'
    ], 'public/css/all.css')
    .combine([
        'public/css/bootstrap.css',
        'resources/assets/css/main.css'
+
    ], 'public/css/all-landing.css')
    //APP RESOURCES
    .copy('resources/assets/img/*.*','public/img')
@@ -43,6 +46,9 @@ mix.js('resources/assets/js/app.js', 'public/js')
 if (mix.config.inProduction) {
   mix.version();
 }
+mix.options({
+    processCssUrls: false
+});
 
 mix.webpackConfig({
     resolve: {

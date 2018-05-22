@@ -32,6 +32,7 @@
                             </p>
                         @endif
                         @include("$name.table")
+
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -40,4 +41,5 @@
             </div>
         </div>
     </div>
+
 @endsection

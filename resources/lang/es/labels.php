@@ -3,6 +3,7 @@
 return [
     'allowapp' => 'Primero pregunta. Tú decides',
     'header' => 'MENU',
+    'dashboard' => 'Panel de control',
     'users' => 'Usuarios',
     'groups' => 'Clases',
     'persons' => 'Alumnos',
@@ -19,5 +20,11 @@ return [
     'face_detected'=>'Caras detectadas',
     'publicationsites' => 'Areas de difusión (web, redes sociales...)',
     'areyousure' => "¿Estás seguro?",
-    'locations' => "Colegios"
+    'locations' => "Colegios",
+    'created'=>"Creada",
+    'pending'=>"Pendiente",
+    'rejected'=>"Rechazada",
+    'success'=>"Aceptada",
+    'unknown'=>"????",
+    'group'=>"Personas del grupo"
 ];

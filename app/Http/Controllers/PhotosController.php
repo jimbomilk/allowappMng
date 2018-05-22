@@ -10,6 +10,7 @@ use App\Http\Requests\CreatePhotoRequest;
 use App\Http\Requests\EditPhotoRequest;
 use App\Location;
 use App\Mail\RequestSignature;
+use App\Person;
 use App\Photo;
 use App\User;
 use Exception;
@@ -225,14 +226,23 @@ class PhotosController extends Controller
 
     }
 
-    public function newContract($location,$photoId,$personId){
-        try {
-            $contract = new Contract();
-            $contract->location_id = $location;
-            $contract->photo_id = $photoId;
-            $contract->person_id = $personId;
-            $contract->save();
-        }catch (Exception  $t){}
+    public function newContract($photoId,$personId){
+        // abrir la people y meterle una nueva persona
+        $photo = Photo::find($photoId);
+        $person = Person::find($personId);
+        if (isset($photo)&&isset($person)) {
+
+            $data = json_decode($photo->data);
+            // ahora vamos a la people
+
+            if (isset($data->people)) {
+                $data->people[] = $person;
+            }
+            $photo->data = json_encode($data);
+            $photo->save();
+            return $photo->data;
+
+        }
     }
 
     public function deleteContract(Request $req,$location,$contractId){
@@ -245,7 +255,7 @@ class PhotosController extends Controller
 
     public function addContract(Request $req,$location,$photo_id,$person_id){
 
-        $this->newContract($req->get('location'),$photo_id,$person_id);
+        $this->newContract($photo_id,$person_id);
         return back();
     }
 
