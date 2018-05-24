@@ -1,17 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\URL;
-
+Route::get ('/', function()
+{
+    return redirect()->away('https://www.allowapp.com/');
+});
 
 // Customer routes
 Route::group([
     'domain' => '{location}.allowapp.com',
     'middleware' => ['auth','location']], function ($location) {
 
-    Route::get ('/', function()
-    {
-        return redirect()->away('https://www.allowapp.com/');
-    });
+
     Route::resource('/home', 'HomeController');
     Route::resource('users', 'UsersController');
     Route::resource('profiles', 'ProfilesController');
