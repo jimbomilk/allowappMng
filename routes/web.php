@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\URL;
 
-Route::get ('http://allowapp.com', function()
+Route::get ('/', function()
 {
     return redirect()->away('https://www.allowapp.com/');
 });
