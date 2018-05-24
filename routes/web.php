@@ -1,7 +1,6 @@
 <?php
 
-Route::get ('http://allowapp.com', function()
-{
+Route::group(['domain' => 'allowapp.com'], function () {
     return redirect()->away('https://www.allowapp.com');
 });
 
