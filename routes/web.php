@@ -2,10 +2,6 @@
 
 use Illuminate\Support\Facades\URL;
 
-if (env('APP_ENV') === 'production') {
-    URL::forceSchema('https');
-}
-
 Route::get ('allowapp.com', function()
 {
     return redirect()->away('www.allowapp.com');
