@@ -33,7 +33,7 @@
                             @if(!in_array($person->id,$element->assigned))
                             <a href="#" class="faces-person" data-action="add" data-personid="{{$person->id}}" data-imagenid="{{$element->id}}" style="margin: 2px;float: left">
                                 <img width="60px" height="60px" src="{{$person->photo}}">
-                                <div>{{$person->name}}</div>
+                                <div>{{$person->name}} </div>
                             </a>
                             @endif
                         @endforeach
