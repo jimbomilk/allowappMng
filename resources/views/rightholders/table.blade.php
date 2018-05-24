@@ -11,7 +11,7 @@
         <tr data-id="{{$element->id}}">
             <td>{{$element->id}}</td>
             <td>{{$element->name}}</td>
-            <td>{{trans("label.$name.$element->title")}}</td>
+            <td>{{trans("label.$name.$element->relation")}}</td>
 
 
             <td>

@@ -23,8 +23,8 @@ Route::group([
     Route::get('photos/recognition/{id}',['uses' => 'PhotosController@recognition']);
     Route::get('photos/run/{id}',['uses' => 'PhotosController@makeRecognition']);
     Route::get('photos/contracts/{id}',['uses' => 'PhotosController@contracts']);
-    Route::get('addContract/{photo}/{person}',['uses' => 'PhotosController@addContract']);
-    Route::get('deleteContract/{contract}',['uses' => 'PhotosController@deleteContract']);
+    Route::get('addContract/{photo}/{person}','PhotosController@addContract');
+    Route::delete('deleteContract','PhotosController@deleteContract');
 
     Route::resource('contracts', 'ContractsController');
     Route::resource('acks', 'AcksController');
@@ -48,7 +48,7 @@ Route::group([
     Route::get('photos/run/{id}',['uses' => 'PhotosController@makeRecognition']);
     Route::get('photos/contracts/{id}',['uses' => 'PhotosController@contracts']);
     Route::get('addContract/{photo}/{person}',['uses' => 'PhotosController@addContract']);
-    Route::get('deleteContract/{contract}',['uses' => 'PhotosController@deleteContract']);
+    Route::get('deleteContract/{photo}/{person}',['uses' => 'PhotosController@deleteContract']);
 
     Route::resource('contracts', 'ContractsController');
     Route::resource('acks', 'AcksController');

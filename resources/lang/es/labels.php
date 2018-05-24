@@ -22,9 +22,15 @@ return [
     'areyousure' => "¿Estás seguro?",
     'locations' => "Colegios",
     'created'=>"Creada",
-    'pending'=>"Pendiente",
+    'pending'=>"En proceso",
     'rejected'=>"Rechazada",
     'success'=>"Aceptada",
     'unknown'=>"????",
-    'group'=>"Personas del grupo"
+    'group'=>"Personas del grupo",
+    'responsable'=>"Responsable",
+    'finalidad'=>"Finalidad",
+    'legitimación'=>"Legitimación",
+    'destinatario'=>"Destinatarios",
+    'derechos'=>"Derechos",
+    'finalidad_text'=>"La publicación de la imagen en las siguientes redes sociales "
 ];

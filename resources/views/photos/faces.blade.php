@@ -8,29 +8,34 @@
     <div class="container-fluid spark-screen">
 
         <div class="row">
-            <div class="col-md-7 panel panel-default">
-                <div class="row">
-                    <div class="col-xs-6"><span style="padding-top: 15px">{{$element->label}}#{{$element->id}}</span></div>
-                    <div class="col-xs-6"> <span style="margin: 10px" class="label {{$element->statuscolor}} pull-right">{{$element->statustext}}</span> </div>
-                </div>
+            <div class="col-md-6 panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-6"><span style="padding-top: 15px">{{$element->label}}#{{$element->id}}</span></div>
+                        <div class="col-xs-6"> <span style="margin: 10px" class="label {{$element->statuscolor}} pull-right">{{$element->statustext}}</span> </div>
 
-                  <img class="img-responsive" src={{$element->getData('src')}}>
-                <div class="pull-right" style="margin: 12px">
-                @include("common.controls.btn_other",array('route'=> 'run','icon'=>'glyphicon-eye-open', 'var'=>$element,'label'=>'recognition','style'=>'btn-info'))
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <img  class="img-responsive" src={{$element->url}}>
+                    <div class="pull-right" style="margin: 12px">
+                    @include("common.controls.btn_other",array('route'=> 'run','icon'=>'glyphicon-eye-open', 'var'=>$element,'label'=>'recognition','style'=>'btn-info'))
+                    </div>
                 </div>
             </div>
-            <div class="col-md-5 panel panel-default">
+            <div class=" col-md-6 panel panel-default">
                 <div class="panel-heading">{{ trans('labels.group')}}</div>
                 @if($element->group )
                     <div class="panel-heading">{{ trans('labels.persons')." ".$element->group->name}} </div>
-                    <div class="panel-body" style="padding: 8px">
+                    <div id = "panel-group" class="detected panel-body"  style="padding: 8px">
+
                         @foreach($element->group->persons as $person)
-                            <div style="float: left">
-                                <div class="person" data-personid="{{$person->id}}" data-imagenid="{{$element->id}}" style="margin: 2px">
-                                    <img width="60px" height="60px" src="{{$person->photo}}">
-                                    <div>{{$person->name}}</div>
-                                </div>
-                            </div>
+                            @if(!in_array($person->id,$element->assigned))
+                            <a href="#" class="faces-person" data-action="add" data-personid="{{$person->id}}" data-imagenid="{{$element->id}}" style="margin: 2px;float: left">
+                                <img width="60px" height="60px" src="{{$person->photo}}">
+                                <div>{{$person->name}}</div>
+                            </a>
+                            @endif
                         @endforeach
                     </div>
                 @else
@@ -40,13 +45,14 @@
             </div>
         </div>
         <div  class="row">
-            <div class="col-md-12 panel panel-default">
-                <div class="panel-heading">{{ trans('labels.face_detected')}} </div>
-                <div id="detected" class="panel-body" style="padding: 8px" >
+            <div  class="col-md-12 panel panel-default">
+                <div class="panel-heading">{{ trans('labels.face_detected')}}  </div>
+                <div id="panel-detected" class="detected panel-body" style="padding: 8px" >
                     @foreach($element->people as $person)
-                        <div style="float: left">
-                        @include("common.controls.input_image",array('var'=>$person->photo,'url'=>"deleteContract/$person->id",'width'=>'full','height'=>'80'))
-                        </div>
+                        <a href="#" class="faces-person" data-action="remove" data-personid="{{$person->id}}" data-imagenid="{{$element->id}}" style="margin: 2px;float: left">
+                            <img width="60px" height="60px" src="{{$person->photo}}">
+                            <div>{{$person->name}}</div>
+                        </a>
                     @endforeach
                 </div>
                 <div class="pull-right" style="margin: 12px">
@@ -62,30 +68,37 @@
 @section('scripts')
 @parent
 <script>
-    $(document).ready(function() {
+    $(".detected").on('click',function (e) {
+        console.log(e);
+        var imagenId = e.target.parentElement.dataset.imagenid;
+        var personId = e.target.parentElement.dataset.personid;
+        var action = e.target.parentElement.dataset.action;
+        var update = action=='add'?'#panel-detected':'#panel-group';
+        verb = ( action == 'add')?'addContract':'deleteContract';
+        $.ajax({
+            type: "GET",
+            url: '/'+verb+'/'+imagenId+'/'+personId,
+            data: "",
+            success: function (res) {
+                $(e.target.parentElement).fadeOut(600, function(){
+                    $(update).load(window.location.href + " "+ update);
 
-        $(".person").click(function () {
-            imagenId = $(this).data("imagenid");
-            personId = $(this).data("personid");
-            var form = $(this);
-            var detected = $("#detected");
-            $.ajax({
-                type: "GET",
-                url: '/addContract/'+imagenId+'/'+personId,
-                data: "",
-                success: function (res) {
-                    $(form).fadeOut(800, function(){
-                        $("#detected").load(location.href + " #detected");
+                });
 
-                    });
-                    console.log("añadido con exito:"+res);
-                },
-                error: function () {
-                    console.log("error al añadir persona");
-                }
-            })
+                $('html, body').animate({
+                    scrollTop: $(e.target.parentElement).offset().top-200
+                }, 1000);
+
+
+
+                console.log("exito:"+res);
+            },
+            error: function () {
+                console.log("error");
+            }
         })
-    })
+    });
+
 </script>
 @endsection
 

@@ -13,7 +13,7 @@ class Photo extends General
     protected $path = 'photo';
 
     //id,photo,location_id
-    protected $fillable = ['name','origen','group_id'];
+    protected $fillable = ['label','origen','group_id'];
 
 
     public function location(){
@@ -31,13 +31,21 @@ class Photo extends General
     }
 
     public function getSharingAsText(){
-        $text = "";
+        $text = ": ";
         $data = json_decode($this->data);
         foreach ($data->sharing as $index=>$sharing){
-            if ($index>1){
+            if ($index>0){
                 $text .= ',';
             }
-            $text .= $sharing;
+            if (isset($sharing->facebook))
+                $text .= $sharing->facebook;
+            if (isset($sharing->twitter))
+                $text .= $sharing->twitter;
+            if (isset($sharing->instagram))
+                $text .= $sharing->instagram;
+            if (isset($sharing->web))
+                $text .= $sharing->web;
+
 
         }
         return $text;
@@ -54,7 +62,8 @@ class Photo extends General
 
     public function getPhotopathAttribute()
     {
-        return $this->group->path.'/'.$this->table.'/'.basename(urldecode($this->origen));
+        $data = json_decode($this->data);
+        return $this->group->path.'/'.$this->table.'/'.basename(urldecode($data->remoteSrc));
     }
 
     public function getPeopleAttribute(){
@@ -130,5 +139,39 @@ class Photo extends General
         else if ($data->status==200)
              return trans('labels.success');
         else return trans('labels.unknown');
+    }
+
+    public function getStatuspendingtxtAttribute()
+    {
+
+        $text = ": ";
+        $total=0;
+        $processed=0;
+        $data = json_decode($this->data);
+        if($data->status==20){
+            foreach($data->people as $person) {
+                foreach ($person->rightholders as $rh) {
+                    $total++;
+                    if ($rh->status>0)
+                        $processed++;
+                }
+            }
+            return $text.$processed .'/'.$total;
+        }
+        return "";
+
+    }
+
+    public function getAssignedAttribute()
+    {
+        $data = json_decode($this->data);
+        return array_column($data->people, 'id');
+    }
+
+    public function getUrlAttribute(){
+
+        return  Storage::disk('s3')->temporaryUrl($this->getPhotopathAttribute(),Carbon::now()->addMinutes(5));
+
+
     }
 }

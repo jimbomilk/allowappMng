@@ -69,6 +69,7 @@ return [
     'photos.date' => 'Fecha',
     'photos.requests_received' => 'Aprobaciones',
     'photos.recognition' => 'Buscar coincidencias mediante reconocimiento facial',
+    'photos.sharing' => 'Publicar',
 
 
     //CONTRACTS

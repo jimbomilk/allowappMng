@@ -45,7 +45,7 @@ class RightholdersController extends Controller
             $persons = Person::where('id',$person_id)->pluck('name','id');
         else
             $persons = Person::pluck('name','id');
-        $titles = Multi::getEnumValues('rightholders','title') ;
+        $titles = ['padre','madre','tutor'];
         if (isset($element)) {
             return view('common.edit', ['name' => 'rightholders', 'element' => $element,'titles'=>$titles,'persons'=>$persons]);
         }

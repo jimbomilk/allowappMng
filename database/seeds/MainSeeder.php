@@ -1,11 +1,13 @@
 <?php
 
 use App\Person;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class MainSeeder extends Seeder {
 
@@ -135,8 +137,9 @@ class MainSeeder extends Seeder {
         $id = DB::table('rightholders')->insertGetId( array (
             'location_id'      => $idlocation,
             'person_id'      => $idPerson,
+            'documentId'       =>'28959436k',
             'name'           => $this->faker->text(10),
-            'title'          => $this->faker->randomElement(['mother','father','tutor']),
+            'relation'          => $this->faker->randomElement(['mother','father','tutor']),
             'email'          => $this->faker->email,
             'phone'          => $this->faker->phoneNumber ));
         return $id;
@@ -151,23 +154,24 @@ class MainSeeder extends Seeder {
             'user_id'       =>$user_id,
             'group_id'      =>$group_id
             ));
-        $path = $this->faker->image($dir = '/tmp',$width = 640, $height = 480);
-        $type = pathinfo($path, PATHINFO_EXTENSION);
-        $data = file_get_contents($path);
-        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        $imagen = $this->faker->image($dir = '/tmp',$width = 640, $height = 480);
+        $path = 'locations/location'.$idlocation; // location
+        $path .= '/groups/group'.$group_id; // group
+        $path .= '/photos';
+        $filename=$this->saveFile('origen',$imagen,$path);
         $people = [];
         $sharing = [];
         $log=[];
         $data = ['rowid'=>-1,
             'remoteid'=>$idPhoto,
             'name'=>$this->faker->text(10),
-            'src'=>$base64,
+            'src'=>'',
             'owner'=>'637455827',
-            'status'=>20,
+            'status'=>$this->faker->randomElement(array('10','20','30','100','200')),
             'people'=>$people,
             'sharing'=>$sharing,
             'log'=>$log,
-            'remoteSrc'=>$path];
+            'remoteSrc'=>$filename];
         $json_data = json_encode($data);
         DB::table('photos')
             ->where('id', $idPhoto)
@@ -181,10 +185,26 @@ class MainSeeder extends Seeder {
 
         $id = DB::table('publicationsites')->insertGetId( array (
             'group_id'      => $idGroup,
-            'name'          => $this->faker->text(10),
+            'name'          => $url,
             'url'           => $url
         ));
         return $id;
     }
+
+    public function saveFile($name,$file,$folder)
+    {
+
+        $filename = '';
+        if (isset($file)) {
+            $filename = $folder . '/' . $name .Carbon::now(). '.jpg';
+            if (Storage::disk('s3')->put($filename,file_get_contents($file),'private')) {
+                return Storage::disk('s3')->url($filename);
+            }
+
+        }
+
+        return $filename;
+    }
+
 
 }

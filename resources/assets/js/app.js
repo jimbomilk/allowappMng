@@ -20,3 +20,7 @@ Vue.component('image-card', require('./components/image-card.vue'));
 const app = new Vue({
     el: '#app'
 });
+
+
+
+

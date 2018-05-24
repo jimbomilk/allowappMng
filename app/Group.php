@@ -44,4 +44,5 @@ class Group extends Model
     {
         return $this->location->path.'/'.$this->table.'/'.$this->path.$this->id;
     }
+
 }

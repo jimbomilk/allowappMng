@@ -6,6 +6,7 @@ use App\Ack;
 use App\Contract;
 use App\Face;
 use App\General;
+use App\Group;
 use App\Http\Requests\CreatePhotoRequest;
 use App\Http\Requests\EditPhotoRequest;
 use App\Location;
@@ -49,13 +50,37 @@ class PhotosController extends Controller
 
     public function store(CreatePhotoRequest $request,$location)
     {
-        $photo = new Photo($request->all());
-        $filename = $request->saveFile('origen',$photo->path);
+        $photo = new Photo();
+        $photo->label = $request->get('label');
         $photo->location_id = $request->get('location');
+        $photo->user_id = $request->user()->id;
+        $photo->group_id = $request->get('group_id');
+        $photo->save();
+        $filename = $request->saveFile('origen',$photo->path);
+        $group = Group::find($request->get('group_id'));
+        $sharing = [];
+        if (isset($group)){
+            foreach ($group->publicationsites as $site)
+            $sharing[] = [$site->name=>$site->url];
+        }
+
+        $data = ['rowid'=>-1,
+            'remoteId'=>$photo->id,
+            'remoteSrc'=>$filename,
+            'name'=>$photo->label,
+            'src'=>'',
+            'owner'=>$request->user()->phone,
+            'status'=>10,
+            'timestamp'=>$photo->created_at,
+            'sharing'=>$sharing,
+            'people'=>[],
+            'log'=>[]];
+        $photo->data = json_encode($data);
+        /*
         if (isset($filename)) {
             $photo->origen = $filename;
             $photo->photo = $filename;
-        }
+        }*/
         $photo->save();
 
         return redirect('photos');
@@ -219,11 +244,8 @@ class PhotosController extends Controller
 
             $photo->findings=count($matches);
             $photo->save();
-
             return back();
-
         }
-
     }
 
     public function newContract($photoId,$personId){
@@ -234,9 +256,21 @@ class PhotosController extends Controller
 
             $data = json_decode($photo->data);
             // ahora vamos a la people
-
+            $rightholders = array();
+            foreach($person->rightholders as $rightholder){
+                $rh_data = ['id'=>$rightholder->id,
+                    'documentId'=>$rightholder->documentId,
+                    'relation'=>$rightholder->relation,
+                    'name'=>$rightholder->name,
+                    'phone'=>$rightholder->phone,
+                    'person_id'=>$person->id,
+                    'location_id'=>$rightholder->location->id,
+                    'status'=>0];
+                $rightholders[] = $rh_data;
+            }
+            $person_data = ['id'=>$person->id,'name'=>$person->name,'phone'=>'','photo'=>$person->photo,'rightholders'=>$rightholders];
             if (isset($data->people)) {
-                $data->people[] = $person;
+                $data->people[] = $person_data;
             }
             $photo->data = json_encode($data);
             $photo->save();
@@ -245,12 +279,31 @@ class PhotosController extends Controller
         }
     }
 
-    public function deleteContract(Request $req,$location,$contractId){
-        $contract = Contract::find($contractId);
-        if (isset($contract)){
-            $contract->delete();
+    public function deleteContract(Request $req,$location,$photo_id,$person_id){
+
+        $photo = Photo::find($photo_id);
+        $person = Person::find($person_id);
+        if (isset($photo)&&isset($person)) {
+            $data = json_decode($photo->data);
+            $this->array_remove_object($data->people,$person_id,'id');
+            $data->people = array_values($data->people);
+            $photo->data = json_encode($data);
+            $photo->save();
+            return $data->people;
         }
+
+
         return back();
+    }
+
+    function array_remove_object(&$array, $value, $prop)
+    {
+        foreach($array as $index=>$elem){
+            if($elem->$prop == $value) {
+                unset($array[$index]);
+                return;
+            }
+        }
     }
 
     public function addContract(Request $req,$location,$photo_id,$person_id){
