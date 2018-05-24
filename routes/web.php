@@ -1,13 +1,14 @@
 <?php
 
+use Illuminate\Support\Facades\URL;
+
+if (env('APP_ENV') === 'production') {
+    URL::forceSchema('https');
+}
+
 Route::get ('allowapp.com', function()
 {
-    return redirect()->away('https://www.allowapp.com');
-});
-
-Route::get ('www.allowapp.com', function()
-{
-    return redirect()->away('https://www.allowapp.com');
+    return redirect()->away('www.allowapp.com');
 });
 // Customer routes
 Route::group([
