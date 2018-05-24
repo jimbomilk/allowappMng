@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\URL;
 
-Route::get ('allowapp.com', function()
+Route::get ('http://allowapp.com', function()
 {
-    return redirect()->away('www.allowapp.com');
+    return redirect()->away('https://www.allowapp.com/');
 });
 // Customer routes
 Route::group([
