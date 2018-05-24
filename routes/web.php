@@ -2,16 +2,17 @@
 
 use Illuminate\Support\Facades\URL;
 
-Route::get ('/', function()
-{
-    return redirect()->away('https://www.allowapp.com/');
-});
+
 // Customer routes
 Route::group([
     'domain' => '{location}.allowapp.com',
     'middleware' => ['auth','location']], function ($location) {
 
-    Route::resource('/', 'HomeController');
+    Route::get ('/', function()
+    {
+        return redirect()->away('https://www.allowapp.com/');
+    });
+    Route::resource('/home', 'HomeController');
     Route::resource('users', 'UsersController');
     Route::resource('profiles', 'ProfilesController');
     Route::resource('groups', 'GroupsController');
@@ -60,6 +61,4 @@ Route::get('/rejectphoto/id={id}&ack={ack}&token={token}','ValidateController@re
 
 
 
-Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
