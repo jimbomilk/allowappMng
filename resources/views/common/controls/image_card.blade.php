@@ -8,7 +8,8 @@
             <div class="row">
                 <div class="col-xs-4">{{$imagen->created}}</div>
 
-                <div class="col-xs-offset-3 col-xs-5 " > <h3 class="label {{$imagen->statuscolor}}">{{$imagen->statustext}} {{$imagen->statuspendingtxt}}</h3> </div>
+                <div class="col-xs-offset-3 col-xs-5 " >
+                    @include("common.controls.status",['status'=>$imagen->status])                 </div>
             </div>
 
 

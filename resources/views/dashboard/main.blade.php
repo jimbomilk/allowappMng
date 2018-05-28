@@ -19,6 +19,10 @@
     <div class="row">
         @include ('dashboard.partials.boxes')
 
+
     </div><!-- /.row -->
+    <div class="row">
+        @include ('dashboard.partials.links')
+    </div>
 
 @endsection

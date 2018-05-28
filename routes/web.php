@@ -1,10 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\URL;
-Route::get ('/', function()
-{
-    return redirect()->away('https://www.allowapp.com/');
-});
+
+if (env('APP_ENV') === 'production') {
+    Route::get('/', function () {
+        return redirect()->away('https://www.allowapp.com/');
+    });
+}
 
 // Customer routes
 Route::group([
@@ -48,16 +50,19 @@ Route::group([
     Route::resource('photos', 'PhotosController');
     Route::get('photos/recognition/{id}',['uses' => 'PhotosController@recognition']);
     Route::get('photos/run/{id}',['uses' => 'PhotosController@makeRecognition']);
-    Route::get('photos/contracts/{id}',['uses' => 'PhotosController@contracts']);
+    Route::get('photos/send/{id}',['uses' => 'PhotosController@send']);
     Route::get('addContract/{photo}/{person}',['uses' => 'PhotosController@addContract']);
     Route::get('deleteContract/{photo}/{person}',['uses' => 'PhotosController@deleteContract']);
 
-    Route::resource('contracts', 'ContractsController');
     Route::resource('acks', 'AcksController');
+    Route::get('/validatephoto/id={id}&ack={ack}&token={token}','ValidateController@accept');
+    Route::get('/rejectphoto/id={id}&ack={ack}&token={token}','ValidateController@reject');
+
 });
 
-Route::get('/validatephoto/id={id}&ack={ack}&token={token}','ValidateController@accept');
-Route::get('/rejectphoto/id={id}&ack={ack}&token={token}','ValidateController@reject');
+Route::get('photo/{id}/owner/{owner}/name/{name}/phone/{phone}/rhname/{rhname}/rhphone/{rhphone}/sharing/{sharing}/{token}','LinkController@link')->name('photo.link');
+Route::get('photo/{id}/owner/{owner}/name/{name}/phone/{phone}/rhname/{rhname}/rhphone/{rhphone}/sharing/{sharing}/{token}/{response}','LinkController@response')->name('photo.link.response');
+
 
 
 

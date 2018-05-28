@@ -13,6 +13,8 @@ use App\Location;
 use App\Mail\RequestSignature;
 use App\Person;
 use App\Photo;
+use App\RightholderPhoto;
+use App\Token;
 use App\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -61,7 +63,7 @@ class PhotosController extends Controller
         $sharing = [];
         if (isset($group)){
             foreach ($group->publicationsites as $site)
-            $sharing[] = [$site->name=>$site->url];
+                $sharing[] = [$site->name=>$site->url];
         }
 
         $data = ['rowid'=>-1,
@@ -140,30 +142,33 @@ class PhotosController extends Controller
         return redirect()->back();
     }
 
-    public function contracts(CreatePhotoRequest $req, $location,$id){
+    public function send(Request $req, $location,$id){
 
         $photo = Photo::find($id);
-        if (isset ($photo)) {
-            // Creamos los contractos asociados a la foto
-            foreach($photo->contracts as $c){
-                foreach($c->person->rightholders as $rh){
-                    //Creamos los acks
-                    try {
-                        $ack = new Ack();
-                        $ack->contract_id = $c->id;
-                        $ack->rightholder_id = $rh->id;
-                        $ack->status = 0;
-                        $ack->save();
-                    }catch (Exception $t){}
+        $people = $photo->getData('people');
+        $sharing = $this->encodeSharing($photo->getData('sharing'));
+        $rhs = array();
+        RightholderPhoto::where('photo_id', $photo->id)->delete();
+        foreach($people as $person){
+            foreach($person->rightholders as $rh){
 
-
-                }
-                // Enviamos las notificaciones
-                $this->requestConfirmations($c);
+                $rhphoto = new RightholderPhoto();
+                $rhphoto->photo_id = $photo->id;
+                $rhphoto->owner = $req->user()->phone;
+                $rhphoto->name = $person->name;
+                $rhphoto->phone = $person->phone;
+                $rhphoto->rhphone = $rh->phone;
+                $rhphoto->rhname = $rh->name;
+                $rhphoto->sharing = $sharing;
+                $rhphoto->status = 0;
+                //$rhphoto->save();
+                $rhphoto->link = $rhphoto->getLink();
+                $rhphoto->save();
+                array_push($rhs,$rhphoto);
             }
-
         }
-        return redirect('photos');
+
+        return view('photos.send', ['name' => 'photos', 'element' => $photo,'rhs'=>$rhs,'data'=>json_decode($photo->data)]);
     }
 
     public  function recognition(Request $req,$location,$id)
@@ -338,5 +343,18 @@ class PhotosController extends Controller
             Mail::to($ack->rightholder->email)->send(new RequestSignature($contract->person,$ack->photo,$linkyes,$linkno));
         }
 
+    }
+
+
+    public function encodeSharing($sharing){
+        $sh = "";
+        foreach ($sharing as $share){
+            foreach($share as $clave => $valor) {
+                $sh .= $clave;
+                $sh .= ($valor == "") ? "=0" : "=1";
+                $sh .= "|";
+            }
+        }
+        return urlencode($sh);
     }
 }

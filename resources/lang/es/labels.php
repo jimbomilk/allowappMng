@@ -29,8 +29,14 @@ return [
     'group'=>"Personas del grupo",
     'responsable'=>"Responsable",
     'finalidad'=>"Finalidad",
-    'legitimación'=>"Legitimación",
+    'legitimacion'=>"Legitimación",
     'destinatario'=>"Destinatarios",
     'derechos'=>"Derechos",
-    'finalidad_text'=>"La publicación de la imagen en las siguientes redes sociales "
+    'finalidad_text'=>"la publicación de la imagen en las siguientes plataformas ",
+    'images-created' => "Imagenes creadas pendientes de envio",
+    'no-data'=>"No hay información",
+    'images-pending'=>"Imagenes en proceso",
+    'images-rejected'=>"Imagenes rechazadas",
+    'images-approved'=>"Imagenes aprobadas",
+    'message'=> 'Mensaje a enviar'
 ];

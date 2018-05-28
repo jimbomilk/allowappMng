@@ -12,7 +12,7 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-6"><span style="padding-top: 15px">{{$element->label}}#{{$element->id}}</span></div>
-                        <div class="col-xs-6"> <span style="margin: 10px" class="label {{$element->statuscolor}} pull-right">{{$element->statustext}}</span> </div>
+                        <div class="col-xs-6"> @include("common.controls.status",['status'=>$element->status]) </div>
 
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                     @endforeach
                 </div>
                 <div class="pull-right" style="margin: 12px">
-                @include("common.controls.btn_other",array('route'=> 'contracts','icon'=>'glyphicon-envelope','var'=>$element,'label'=>'requests','style'=>'btn-danger'))
+                @include("common.controls.btn_other",array('route'=> 'send','icon'=>'glyphicon-envelope','var'=>$element,'label'=>'requests','style'=>'btn-danger'))
                 </div>
             </div>
         </div>

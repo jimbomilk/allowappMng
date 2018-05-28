@@ -60,21 +60,37 @@ class User extends Authenticatable
         }
     }
 
-    public function getPhotos(){
+    public function getPhotos($all=false){
 
-        if ($this->profile->type == 'admin') {
-            return $this->location->photos()->paginate(15);
+        if ($this->profile->type == 'admin' || $this->profile->type == 'super'  ) {
+            return $all?$this->location->photos:$this->location->photos()->paginate(15);
         }
         else {
             //dd($this->location->groups->where('user_id', $this->id));
-            return $this->location->photos->whereIn('group_id', $this->getGroups()->pluck('id'))->paginate(15);
+            return $all?$this->location->photos->whereIn('group_id', $this->getGroups()->pluck('id')):$this->location->photos()->whereIn('group_id', $this->getGroups()->pluck('id'))->paginate(15);
         }
     }
 
-    public function getPathAttribute()
+    public function countPhotosByStatus($status){
+        $count =0;
+
+        $photos = $this->getPhotos(true);
+        foreach($photos as $photo){
+            $data = json_decode($photo->data);
+            if($data->status==$status){
+                $count++;
+            }
+        }
+        return $count;
+    }
+
+        public function getPathAttribute()
     {
         return $this->location->path.'/'.$this->table;
     }
 
+    public function links(){
+        return Link::where('owner',$this->phone);
+    }
 
 }

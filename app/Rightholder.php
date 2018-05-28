@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Waavi\UrlShortener\Facades\UrlShortener;
 
 class Rightholder extends Model
 {
@@ -16,4 +17,6 @@ class Rightholder extends Model
     public function location(){
         return $this->belongsTo('App\Location');
     }
+
+
 }

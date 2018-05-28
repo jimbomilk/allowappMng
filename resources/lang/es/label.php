@@ -70,6 +70,9 @@ return [
     'photos.requests_received' => 'Aprobaciones',
     'photos.recognition' => 'Buscar coincidencias mediante reconocimiento facial',
     'photos.sharing' => 'Publicar',
+    'photos.name-person'=>'Nombre',
+    'photos.name-rightholder'=>'Responsable',
+    'photos.link'=>'Enlace',
 
 
     //CONTRACTS

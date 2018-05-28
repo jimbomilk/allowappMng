@@ -105,6 +105,8 @@ return [
 
     'key' => env('APP_KEY'),
 
+    'allowapi_key' => env('ALLOWAPI_KEY'),
+
     'cipher' => 'AES-256-CBC',
 
     /*
@@ -181,6 +183,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Larareko\Rekognition\RekognitionServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Waavi\UrlShortener\UrlShortenerServiceProvider::class,
 
 
 
@@ -236,7 +239,8 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Rekognition' => Larareko\Rekognition\RekognitionFacade::class,
-        'Image' => Intervention\Image\Facades\Image::class
+        'Image' => Intervention\Image\Facades\Image::class,
+        'UrlShortener' => Waavi\UrlShortener\Facades\UrlShortener::class
 
     ],
 

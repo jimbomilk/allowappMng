@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Link;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dashboard.main');
+        $links = Auth::user()->links()->paginate(10);
+
+        return view('dashboard.main',['links'=>$links]);
     }
 }

@@ -51,6 +51,7 @@ class Photo extends General
         return $text;
     }
 
+
     public function getCollectionAttribute(){
         return "$this->table-$this->id";
     }
@@ -113,50 +114,50 @@ class Photo extends General
         return $ret;
     }
 
-    public function getStatuscolorAttribute()
+    public function getStatusAttribute()
     {
         $data = json_decode($this->data);
-        if ($data->status==10)
-            return 'label-primary';
-        else if ($data->status==20)
-            return 'label-warning';
-        else if ($data->status==100)
-            return 'label-danger';
-        else if ($data->status==200)
-            return 'label-success';
-        else return 'label-default';
+        $label_color="";$label_text="";
+        if ($data->status==10) {
+            $label_color = 'label-primary';
+            $label_text = trans('labels.created');
+        }
+        else if ($data->status==20||$data->status==30) {
+            $label_color = 'label-warning';
+            $label_text = trans('labels.pending');
+        }
+        else if ($data->status==100) {
+            $label_color = 'label-danger';
+            $label_text = trans('labels.rejected');
+        }
+        else if ($data->status==200) {
+            $label_color = 'label-success';
+            $label_text = trans('labels.success');
+        }
+        else{
+            $label_color = 'label-default';
+            $label_text = trans('labels.unknown');
+        }
+
+        return ['color'=>$label_color,'text' => $label_text];
     }
 
-    public function getStatustextAttribute()
-    {
-        $data = json_decode($this->data);
-        if ($data->status==10)
-            return trans('labels.created');
-        else if ($data->status==20)
-            return trans('labels.pending');
-        else if ($data->status==100)
-            return trans('labels.rejected');
-        else if ($data->status==200)
-             return trans('labels.success');
-        else return trans('labels.unknown');
-    }
 
     public function getStatuspendingtxtAttribute()
     {
-
         $text = ": ";
         $total=0;
-        $processed=0;
+        $pending=0;
         $data = json_decode($this->data);
-        if($data->status==20){
+        if($data->status==20||$data->status==30){
             foreach($data->people as $person) {
                 foreach ($person->rightholders as $rh) {
                     $total++;
                     if ($rh->status>0)
-                        $processed++;
+                        $pending++;
                 }
             }
-            return $text.$processed .'/'.$total;
+            return $text.$pending .'/'.$total;
         }
         return "";
 
@@ -174,4 +175,5 @@ class Photo extends General
 
 
     }
+
 }

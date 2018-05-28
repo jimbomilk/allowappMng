@@ -1,9 +1,10 @@
+
 <div class="col-lg-3 col-xs-6">
     <!-- small box -->
     <div class="small-box bg-aqua">
         <div class="inner">
-            <h3>Imagenes</h3>
-            <p>{{trans('labels.activitiesRunning')}}</p>
+            <h3>{{$user->countPhotosByStatus(10)}}</h3>
+            <p>{{trans('labels.images-created')}}</p>
         </div>
         <div class="icon">
             <i class="ion ion-ios-body"></i>
@@ -13,10 +14,10 @@
 </div><!-- ./col -->
 <div class="col-lg-3 col-xs-6">
     <!-- small box -->
-    <div class="small-box bg-green">
+    <div class="small-box bg-yellow">
         <div class="inner">
-            <h3>45</h3>
-            <p>{{trans('labels.participants')}}</p>
+            <h3>{{$user->countPhotosByStatus(20)+$user->countPhotosByStatus(30)}}</h3>
+            <p>{{trans('labels.images-pending')}}</p>
         </div>
         <div class="icon">
             <i class="ion ion-stats-bars"></i>
@@ -26,10 +27,10 @@
 </div><!-- ./col -->
 <div class="col-lg-3 col-xs-6">
     <!-- small box -->
-    <div class="small-box bg-yellow">
+    <div class="small-box bg-green">
         <div class="inner">
-            <h3>23</h3>
-            <p>Usuarios</p>
+            <h3>{{$user->countPhotosByStatus(200)}}</h3>
+            <p>{{trans('labels.images-approved')}}</p>
         </div>
         <div class="icon">
             <i class="ion ion-person-add"></i>
@@ -41,8 +42,8 @@
     <!-- small box -->
     <div class="small-box bg-red">
         <div class="inner">
-            <h3>22</h3>
-            <p>Pantallas activas</p>
+            <h3>{{$user->countPhotosByStatus(100)}}</h3>
+            <p>{{trans('labels.images-rejected')}}</p>
         </div>
         <div class="icon">
             <i class="ion ion-monitor"></i>

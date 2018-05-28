@@ -21,7 +21,7 @@ class MainSeeder extends Seeder {
     {
         //Empty the countries table
         DB::table('users')->delete();
-
+        DB::table('locations')->delete();
         $this->faker = Faker::create();
 
         // ** LOCATIONS **
