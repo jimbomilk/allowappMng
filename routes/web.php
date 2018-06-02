@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\URL;
 
-if (env('APP_ENV') === 'production') {
+if (env('APP_NABO') != 'eu') {
     Route::get('/', function () {
         if (url()->current() == 'https://allowapp.com')
             return redirect()->away('https://www.allowapp.com/');
@@ -14,7 +14,7 @@ if (env('APP_ENV') === 'production') {
 // Customer routes
 
 Route::group([
-    'domain' => '{location}.allowapp.com',
+    'domain' => '{location}.allowapp.eu',
     'middleware' => ['auth','location']], function ($location) {
 
     Route::resource('/', 'HomeController');
