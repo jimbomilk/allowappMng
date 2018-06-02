@@ -2,12 +2,12 @@
 
 use Illuminate\Support\Facades\URL;
 
-/*if (env('APP_ENV') === 'production') {*/
+/*if (env('APP_ENV') === 'production') {
     Route::get('/', function () {
         if (url()->current() == 'https://allowapp.com' || url()->current() == 'https://www.allowapp.com');
             return redirect()->away('https://www.allowapp.com/');
     });
-/*}*/
+}*/
 
 // Customer routes
 
