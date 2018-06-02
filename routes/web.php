@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\URL;
 
 if (env('APP_ENV') === 'production') {
     Route::get('/', function () {
-        if (url()->current() == 'https://allowapp.com');
+        if (url()->current() == 'https://allowapp.com')
             return redirect()->away('https://www.allowapp.com/');
         else
             return redirect()->away('http://colegio1.allowapp.com/home');
