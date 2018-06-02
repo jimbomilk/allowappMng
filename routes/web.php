@@ -2,11 +2,12 @@
 
 use Illuminate\Support\Facades\URL;
 
-if (env('APP_ENV') === 'production') {
+/*if (env('APP_ENV') === 'production') {*/
     Route::get('/', function () {
-        return redirect()->away('https://www.allowapp.com/');
+        if (url()->current() == 'https://allowapp.com' || url()->current() == 'https://www.allowapp.com');
+            return redirect()->away('https://www.allowapp.com/');
     });
-}
+/*}*/
 
 // Customer routes
 
@@ -14,7 +15,7 @@ Route::group([
     'domain' => '{location}.allowapp.com',
     'middleware' => ['auth','location']], function ($location) {
 
-    Route::resource('home', 'HomeController');
+    Route::resource('/', 'HomeController');
     Route::resource('users', 'UsersController');
     Route::resource('profiles', 'ProfilesController');
     Route::resource('groups', 'GroupsController');
