@@ -14,7 +14,7 @@ Route::group([
     'domain' => '{location}.allowapp.com',
     'middleware' => ['auth','location']], function ($location) {
 
-    Route::resource('/app', 'HomeController');
+    Route::get('/home', 'HomeController@index');
     Route::resource('users', 'UsersController');
     Route::resource('profiles', 'ProfilesController');
     Route::resource('groups', 'GroupsController');
