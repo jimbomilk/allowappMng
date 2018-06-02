@@ -27,7 +27,7 @@
                     <strong>
                         <div class="col-xs-4">{{trans("label.$name.name-person")}}</div>
                         <div class="col-xs-4">{{trans("label.$name.name-rightholder")}}</div>
-                        <div class="col-xs-4">{{trans("label.$name.link")}}</div>
+                        <div class="col-xs-4"></div>
                     </strong>
 
                     <div id = "panel-group" class="detected panel-body"  style="padding: 8px">
@@ -35,7 +35,7 @@
                         @foreach($rhs as $rh)
                             <div class="col-xs-4">{{$rh->name}}</div>
                             <div class="col-xs-4">{{$rh->rhname}}</div>
-                            <div class="col-xs-4">{{$rh->link}}</div>
+                            <div class="col-xs-4"><a target="_blank"  href="{{$rh->link}}">{{trans("label.$name.link")}}</a></div>
                         @endforeach
                     </div>
                 @else
@@ -46,19 +46,24 @@
 
             <div  class="col-md-6 panel panel-default">
                 <div class="panel-heading">{{ trans('labels.message')}}  </div>
-                Estimados padres/madres y tutores,</br>
-                Por la presente y como propietario de esta imagen solicito vuestro consentimiento para la publicación de esta imagen. A continuación se establecen las
-                condiciones de publicación y los derechos adquiridos de acuerdo al Reglamento Europeo de Protección de Datos:
+
+                {!! Form::open(array('url' => 'photos/emails', 'method' => 'POST', 'enctype' => 'multipart/form-data')) !!}
+                {!! Form::hidden('photoId', $element->id) !!}
+
+                @include("common.controls.input_textarea",array('var'=>'email','value'=>$template))
+
 
                 <div><strong>{{trans('labels.responsable')}}: </strong>{{$element->user->name}}</div>
                 <div><strong>{{trans('labels.finalidad')}}: </strong>{{trans('labels.finalidad_text')}} {{$element->getSharingAsText()}}</div>
                 <div><strong>{{trans('labels.legitimacion')}}: </strong>{{trans('labels.legitimacion_text')}}</div>
                 <div><strong>{{trans('labels.derechos')}}: </strong>{{trans('labels.derechos_text')}}</div>
 
+                <p style="text-align: center;margin: 12px">
+                    <button type="submit" class="btn btn-primary">{{ trans("label.$name.request")}} </button>
+                </p>
 
-                <div class="pull-right" style="margin: 12px">
-                    @include("common.controls.btn_other",array('route'=> 'contracts','icon'=>'glyphicon-envelope','var'=>$element,'label'=>'requests','style'=>'btn-danger'))
-                </div>
+                {!! Form::close() !!}
+
             </div>
         </div>
 

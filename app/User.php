@@ -41,11 +41,11 @@ class User extends Authenticatable
 
         if ($this->profile->type == 'admin') {
             //dd($this);
-            return $this->location->users;
+            return $this->location->rightholders;
         }
         else {
 
-            return $this->location->users->where('id', $this->id);
+            return $this->location->rightholders->whereIn('person_id', $this->getGroups()->pluck('id'));
         }
     }
 
@@ -63,11 +63,11 @@ class User extends Authenticatable
     public function getPhotos($all=false){
 
         if ($this->profile->type == 'admin' || $this->profile->type == 'super'  ) {
-            return $all?$this->location->photos:$this->location->photos()->paginate(15);
+            return $all?$this->location->photos:$this->location->photos()->orderBy('created_at','desc')->paginate(15);
         }
         else {
             //dd($this->location->groups->where('user_id', $this->id));
-            return $all?$this->location->photos->whereIn('group_id', $this->getGroups()->pluck('id')):$this->location->photos()->whereIn('group_id', $this->getGroups()->pluck('id'))->paginate(15);
+            return $all?$this->location->photos->whereIn('group_id', $this->getGroups()->pluck('id')):$this->location->photos()->whereIn('group_id', $this->getGroups()->pluck('id'))->orderBy('created_at','desc')->paginate(15);
         }
     }
 

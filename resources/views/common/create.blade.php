@@ -9,7 +9,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-11">
-                <div class="panel panel-default">
+                <div class="panel panel-primary">
                     <div class="panel-heading">{{ trans('label.create_new')}} {{ trans('label.'.$name)}} </div>
 
                     <div class="panel-body">
@@ -18,9 +18,11 @@
 
 
                         {!! Form::open(array('url' => "$name", 'method' => 'POST', 'enctype' => 'multipart/form-data')) !!}
+                            {!! Form::hidden('redirects_to', URL::previous()) !!}
                             @include("$name.fields")
-                            <button type="submit" class="btn btn-default">{{ trans('labels.create')}} {{ trans('label.'.$name)}} </button>
-
+                            <div style="float: right">
+                            <button type="submit" class="btn btn-primary">{{ trans('labels.create')}} {{ trans('label.'.$name)}} </button>
+                            </div>
                         {!! Form::close() !!}
                     </div>
                 </div>

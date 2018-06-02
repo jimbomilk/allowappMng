@@ -4,6 +4,7 @@ namespace App\Mail;
 
 use App\Person;
 use App\Photo;
+use App\Rightholder;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -18,17 +19,18 @@ class RequestSignature extends Mailable
      *
      * @return void
      */
-    Public $urlconforme;
-    Public $urlnoconforme;
-    Public $photo;
-    Public $person;
+    Public $rightholderphoto;
+    Public $email_text;
+    Public $email_from;
+    Public $email_photo;
 
-    public function __construct(Person $person, $photo,$urlconforme,$urlnoconforme)
+
+    public function __construct($rhp,$text,$from,$photo)
     {
-        $this->urlconforme = $urlconforme;
-        $this->urlnoconforme = $urlnoconforme;
-        $this->photo = $photo;
-        $this->person = $person;
+        $this->rightholderphoto = $rhp;
+        $this->email_text = $text;
+        $this->email_from = $from;
+        $this->email_photo = $photo;
     }
 
     /**
@@ -38,8 +40,7 @@ class RequestSignature extends Mailable
      */
     public function build()
     {
-        return  $this->from('jmgarciacarrasco@addmeetoo.com')
-                    ->markdown('emails.signature')
-                    ->attach($this->photo);
+        return  $this->from('usuarios@allowapp.com')
+                    ->markdown('emails.signature');
     }
 }

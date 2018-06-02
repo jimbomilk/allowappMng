@@ -12,6 +12,8 @@ use App\Group;
 use App\Profile;
 use App\Publicationsite;
 use App\User;
+use Illuminate\Support\Facades\Config;
+use Share;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -34,11 +36,13 @@ class PublicationsitesController extends Controller
 
     public function sendView(Request $request,$element=null)
     {
+        $services = array_keys(Config::get('social-share.services'));
         if (isset($element)) {
-            return view('common.edit', ['name' => 'publicationsites', 'element' => $element]);
+            $val = array_search ($element->name,$services);
+            return view('common.edit', ['name' => 'publicationsites', 'element' => $element,'services'=>$services,'selected'=>$val]);
         }
         else
-            return view('common.create',['name'=>'publicationsites']);
+            return view('common.create',['name'=>'publicationsites','services'=>$services]);
     }
 
     public function create(Request $request)
@@ -48,8 +52,10 @@ class PublicationsitesController extends Controller
 
     public function store(CreatePublicationsiteRequest $request,$location)
     {
+        $services = array_keys(Config::get('social-share.services'));
         $psite = new Publicationsite($request->all());
         $group_id = $request->session()->get('group_id');
+        $psite->name=$services[$request->get('name')];
         $psite->group_id=$group_id;
         $psite->save();
 
@@ -58,6 +64,7 @@ class PublicationsitesController extends Controller
 
     public function edit(Request $request,$location,$id)
     {
+
         $psite = Publicationsite::find($id);
         if (isset ($psite))
         {
@@ -70,11 +77,13 @@ class PublicationsitesController extends Controller
 
     public function update(EditPublicationsiteRequest $request, $location , $id)
     {
+        $services = array_keys(Config::get('social-share.services'));
         $psite = Publicationsite::find($id);
         if (isset($psite)) {
             $psite->fill($request->all());
             $group_id = $request->session()->get('group_id');
             $psite->group_id=$group_id;
+            $psite->name=$services[$request->get('name')];
             $psite->save();
         }
 

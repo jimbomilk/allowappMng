@@ -9,7 +9,10 @@ use App\Location;
 use App\Multi;
 use App\Person;
 use App\Rightholder;
+use App\Mail\RequestSignatureRightholder;
+use App\Status;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class RightholdersController extends Controller
@@ -28,11 +31,11 @@ class RightholdersController extends Controller
             $set = Rightholder::where('person_id',$person_id)->get();
         }
         else{
-            $location = Location::find($location_id);
-            if (isset($location)) {
-                $set = $location->rightholders;
-            }
+
+            $set = $request->user()->getTutors();
+            //return json_encode($set);
         }
+
 
         return view('common.index', ['name' => 'rightholders', 'set' => $set,'person_id'=>$person_id]);
 
@@ -45,7 +48,7 @@ class RightholdersController extends Controller
             $persons = Person::where('id',$person_id)->pluck('name','id');
         else
             $persons = Person::pluck('name','id');
-        $titles = ['padre','madre','tutor'];
+        $titles = ['Padre','Madre','Tutor'];
         if (isset($element)) {
             return view('common.edit', ['name' => 'rightholders', 'element' => $element,'titles'=>$titles,'persons'=>$persons]);
         }
@@ -83,6 +86,24 @@ class RightholdersController extends Controller
 
     }
 
+    public function consentimientos(Request $request,$location,$id=null)
+    {
+        $person_id = $request->session()->get('person_id');
+        $set = null;
+        if(isset($id)) {
+            $set [] = Rightholder::find($id);
+
+        }
+        else if(isset($person_id))
+            $set =  Rightholder::where('person_id',$person_id)->get();
+        else{
+            $set = $request->user()->getTutors();
+        }
+
+
+        $template = trans('label.rightholders.template');
+        return view('rightholders.consentimiento',['name' => 'rightholders','template'=>$template,'set'=>$set]);
+    }
 
     public function update(EditRightholderRequest $request, $location , $id)
     {
@@ -118,4 +139,38 @@ class RightholdersController extends Controller
         Session::flash('message',$message);
         return redirect()->back();
     }
+
+    private function sendEmail($rh,$email_text,$from){
+        Mail::to($rh->email)->queue(new RequestSignatureRightholder($rh, $email_text,$from));
+        $rh->status=Status::RH_PENDING;
+        $rh->save();
+    }
+
+    public function emails(Request $req)
+    {
+        //return json_encode($req->all());
+        $element = $req->get('rightholderId');
+        $email_text = $req->get('email');
+        $count=0;
+        try {
+            if ($element == 'all'){
+                foreach ($req->user()->getTutors() as $rh){
+                    $this->sendEmail($rh,$email_text,$req->user()->email);
+                    $count++;
+                }
+            }else{
+                $rh = Rightholder::find('element');
+                $this->sendEmail($rh,$email_text,$req->user()->email);
+                $count++;
+            }
+        }catch (Exception $e){
+            Session::flash('message',"¡Error!, se ha producido un error en el envio, inténtelo más tarde. Detalles:".$e->getMessage());
+            return redirect()->back();
+        }
+        Session::flash('message',"¡Felicidades!, se han enviado correctamente ".$count." emails solicitando el consentimiento.");
+
+        return redirect('rightholders');
+
+    }
+
 }

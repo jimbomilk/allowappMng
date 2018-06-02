@@ -4,7 +4,9 @@ namespace App;
 
 
 use Carbon\Carbon;
+use Share;
 use Illuminate\Support\Facades\Storage;
+use Waavi\UrlShortener\Facades\UrlShortener;
 
 class Photo extends General
 {
@@ -30,23 +32,18 @@ class Photo extends General
         return $this->belongsTo('App\User');
     }
 
+    public function rightholderphotos(){
+        return $this->hasMany('App\RightholderPhoto');
+    }
+
     public function getSharingAsText(){
         $text = ": ";
         $data = json_decode($this->data);
-        foreach ($data->sharing as $index=>$sharing){
+        foreach ($data->sharing as $index=>$share){
             if ($index>0){
                 $text .= ',';
             }
-            if (isset($sharing->facebook))
-                $text .= $sharing->facebook;
-            if (isset($sharing->twitter))
-                $text .= $sharing->twitter;
-            if (isset($sharing->instagram))
-                $text .= $sharing->instagram;
-            if (isset($sharing->web))
-                $text .= $sharing->web;
-
-
+            $text .= $share->name;
         }
         return $text;
     }
@@ -105,6 +102,12 @@ class Photo extends General
         return $data->$field;
     }
 
+    public function setData($field,$value){
+        $data = json_decode($this->data);
+        $data->$field=$value;
+        $this->data = json_encode($data);
+    }
+
     //Recogemos el valor UTC de la BBDD y devolvemos el valor local.
     public function getCreatedAttribute()
     {
@@ -122,9 +125,13 @@ class Photo extends General
             $label_color = 'label-primary';
             $label_text = trans('labels.created');
         }
-        else if ($data->status==20||$data->status==30) {
+        else if ($data->status==20) {
             $label_color = 'label-warning';
             $label_text = trans('labels.pending');
+        }
+        elseif ($data->status==30) {
+            $label_color = 'label-success';
+            $label_text = trans('labels.processed');
         }
         else if ($data->status==100) {
             $label_color = 'label-danger';
@@ -173,6 +180,57 @@ class Photo extends General
 
         return  Storage::disk('s3')->temporaryUrl($this->getPhotopathAttribute(),Carbon::now()->addMinutes(5));
 
+
+    }
+
+    public function pendingRightholders(){
+        $data = json_decode($this->data);
+        $total = 0;$processed=0;
+        foreach($data->people as $person) {
+            foreach ($person->rightholders as $rh) {
+                $total++;
+                if ($rh->status == Status::RH_PROCESED)
+                    $processed++;
+            }
+        }
+        return  $processed."/".$total;
+    }
+
+    private function combineSharing($sharing1,$sharing2){
+        $sharing_ret = [];
+        $new_share =null;
+        foreach($sharing1 as $index=>$share){
+            foreach($share as $key=>$value) {
+                if (isset($sharing2[$index]))
+                    $new_share = [$key => $value && $sharing2[$index][$key]];
+                else
+                    $new_share = [$key => $value];
+                $sharing_ret[] = $new_share;
+            }
+        }
+        return $sharing_ret;
+    }
+
+    public function cumulativeSharingRightholders(){
+        $data = json_decode($this->data);
+        $sharing_ret =[];
+
+        foreach($data->people as $person){
+            foreach($person->rightholders as $rh){
+                if (isset($rh->sharing))
+                    $sharing_ret=$this->combineSharing($rh->sharing,$sharing_ret);
+            }
+        }
+
+        return $sharing_ret;
+    }
+
+
+    public function getSharedLink($share){
+        $token = Token::generateShared($this->id);
+        $route = route('photo.link.shared', ['id' => $this->id,'token' => $token],true);
+
+        return Share::load($route,$this->name)->$share();
 
     }
 

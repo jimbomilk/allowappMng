@@ -1,15 +1,14 @@
 <div class="form-group">
-    @if(isset($element))
-        {!! Html::image($element->$var, $var,array('id'=>$var.'-image-tag', 'width' => $width, 'height' => $height,'float'=>'left')) !!}
-        <a class="btn-remove" id="{{$var}}-remove" style="position:absolute;float:left;display: none"><i class="btn btn-primary">x</i></a>
-    @endif
-</div>
+{!! Form::label($var, Lang::get('label.'.$name.'.'.$var)) !!}
 
-<div class="form-group">
-    {!! Form::hidden($var.'file', null, array('name'=>$var,'id'=>$var.'file')) !!}
-    {!! Form::label($var, Lang::get('label.'.$name.'.'.$var)) !!}
-    <span>{!! Form::file($var, null) !!}</span>
-
+    <div id="imgdata" class="container-photo form-group" style="display:none">
+        {!! Html::image(isset($element)?$element->$var:null, $var,array('id'=>$var.'-image-tag', 'width' => $width, 'height' => $height,'float'=>'left')) !!}
+        <a class="btn btn-remove" id="{{$var}}-remove"><span class="glyphicon glyphicon-trash form-control-feedback"></span></a>
+    </div>
+    <div id="imgfile" class="form-group" style="display:block">
+        {!! Form::hidden($var.'file', null, array('name'=>$var,'id'=>$var.'file')) !!}
+        <span>{!! Form::file($var, null) !!}</span>
+    </div>
 </div>
 <br>
 
@@ -17,6 +16,19 @@
 @section('scripts')
     @parent
     <script type="text/javascript">
+
+        function readURL(input,tag) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $(tag).attr('src', e.target.result);
+                    $('#imgdata').css('display','block');
+                    $('#imgfile').css('display','none');
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
         $('#{{$var}}-image-tag').one('load', function() {
             s=$('#{{$var}}-image-tag').attr('src');
             if (s != "")
@@ -31,6 +43,8 @@
             $('#{{$var}}-image-tag').attr('src', "");
             $("#{{$var}}file").val("");
             $('#{{$var}}-remove').hide();
+            $('#imgdata').css('display','none');
+            $('#imgfile').css('display','block');
         });
 
         $('#{{$var}}').change(function(){

@@ -45,7 +45,13 @@
 
             <li class="active">
                 <a href="{{ url('persons') }}">
-                    <i class='fa fa-id-card-o'></i> <span>{{ trans('labels.persons') }}</span></a></li>
+                    <i class='fa fa-users'></i> <span>{{ trans('labels.persons') }}</span></a>
+            </li>
+
+            <li class="active">
+                <a href="{{ url('rightholders') }}">
+                    <i class='fa fa-id-card-o'></i> <span>{{ trans('labels.rightholders') }}</span></a>
+            </li>
 
             <li class="active">
                 <a href="{{ url('photos') }}">

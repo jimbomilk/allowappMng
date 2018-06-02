@@ -184,7 +184,8 @@ return [
         Larareko\Rekognition\RekognitionServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Waavi\UrlShortener\UrlShortenerServiceProvider::class,
-
+        \Eduardokum\LaravelMailAutoEmbed\ServiceProvider::class,
+        Chencha\Share\ShareServiceProvider::class,
 
 
     ],
@@ -240,7 +241,8 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Rekognition' => Larareko\Rekognition\RekognitionFacade::class,
         'Image' => Intervention\Image\Facades\Image::class,
-        'UrlShortener' => Waavi\UrlShortener\Facades\UrlShortener::class
+        'UrlShortener' => Waavi\UrlShortener\Facades\UrlShortener::class,
+        'Share' => Chencha\Share\ShareFacade::class
 
     ],
 

@@ -115,6 +115,13 @@ img {
     text-shadow: 0 1px 0 white;
 }
 
+p img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
 /* Body */
 
 .body {

@@ -1,16 +1,12 @@
 @component('mail::message')
-# Petición de aprobación
+{!!$email_text!!}
+<br>
 
-Como tutor/a de {{$person->name}}, le solicitamos la aprobación de la imagen adjunta.
+![photo]({{$email_photo}})
 
-@component('mail::button', ['url' => $urlconforme])
-Conforme
+<strong>ATENCIÓN:</strong> Si no es tutor de {{$rightholderphoto->name}} y los tres últimos dígitos de su teléfono no son <strong> {{substr($rightholderphoto->rhphone,-3,3)}}</strong>, no pulse el botón pues se trata de un correo fraudulento.
+@component('mail::button', ['url' => $rightholderphoto->link])
+Revisar
 @endcomponent
 
-@component('mail::button', ['url' => $urlnoconforme])
-No Conforme
-@endcomponent
-
-Muchas gracias,<br>
-{{ config('app.name') }}
 @endcomponent

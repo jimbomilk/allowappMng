@@ -44,6 +44,16 @@ desired effect
 
         <!-- Main content -->
         <section class="content">
+
+            @if (Session::has('message'))
+                @if (strpos(Session::get('message'),'error')==false)
+                <p class="alert alert-success">
+                @else
+                <p class="alert alert-danger">
+                @endif
+                    {{ Session::get('message') }}
+                </p>
+            @endif
             <!-- Your Page Content Here -->
             @yield('main-content')
         </section><!-- /.content -->

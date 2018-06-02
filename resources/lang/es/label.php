@@ -4,6 +4,12 @@ return [
 
     "create_new" => "Añadir",
 
+    //PROFILES
+    'profiles.super'=> 'Super usuario',
+    'profiles.admin'=> 'Administrador/Director',
+    'profiles.owner'=> 'Responsable de grupo',
+    'profiles.user'=>'Usuario',
+
     // LOCATIONS
     'locations' => "Colegio",
     "locations.name" => "Nombre del colegio",
@@ -13,6 +19,8 @@ return [
     'users.name'=>'Nombre',
     'users.email'=>'Email',
     'users.show' => 'Perfil',
+    'users.password' => 'Introduzca su password',
+    'users.password2' => 'Vuelva a introducirla',
 
     //PROFILES
     'profiles' => 'Perfil',
@@ -54,6 +62,9 @@ return [
     'rightholders.phone' => 'Teléfono',
     'rightholders.person_id'=>'Nombre del alumno',
     'rightholders.relation' =>'Relación',
+    'rightholders.request' => 'Solicitar consentimientos',
+    'rightholders.consents' => 'Consentimientos',
+    'rightholders.template' => 'Solicito su consentimiento para publicar y bla,bla,bla. <br> Por favor pulse el botón y siga las instrucciones.',
 
 
     // PHOTOS
@@ -73,6 +84,9 @@ return [
     'photos.name-person'=>'Nombre',
     'photos.name-rightholder'=>'Responsable',
     'photos.link'=>'Enlace',
+    'photos.request'=>'Solicitar consentimientos',
+    'photos.label' => 'Etiqueta identificativa',
+    'photos.origen' => 'Imagen',
 
 
     //CONTRACTS
@@ -91,6 +105,9 @@ return [
     'acks.photo'  => 'Foto',
     'acks.rightholder'=> 'Firmantes',
     'acks.status_signed' =>'Firmado',
-    'acks.status_pending' => 'Pendiente'
+    'acks.status_pending' => 'Pendiente',
+
+    //Response
+    'response.dni'=>'Introduzca su DNI',
 
 ];

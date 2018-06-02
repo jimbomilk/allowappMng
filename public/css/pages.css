@@ -1,0 +1,33 @@
+body{
+    background-color:black ;
+    background-repeat: repeat-y;
+    color: #d3d3d3;
+}
+
+.container {
+    height: 100%;
+    padding-top: 20px;
+
+}
+
+.container p{
+    text-align: justify;
+    padding: 10px;
+    font-size: 12px;
+}
+
+.legal{
+    color:grey;
+}
+
+footer{
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+footer .copyright{
+    text-align: center;
+    color: #808080;
+}

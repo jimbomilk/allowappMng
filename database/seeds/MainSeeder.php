@@ -40,7 +40,7 @@ class MainSeeder extends Seeder {
         ) );
 
         $id1 = DB::table('users')->insertGetId( array(
-            'name' => 'test1',
+            'name' => 'Profesor de Matemáticas',
             'email' => 'test1@gmail.com',
             'phone' => '637455826',
             'location_id' => $idlocation,
@@ -80,6 +80,7 @@ class MainSeeder extends Seeder {
 
         // ** PHOTOS **
         // GROUP 1
+        /*
         $persons1 = DB::table('persons')->where('group_id',$group1);
 
         for($j=0; $j< 10 ; $j++) {
@@ -95,7 +96,7 @@ class MainSeeder extends Seeder {
 
 
         }
-
+*/
 
     }
 
@@ -118,30 +119,35 @@ class MainSeeder extends Seeder {
     }
 
     function addPersons($idlocation,$groupId){
-        for($i=0; $i< 20 ; $i++) {
+        for($i=0; $i< 1 ; $i++) {
             $idPerson = DB::table('persons')->insertGetId( array (
                 'location_id'      => $idlocation,
                 'group_id'      => $groupId,
                 'photo'         => $this->faker->imageUrl(200,200,'people'),
-                'name'          => $this->faker->text(10)));
+                'name'          => $this->faker->name()));
 
             // ** RIGHTHOLDERS **
             $rightholder1 = $this->addRightHolders($idlocation,$idPerson);
-            $rightholder2 = $this->addRightHolders($idlocation,$idPerson);
+            //$rightholder2 = $this->addRightHolders($idlocation,$idPerson);
 
 
         }
     }
 
     function addRightHolders($idlocation,$idPerson){
+
+        $consents = [['name'=>'twitter','value'=>1],['name'=>'facebook','value'=>1],['name'=>'instagram','value'=>0]];
+
         $id = DB::table('rightholders')->insertGetId( array (
-            'location_id'      => $idlocation,
+            'location_id'    => $idlocation,
             'person_id'      => $idPerson,
-            'documentId'       =>'28959436k',
-            'name'           => $this->faker->text(10),
-            'relation'          => $this->faker->randomElement(['mother','father','tutor']),
-            'email'          => $this->faker->email,
-            'phone'          => $this->faker->phoneNumber ));
+            'documentId'     =>'28959436k',
+            'name'           => $this->faker->name(),
+            'relation'       => $this->faker->randomElement(['Madre','Padre','Tutor']),
+            'email'          => "jmgarciacarrasco@gmail.com",
+            'phone'          => $this->faker->phoneNumber,
+            'consent'       => json_encode($consents)
+        ));
         return $id;
     }
 
@@ -167,7 +173,7 @@ class MainSeeder extends Seeder {
             'name'=>$this->faker->text(10),
             'src'=>'',
             'owner'=>'637455827',
-            'status'=>$this->faker->randomElement(array('10','20','30','100','200')),
+            'status'=>10,
             'people'=>$people,
             'sharing'=>$sharing,
             'log'=>$log,

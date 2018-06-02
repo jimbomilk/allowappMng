@@ -14,10 +14,13 @@ use App\Mail\RequestSignature;
 use App\Person;
 use App\Photo;
 use App\RightholderPhoto;
+use App\Status;
 use App\Token;
 use App\User;
+use Share;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -59,20 +62,24 @@ class PhotosController extends Controller
         $photo->group_id = $request->get('group_id');
         $photo->save();
         $filename = $request->saveFile('origen',$photo->path);
+        $workingfile = $request->saveWorkFile('origen',$photo->path);
+
+
+
         $group = Group::find($request->get('group_id'));
         $sharing = [];
         if (isset($group)){
             foreach ($group->publicationsites as $site)
-                $sharing[] = [$site->name=>$site->url];
+                $sharing[] = ['name'=>$site->name,'url'=>$site->url];
         }
 
         $data = ['rowid'=>-1,
             'remoteId'=>$photo->id,
-            'remoteSrc'=>$filename,
+            'remoteSrc'=>$workingfile,
             'name'=>$photo->label,
-            'src'=>'',
+            'src'=>$filename,
             'owner'=>$request->user()->phone,
-            'status'=>10,
+            'status'=>Status::STATUS_CREADA,
             'timestamp'=>$photo->created_at,
             'sharing'=>$sharing,
             'people'=>[],
@@ -85,7 +92,7 @@ class PhotosController extends Controller
         }*/
         $photo->save();
 
-        return redirect('photos');
+        return redirect($request->get('redirects_to'));
     }
 
     public function edit(Request $request,$location,$id)
@@ -117,7 +124,7 @@ class PhotosController extends Controller
             $photo->save();
         }
 
-        return redirect('photos');
+        return redirect($request->get('redirects_to'));
     }
 
     public function destroy($location,$id,Request $request)
@@ -146,29 +153,22 @@ class PhotosController extends Controller
 
         $photo = Photo::find($id);
         $people = $photo->getData('people');
-        $sharing = $this->encodeSharing($photo->getData('sharing'));
         $rhs = array();
-        RightholderPhoto::where('photo_id', $photo->id)->delete();
+        //RightholderPhoto::where('photo_id', $photo->id)->delete();
         foreach($people as $person){
             foreach($person->rightholders as $rh){
-
-                $rhphoto = new RightholderPhoto();
-                $rhphoto->photo_id = $photo->id;
-                $rhphoto->owner = $req->user()->phone;
-                $rhphoto->name = $person->name;
-                $rhphoto->phone = $person->phone;
-                $rhphoto->rhphone = $rh->phone;
-                $rhphoto->rhname = $rh->name;
-                $rhphoto->sharing = $sharing;
-                $rhphoto->status = 0;
-                //$rhphoto->save();
-                $rhphoto->link = $rhphoto->getLink();
+                $rhphoto = RightholderPhoto::where([['photo_id', $photo->id],['name',$person->name],['phone',$person->phone],['rhphone',$rh->phone]])->first();
+                if (!isset($rhphoto)) {
+                    $rhphoto = new RightholderPhoto();
+                }
+                $rhphoto->setValues($photo,$person,$rh);
                 $rhphoto->save();
                 array_push($rhs,$rhphoto);
             }
         }
+        $template_email = trans('labels.template.consentimiento').$req->user()->name;
 
-        return view('photos.send', ['name' => 'photos', 'element' => $photo,'rhs'=>$rhs,'data'=>json_decode($photo->data)]);
+        return view('photos.send', ['name' => 'photos', 'element' => $photo,'rhs'=>$rhs,'template'=>$template_email]);
     }
 
     public  function recognition(Request $req,$location,$id)
@@ -268,6 +268,7 @@ class PhotosController extends Controller
                     'relation'=>$rightholder->relation,
                     'name'=>$rightholder->name,
                     'phone'=>$rightholder->phone,
+                    'email'=>$rightholder->email,
                     'person_id'=>$person->id,
                     'location_id'=>$rightholder->location->id,
                     'status'=>0];
@@ -317,44 +318,40 @@ class PhotosController extends Controller
         return back();
     }
 
-    public function requestConfirmations($contract)
+    public function emails(Request $req,$location)
     {
-        foreach($contract->acks as $ack){
-            $token_key = str_random(16);
-            $ack->token = $token_key;
+        //return json_encode($req->all());
+        $photo = Photo::find($req->get('photoId'));
+        $email_text = $req->get('email');
+        //Log::debug('antes email');
+        $count=0;
 
-            //recoger la photo
-            $photo = $contract->photo;
+        try {
+            foreach ($photo->rightholderphotos as $rhp) {
+                //Log::debug('antes email' . json_encode($rhp));
+                if ($rhp->rhemail && $rhp->rhemail != "") {
 
-            $img = Image::make($photo->photo);
-            $img->pixelate(12);
-            //$img->save('./public/img/temp.jpg');
-            $filename = General::saveImage('photo',$ack->path,$img->stream()->__toString(),'jpg');
-            if (isset($filename)){
-                $ack->photo = $filename;
+                    $ret = Mail::to($rhp->rhemail)->queue(new RequestSignature($rhp, $email_text,$req->user()->email,$photo->getData('remoteSrc')));
+                    //Log::debug('email:'.$ret);
+                    $count++;
+                }
             }
-
-            $ack->save();
-
-            $linkyes = "http://colegio1.allowapp.test/validatephoto/id=".$contract->photo->id."&ack=".$ack->id."&token=".$token_key;
-            $linkno = "http://colegio1.allowapp.test/rejectphoto/id=".$contract->photo->id."&ack=".$ack->id."&token=".$token_key;
-
-
-            Mail::to($ack->rightholder->email)->send(new RequestSignature($contract->person,$ack->photo,$linkyes,$linkno));
+        }catch (Exception $e){
+            Session::flash('message',"¡Error!, se ha producido un error en el envio, inténtelo más tarde. Detalles:".$e->getMessage());
+            return redirect()->back();
         }
+        $photo->setData('status',Status::STATUS_PENDING);
+        $photo->save();
+        Session::flash('message',"¡Felicidades!, se han enviado correctamente ".$count." emails solicitando el consentimiento.");
+
+        return redirect('photos');
 
     }
 
+    public function share(Request $req,$location,$photoId,$share){
+        $photo = Photo::find($photoId);
 
-    public function encodeSharing($sharing){
-        $sh = "";
-        foreach ($sharing as $share){
-            foreach($share as $clave => $valor) {
-                $sh .= $clave;
-                $sh .= ($valor == "") ? "=0" : "=1";
-                $sh .= "|";
-            }
-        }
-        return urlencode($sh);
+        return  Share::load($photo->getSharedLink(),'Example')->$share();
     }
+
 }

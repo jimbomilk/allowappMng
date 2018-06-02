@@ -19,10 +19,11 @@ return [
     'recognition'=>'Reconocimiento facial',
     'face_detected'=>'Caras detectadas',
     'publicationsites' => 'Areas de difusión (web, redes sociales...)',
-    'areyousure' => "¿Estás seguro?",
+    'deleteareyousure' => "¿Confirmas que quieres borrar a ",
     'locations' => "Colegios",
     'created'=>"Creada",
     'pending'=>"En proceso",
+    'processed'=>"Revisada",
     'rejected'=>"Rechazada",
     'success'=>"Aceptada",
     'unknown'=>"????",
@@ -38,5 +39,8 @@ return [
     'images-pending'=>"Imagenes en proceso",
     'images-rejected'=>"Imagenes rechazadas",
     'images-approved'=>"Imagenes aprobadas",
-    'message'=> 'Mensaje a enviar'
+    'message'=> 'Mensaje a enviar',
+    'template.consentimiento'=>'Estimados padres/madres y tutores, <br><br> Solicito vuestro consentimiento para la publicación en redes sociales de esta imagen. Para realizarlo debéis pulsar el botón y seguir las instrucciones. Muchas gracias. <br><br> Recibid un cordial saludo,<br>',
+    'send'=>'Enviar',
+    'explanation.badgepending'=>'Consentimientos recibidos/Totales'
 ];

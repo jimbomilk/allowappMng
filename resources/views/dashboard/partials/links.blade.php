@@ -11,15 +11,15 @@
                 <p> {{trans('labels.no-data')}} </p>
             @endif
             <div class="row">
-                <div class="col-md-3"></div>
                 <div class="col-md-2"></div>
                 <div class="col-md-2"></div>
-                <div class="col-md-3"></div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2"></div>
                 <div class="col-md-2"></div>
             </div>
             @foreach($links as $link)
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2" style="text-align: center">
                     <img src="{{$link->photo->url}}" width="75" height="50" alt="add image" class="online"/>
                 </div>
                 <div class="col-md-2">
@@ -28,7 +28,7 @@
                 <div class="col-md-2">
                     por {{ $link->owner }}
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <a target="_blank" href="{{ $link->link }}">Enlace</a>
                 </div>
                 <div class="col-md-2">

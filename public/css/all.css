@@ -22537,6 +22537,56 @@ label,
     height: 200px;
 }
 
+.container-photo{
+    position: relative;
+    width: 50%;
+}
+
+.container-photo img {
+    width: 100%;
+    height: auto;
+}
+
+.container-photo .btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 18px;
+    background-color: white;
+    padding: 18px 17px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.container-photo .glyphicon:hover {
+    background-color: black;
+}
+
+.btn-card{
+    float: right;
+    }
+.btn-card .social{
+    margin-right:8px;
+    font-size:19px;
+}
+
+.btn-card .badge{
+    margin-right: 8px;
+    font-size: 14px;
+    padding: 2px 10px 2px 8px;
+    margin-bottom: 4px;
+    background-color: rgb(246,216,88) !important;
+    color: black !important;
+
+}
+
+.status{
+    float: right;
+    margin-top: 4px;
+    font-size: 14px;
+    border: 1px solid white;
+}
 
 /* iCheck plugin Square skin, blue
 ----------------------------------- */

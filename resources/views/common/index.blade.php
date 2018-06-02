@@ -11,26 +11,29 @@
             <div class="col-md-12">
 
                 <!-- Default box -->
-                <div class="box">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">{{trans("labels.$name")}}</h3>
-
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                <i class="fa fa-minus"></i></button>
-                            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-                                <i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                    <div class="box-body">
-
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                        <div class="col-md-6"><h4>{{trans("labels.$name")}}</h4></div>
                         @if(!isset($hide_new) || !$hide_new)
-                            <p style="text-align: right">
+                            <div class="col-md-6" style="text-align:right">
+                                @if(View::exists("$name.buttons"))
+                                    @include("$name.buttons")
+                                @endif
+
                                 <a class="btn btn-info" href="{{ url("$name/create") }}" role="button">
                                     {{trans('labels.new')}} {{trans('label.'.$name)}}
                                 </a>
-                            </p>
+
+                            </div>
                         @endif
+
+
+                        </div>
+                    </div>
+                    <div class="panel-body">
+
+
                         @include("$name.table")
 
                     </div>
@@ -43,3 +46,5 @@
     </div>
 
 @endsection
+
+

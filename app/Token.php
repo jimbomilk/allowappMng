@@ -19,5 +19,9 @@ class Token extends Model
 
     }
 
+    public static function generateShared($photoId)
+    {
+        return hash_hmac('sha256', $photoId, config('allowapi_key'));
 
+    }
 }

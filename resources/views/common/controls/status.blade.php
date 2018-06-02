@@ -1,1 +1,1 @@
-<h3 style='margin: 10px' class='label {{$status['color']}}'>{{$status['text']}}</h3>
+<h3 class='status label {{$status['color']}}'>{{$status['text']}}</h3>

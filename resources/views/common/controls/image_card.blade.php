@@ -3,13 +3,21 @@
     <div class="panel panel-primary">
         <div class="panel-heading">
             <div class="row">
-                <div class="col-xs-12">{{$imagen->label}}#{{$imagen->id}}</div>
+                <div class="col-xs-4">{{$imagen->label}}#{{$imagen->id}}</div>
+                <div class="col-xs-8">
+                    <span style="float: right">@include("common.controls.btn_delete",array('var'=>$element))</span>
+
+                    <a class="btn-card" ><span data-toggle="tooltip" title="{{trans('labels.explanation.badgepending')}}" class="badge badge-secondary">{{$imagen->pendingRightholders()}}</span></a>
+
+
+                </div>
             </div>
             <div class="row">
                 <div class="col-xs-4">{{$imagen->created}}</div>
 
-                <div class="col-xs-offset-3 col-xs-5 " >
-                    @include("common.controls.status",['status'=>$imagen->status])                 </div>
+                <div class="col-xs-offset-3 col-xs-5 ">
+                    @include("common.controls.status",['status'=>$imagen->status])
+                </div>
             </div>
 
 
@@ -36,13 +44,24 @@
 
             <div class="text-right"  style="margin: 8px">
                 @if($imagen->getData('status')==10)
-                    @include(
-                    "common.controls.btn_other",array('route'=> 'recognition','icon'=>'glyphicon-eye-open','var'=>$element,'label'=>'faces','style'=>'btn-danger'))
+                    <a href="{{ url("$name/recognition/$imagen->id") }}" data-imagenid="{{$imagen->id}}" class="details btn btn-block btn-social btn-foursquare">
+                        <span class="fa fa-eye"></span> {{trans("label.$name.faces")}}
+                    </a>
                 @endif
-                @if($imagen->getData('status')==200)
-                    @include("common.controls.btn_other",array('route'=> 'sharing','icon'=>'glyphicon-share','var'=>$element,'label'=>'sharing','style'=>'btn-danger'))
-                @endif
-                <a href="#" data-imagenid="{{$imagen->id}}" style="margin-left: 5px" class="details btn-sm btn-primary">Detalles</a>
+
+                @foreach($imagen->cumulativeSharingRightholders() as $share)
+                    @if($share[key($share)])
+                    <a  target="_blank" href="{{$imagen->getSharedLink(key($share)) }}" class="btn btn-block btn-social btn-{{key($share)}}  btn-reddit">
+                        <span class="fa glyphicon-globe fa-envelope-o fa-{{key($share)}}"></span> Compartir en {{key($share)}}
+                       </a>
+                    @endif
+
+                @endforeach
+
+                <a href="#" data-imagenid="{{$imagen->id}}" class="details btn btn-block btn-social btn-openid">
+                    <span class="fa fa-info-circle"></span> Detalles
+                </a>
+
             </div>
         </div>
     </div>

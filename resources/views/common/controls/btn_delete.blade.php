@@ -1,1 +1,1 @@
-<a href="{{url("$name/$var->id")}}" class="btn-sm btn-danger" style="margin-left: 5px" title="{{trans("labels.delete")}}" data-method="delete" data-confirm="{{trans('labels.areyousure')}}" data-token="{{ csrf_token() }}"><span class="glyphicon glyphicon-trash"></span></a>
+<a href="{{url("$name/$var->id")}}" class="btn-sm btn-danger" style="margin-left: 5px" title="{{trans("labels.delete")}}" data-method="delete" data-confirm="{{trans("labels.deleteareyousure")."$var->name?"}}" data-token="{{ csrf_token() }}"><span class="glyphicon glyphicon-trash"></span></a>
