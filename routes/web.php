@@ -1,12 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\URL;
-
+/*
 if (env('APP_ENV') === 'production') {
     Route::get('/', function () {
         return redirect()->away('https://www.allowapp.com/');
     });
-}
+}*/
 
 // Customer routes
 
