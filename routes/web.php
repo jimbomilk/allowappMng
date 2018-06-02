@@ -9,30 +9,35 @@ if (env('APP_ENV') === 'production') {
 }
 
 // Customer routes
+
 Route::group([
     'domain' => '{location}.allowapp.com',
     'middleware' => ['auth','location']], function ($location) {
 
-
-    Route::resource('/home', 'HomeController');
+    Route::resource('/app', 'HomeController');
     Route::resource('users', 'UsersController');
     Route::resource('profiles', 'ProfilesController');
     Route::resource('groups', 'GroupsController');
     Route::resource('persons', 'PersonsController');
     Route::resource('locations', 'LocationsController');
+
     Route::resource('rightholders', 'RightholdersController');
+    Route::get('rightholders/consentimientos/all', ['uses'=>'RightholdersController@consentimientos']);
+    Route::get('rightholders/consentimientos/{id}', ['uses'=>'RightholdersController@consentimientos']);
+    Route::post('rightholders/emails',['uses' => 'RightholdersController@emails']);
+
     Route::get('groups/publicationsites/{id}', 'PublicationsitesController@index');
     Route::resource('publicationsites', 'PublicationsitesController');
     Route::resource('photos', 'PhotosController');
     Route::get('photos/recognition/{id}',['uses' => 'PhotosController@recognition']);
     Route::get('photos/run/{id}',['uses' => 'PhotosController@makeRecognition']);
-    Route::get('photos/contracts/{id}',['uses' => 'PhotosController@contracts']);
-    Route::get('addContract/{photo}/{person}','PhotosController@addContract');
-    Route::delete('deleteContract','PhotosController@deleteContract');
-
-    Route::resource('contracts', 'ContractsController');
-    Route::resource('acks', 'AcksController');
+    Route::get('photos/send/{id}',['uses' => 'PhotosController@send']);
+    Route::post('photos/emails',['uses' => 'PhotosController@emails']);
+    Route::get('addContract/{photo}/{person}',['uses' => 'PhotosController@addContract']);
+    Route::get('deleteContract/{photo}/{person}',['uses' => 'PhotosController@deleteContract']);
+    Route::get('photos/share/{id}/{share}',['uses' => 'PhotosController@share']);
 });
+
 
 Route::group([
     'domain' => '{location}.allowapp.test',
