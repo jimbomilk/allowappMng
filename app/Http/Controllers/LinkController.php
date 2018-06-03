@@ -53,8 +53,7 @@ class LinkController extends Controller
                     if ($photoData->allRightholdersProcessed())
                         $photoData->status = Status::STATUS_PROCESED;
                     $photo->data = json_encode($photoData);
-                    $ret = $photo->save();
-                    return json_encode($ret);
+                    $photo->save();
                     return view('pages.photook',['link'=>$photo->link]);
                 }else{
                     return view('pages.errordni',['link'=>URL::previous()]);
