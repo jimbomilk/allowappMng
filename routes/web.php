@@ -9,8 +9,8 @@ Route::get('/', function () {
 // Customer routes
 
 Route::group([
-    'domain' => '{location}.allowapp.eu',
-    'middleware' => ['auth','location']], function ($location) {
+    'domain' => 'colegio1.allowapp.eu',
+    'middleware' => ['auth','location']], function ($location = 'colegio1') {
 
     Route::resource('/', 'HomeController');
     Route::resource('users', 'UsersController');
