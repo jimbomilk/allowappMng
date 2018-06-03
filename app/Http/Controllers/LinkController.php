@@ -52,9 +52,7 @@ class LinkController extends Controller
                 if ($rh = $photoData->setRightholderSharing($dni,$rhphone,$sharing)){
                     if ($photoData->allRightholdersProcessed())
                         $photoData->status = Status::STATUS_PROCESED;
-                    return json_encode($photoData);
                     $photo->data = json_encode($photoData);
-
                     $photo->save();
                     return view('pages.photook',['link'=>$photo->link]);
                 }else{
