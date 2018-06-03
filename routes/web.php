@@ -2,15 +2,6 @@
 
 use Illuminate\Support\Facades\URL;
 
-if (env('APP_NABO') != 'eu') {
-    Route::get('/', function () {
-        if (url()->current() == 'https://allowapp.com')
-            return redirect()->away('https://www.allowapp.com/');
-        else
-            return redirect()->away('http://colegio1.allowapp.com/home');
-    });
-}
-
 // Customer routes
 
 Route::group([
