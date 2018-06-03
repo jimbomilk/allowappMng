@@ -2,16 +2,10 @@
 
 use Illuminate\Support\Facades\URL;
 
-Route::get('/', function () {
-    return "hola";
-});
 
 // Customer routes
 
-Route::group([
-    'domain' => '{location}.allowapp.eu',
-    'middleware' => ['auth','location']], function ($location) {
-
+Route::domain('{location}.allowapp.eu')->group(['middleware' => ['auth','location']],function ($location) {
     Route::resource('/', 'HomeController');
     Route::resource('users', 'UsersController');
     Route::resource('profiles', 'ProfilesController');
