@@ -15,7 +15,7 @@ class Photo extends General
     protected $path = 'photo';
 
     //id,photo,location_id
-    protected $fillable = ['label','origen','group_id'];
+    protected $fillable = ['label','data','group_id'];
 
 
     public function location(){
