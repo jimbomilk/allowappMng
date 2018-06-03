@@ -1,11 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\URL;
-/*
-Route::get('/', function () {
-   return "hola";
-});
-*/
+
+Route::resource('/', 'HomeController');
+
+
 // Customer routes
 Route::domain('{location}.allowapp.eu')->group(function () {
         Route::resource('/', 'HomeController');
