@@ -2,10 +2,6 @@
 
 use Illuminate\Support\Facades\URL;
 
-Route::get('/', function () {
-    return "hola";
-});
-
 // Customer routes
 
 Route::group([
