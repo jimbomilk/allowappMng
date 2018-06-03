@@ -66,11 +66,11 @@ class MainSeeder extends Seeder {
         $group1 = $this->createGroup($idlocation,$id1,'2B');
         $g1_twitter = $this->addPublicationSite($group1,'twitter');
         $g1_facebook = $this->addPublicationSite($group1,'facebook');
-        $g1_instagram = $this->addPublicationSite($group1,'instagram');
+        //$g1_instagram = $this->addPublicationSite($group1,'instagram');
         $group2 = $this->createGroup($idlocation,$id1,'3A');
         $g2_twitter = $this->addPublicationSite($group2,'twitter');
         $g2_facebook = $this->addPublicationSite($group2,'facebook');
-        $g2_instagram = $this->addPublicationSite($group2,'instagram');
+        //$g2_instagram = $this->addPublicationSite($group2,'instagram');
 
 
         // ** PERSONS **

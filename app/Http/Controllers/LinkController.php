@@ -7,6 +7,7 @@ use App\PhotoData;
 use App\Rightholder;
 use App\Status;
 use App\Token;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 
@@ -47,7 +48,7 @@ class LinkController extends Controller
                 foreach ($sh as $share){
                     $sharing[]=[$share->name=>(int)$req->get($share->name,'0')];
                 }
-
+                return json_encode('sharing');
                 $photoData  = new PhotoData($photo->data);
                 if ($rh = $photoData->setRightholderSharing($dni,$rhphone,$sharing)){
                     if ($photoData->allRightholdersProcessed())
@@ -111,6 +112,7 @@ class LinkController extends Controller
                 if ($rightholder->documentId == $dni){
                     $rightholder->status = Status::RH_PROCESED;
                     $rightholder->consent = json_encode($sharing);
+                    $rightholder->consent_date = Carbon::now();
                     $rightholder->save();
                     return view('pages.photook',['link'=>$rightholder->link]);
                 }else{
