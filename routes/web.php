@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\URL;
 
-Route::resource('/', 'HomeController');
 
 
 // Customer routes
@@ -32,34 +31,6 @@ Route::domain('{location}.allowapp.eu')->group(function () {
 
 });
 
-
-Route::group([
-    'domain' => 'colegio1.allowapp.eu',
-    'middleware' => ['auth','location']], function ($location = 'colegio1') {
-
-    Route::resource('/', 'HomeController');
-    Route::resource('users', 'UsersController');
-    Route::resource('profiles', 'ProfilesController');
-    Route::resource('groups', 'GroupsController');
-    Route::resource('persons', 'PersonsController');
-    Route::resource('locations', 'LocationsController');
-
-    Route::resource('rightholders', 'RightholdersController');
-    Route::get('rightholders/consentimientos/all', ['uses'=>'RightholdersController@consentimientos']);
-    Route::get('rightholders/consentimientos/{id}', ['uses'=>'RightholdersController@consentimientos']);
-    Route::post('rightholders/emails',['uses' => 'RightholdersController@emails']);
-
-    Route::get('groups/publicationsites/{id}', 'PublicationsitesController@index');
-    Route::resource('publicationsites', 'PublicationsitesController');
-    Route::resource('photos', 'PhotosController');
-    Route::get('photos/recognition/{id}',['uses' => 'PhotosController@recognition']);
-    Route::get('photos/run/{id}',['uses' => 'PhotosController@makeRecognition']);
-    Route::get('photos/send/{id}',['uses' => 'PhotosController@send']);
-    Route::post('photos/emails',['uses' => 'PhotosController@emails']);
-    Route::get('addContract/{photo}/{person}',['uses' => 'PhotosController@addContract']);
-    Route::get('deleteContract/{photo}/{person}',['uses' => 'PhotosController@deleteContract']);
-    Route::get('photos/share/{id}/{share}',['uses' => 'PhotosController@share']);
-});
 
 
 Route::group([
