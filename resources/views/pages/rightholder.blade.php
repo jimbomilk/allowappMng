@@ -26,7 +26,7 @@
         @include("common.controls.input_hidden",['var'=>'rightholderId','val'=>$rightholder->id])
         @foreach( json_decode($rightholder->consent) as $share)
 
-        <div class="row" style="margin-top:20px;color: #000000">
+        <div class="row" style="margin-top:20px;color: white">
             <div class="row">
                 <div class="col-sm-offset-3 col-sm-6">
                     <strong>Compartir en {{$share->name}} :</strong>
