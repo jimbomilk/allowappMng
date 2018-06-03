@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\URL;
 // Customer routes
 
 Route::group([
-    'domain' => '{location}.allowapp.eu',
+    'domain' => 'allowapp.eu/{location}',
     'middleware' => ['auth','location']], function ($location) {
 
     Route::resource('/', 'HomeController');
