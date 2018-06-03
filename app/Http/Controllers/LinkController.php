@@ -54,6 +54,7 @@ class LinkController extends Controller
                         $photoData->status = Status::STATUS_PROCESED;
                     $photo->data = json_encode($photoData);
                     $photo->save();
+                    return json_encode($photo);
                     return view('pages.photook',['link'=>$photo->link]);
                 }else{
                     return view('pages.errordni',['link'=>URL::previous()]);
