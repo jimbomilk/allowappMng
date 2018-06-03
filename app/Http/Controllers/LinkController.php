@@ -48,7 +48,7 @@ class LinkController extends Controller
                 foreach ($sh as $share){
                     $sharing[]=[$share->name=>(int)$req->get($share->name,'0')];
                 }
-                return json_encode('sharing');
+                return json_encode($sharing);
                 $photoData  = new PhotoData($photo->data);
                 if ($rh = $photoData->setRightholderSharing($dni,$rhphone,$sharing)){
                     if ($photoData->allRightholdersProcessed())
