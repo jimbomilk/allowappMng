@@ -37,22 +37,26 @@
                     <i class='fa fa-key'></i> <span>{{ trans('labels.users') }}</span></a></li>
             @endif
 
+            <li class="active">
+                <a href="{{ url('groups') }}">
+                    <i class='fa fa-address-book'></i> <span>{{ trans('labels.groups') }}</span></a>
 
-            <li class="active treeview">
-                <a href="{{ url('groups') }}"><i class='fa fa-address-book'></i>
-                    <span>{{ trans('labels.groups') }}</span>
-                    <i class="fa fa-angle-left pull-right"></i></a>
-                <ul class="treeview-menu">
-                    <li><a href="{{ url('persons') }}"><i class='fa fa-users'></i> <span>{{ trans('labels.byperson') }}</span></a></li>
-                    <li><a href="{{ url('rightholders') }}"><i class='fa fa-id-card-o'></i> <span>{{ trans('labels.rightholders') }}</span></a></li>
-                </ul>
+            </li>
+
+            <li class="active">
+                <a href="{{ url('persons') }}">
+                    <i class='fa fa-users'></i> <span>{{ trans('labels.persons') }}</span></a>
             </li>
 
 
+            <li class="active">
+                <a href="{{ url('rightholders') }}">
+                    <i class='fa fa-id-card-o'></i> <span>{{ trans('labels.rightholders') }}</span></a>
+            </li>
 
             <li class="active">
                 <a href="{{ url('photos') }}">
-                    <i class='fa fa-camera'></i>
+                    <i class='fa fa-image'></i>
                     <span>{{ trans('labels.photos') }}</span>
                 </a>
             </li>
@@ -69,7 +73,7 @@
 
 
             <li class="active treeview">
-                <a href="#"><i class='fa fa-cogs'></i> <span>{{ trans('labels.templates') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><i class='fa fa-edit'></i> <span>{{ trans('labels.templates') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="#"><i class='fa fa-envelope'></i> <span>{{ trans('labels.emails') }}</span></a></li>
                     <li><a href="#"><i class='fa fa-balance-scale'></i> <span>{{ trans('labels.legal') }}</span></a></li>
