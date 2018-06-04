@@ -63,6 +63,7 @@ class GroupsController extends Controller
     public function store(CreateGroupRequest $request,$location)
     {
         $group = new Group($request->all());
+        $group->user_id = $request->get('user_id');
         $group->location_id = $request->get('location');
         $group->save();
 
