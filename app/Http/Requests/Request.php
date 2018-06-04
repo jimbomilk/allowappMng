@@ -54,7 +54,7 @@ class Request extends FormRequest
             $watermark = Image::make(public_path() . '/img/watermark_' . $watermark_type.'.png');
             $watermark->resize(100, 40);
             if ($watermark_type == 'final' ) {
-                $img->insert($watermark, 'bottom-right');
+                $img->insert($watermark, 'top-right');
 
             }else {
                 $img->insert($watermark, 'top-left');
