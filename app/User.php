@@ -37,6 +37,16 @@ class User extends Authenticatable
         }
     }
 
+    public function getGroupTutors(){
+        if ($this->profile->type == 'admin') {
+            //dd($this);
+            return $this->location->users;
+        }
+        else {
+            return $this->location->users->where('id', $this->id);
+        }
+    }
+
     public function getTutors(){
 
         if ($this->profile->type == 'admin') {

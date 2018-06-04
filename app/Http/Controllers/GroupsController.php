@@ -26,7 +26,7 @@ class GroupsController extends Controller
 
     public function sendView(Request $request,$element=null)
     {
-        $tutors = $request->user()->getTutors()->pluck('name','id');
+        $tutors = $request->user()->getGroupTutors()->pluck('name','id');
         if (isset($element)) {
             return view('common.edit', ['name' => 'groups', 'element' => $element,'tutors'=>$tutors]);
         }
@@ -63,7 +63,7 @@ class GroupsController extends Controller
     public function store(CreateGroupRequest $request,$location)
     {
         $group = new Group($request->all());
-        $group->user_id = $request->get('user_id');
+        //$group->user_id = $request->get('user_id');
         $group->location_id = $request->get('location');
         $group->save();
 
