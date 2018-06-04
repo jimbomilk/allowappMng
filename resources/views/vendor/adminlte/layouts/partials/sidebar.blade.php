@@ -57,15 +57,16 @@
                 <a href="{{ url('photos') }}">
                     <i class='fa fa-camera'></i> <span>{{ trans('labels.photos') }}</span></a></li>
 
-            <!--
+
             <li class="treeview">
-                <a href="#"><i class='fa fa-link'></i> <span>Multinivel</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><i class='fa fa-link'></i> <span>{{ trans('labels.historial') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a href="#">Nivel2</a></li>
-                    <li><a href="#">Nivel2</a></li>
+                    <li><a href="#">Por alumnos</a></li>
+                    <li><a href="#">Por responsable</a></li>
+                    <li><a href="#">Por foto</a></li>
                 </ul>
             </li>
-            -->
+
         </ul><!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->
