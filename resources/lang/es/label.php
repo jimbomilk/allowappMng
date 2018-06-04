@@ -47,11 +47,11 @@ return [
     'persons.name' => 'Nombre',
     'persons.group_id' => 'Clase',
     'persons.photo' => 'Foto',
-    'persons.show' => 'Tutores',
+    'persons.show' => 'Responsables',
     'persons.rightholders' => 'Tutores',
 
     // RIGHTHOLDERS
-    'rightholders' => 'Tutor',
+    'rightholders' => 'Responsables',
     'rightholders.name' => 'Nombre del tutor',
     'rightholders.person' => 'Nombre del alumno',
     'rightholders.title' => 'Relación',

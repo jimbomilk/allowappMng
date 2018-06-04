@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.imagen')
 @section('content')
 
 <div class="row">
