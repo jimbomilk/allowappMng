@@ -64,6 +64,12 @@ class Photo extends General
         return $this->group->path.'/'.$this->table.'/'.basename(urldecode($data->remoteSrc));
     }
 
+    public function getPhotoFinalpathAttribute()
+    {
+        $data = json_decode($this->data);
+        return $this->group->path.'/'.$this->table.'/'.basename(urldecode($data->src));
+    }
+
     public function getPeopleAttribute(){
         //return $this->hasmany('App\Face');
         $data = json_decode($this->data);
@@ -183,14 +189,23 @@ class Photo extends General
 
     }
 
+    public function getUrlfinalAttribute(){
+
+        return  Storage::disk('s3')->temporaryUrl($this->getPhotoFinalpathAttribute(),Carbon::now()->addMinutes(5));
+
+
+    }
+
     public function pendingRightholders(){
         $data = json_decode($this->data);
         $total = 0;$processed=0;
-        foreach($data->people as $person) {
-            foreach ($person->rightholders as $rh) {
-                $total++;
-                if ($rh->status == Status::RH_PROCESED)
-                    $processed++;
+        if (isset($data->people)) {
+            foreach ($data->people as $person) {
+                foreach ($person->rightholders as $rh) {
+                    $total++;
+                    if ($rh->status == Status::RH_PROCESED)
+                        $processed++;
+                }
             }
         }
         return  $processed."/".$total;

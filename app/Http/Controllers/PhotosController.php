@@ -61,10 +61,8 @@ class PhotosController extends Controller
         $photo->user_id = $request->user()->id;
         $photo->group_id = $request->get('group_id');
         $photo->save();
-        $filename = $request->saveFile('origen',$photo->path);
-        $workingfile = $request->saveWorkFile('origen',$photo->path);
-
-
+        $filename = $request->saveWatermarkFile('origen',$photo->path,600,'final');
+        $workingfile = $request->saveWatermarkFile('origen',$photo->path,350,'working');
 
         $group = Group::find($request->get('group_id'));
         $sharing = [];
