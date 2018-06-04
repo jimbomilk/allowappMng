@@ -3,6 +3,7 @@
 return [
     'users.name' => 'Introducir nombre',
     'users.email'=> 'Introducir email',
+    'users.phone'=> 'Introducir teléfono',
 
     'persons.name' => 'Introducir nombre',
 

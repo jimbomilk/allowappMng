@@ -19,6 +19,7 @@ return [
     'users.name'=>'Nombre',
     'users.email'=>'Email',
     'users.show' => 'Perfil',
+    'users.phone' => 'Teléfono',
     'users.password' => 'Introduzca su password',
     'users.password2' => 'Vuelva a introducirla',
 
