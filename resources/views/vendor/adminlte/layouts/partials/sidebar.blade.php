@@ -21,7 +21,7 @@
 
 
         <!-- Sidebar Menu -->
-        <ul class="sidebar-menu">
+        <ul class="sidebar-menu" data-widget="tree">
             <li class="header">{{ trans('labels.header') }}</li>
             <!-- Optionally, you can add icons to the links -->
 
@@ -37,33 +37,42 @@
                     <i class='fa fa-key'></i> <span>{{ trans('labels.users') }}</span></a></li>
             @endif
 
-            <li class="active">
-                <a href="{{ url('groups') }}">
-                    <i class='fa fa-users'></i> <span>{{ trans('labels.groups') }}</span></a>
 
+            <li class="active treeview">
+                <a href="{{ url('groups') }}"><i class='fa fa-address-book'></i>
+                    <span>{{ trans('labels.groups') }}</span>
+                    <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ url('persons') }}"><i class='fa fa-users'></i> <span>{{ trans('labels.byperson') }}</span></a></li>
+                    <li><a href="{{ url('rightholders') }}"><i class='fa fa-id-card-o'></i> <span>{{ trans('labels.rightholders') }}</span></a></li>
+                </ul>
             </li>
 
-            <li class="active">
-                <a href="{{ url('persons') }}">
-                    <i class='fa fa-users'></i> <span>{{ trans('labels.persons') }}</span></a>
-            </li>
 
-            <li class="active">
-                <a href="{{ url('rightholders') }}">
-                    <i class='fa fa-id-card-o'></i> <span>{{ trans('labels.rightholders') }}</span></a>
-            </li>
 
             <li class="active">
                 <a href="{{ url('photos') }}">
-                    <i class='fa fa-camera'></i> <span>{{ trans('labels.photos') }}</span></a></li>
+                    <i class='fa fa-camera'></i>
+                    <span>{{ trans('labels.photos') }}</span>
+                </a>
+            </li>
 
 
-            <li class="treeview">
-                <a href="#"><i class='fa fa-link'></i> <span>{{ trans('labels.historial') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
+            <li class="active treeview">
+                <a href="#"><i class='fa fa-history'></i> <span>{{ trans('labels.historial') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a href="#">Por alumnos</a></li>
-                    <li><a href="#">Por responsable</a></li>
-                    <li><a href="#">Por foto</a></li>
+                    <li><a href="#"><i class='fa fa-users'></i> <span>{{ trans('labels.byperson') }}</span></a></li>
+                    <li><a href="#"><i class='fa fa-id-card'></i> <span>{{ trans('labels.byrightholder') }}</span></a></li>
+                    <li><a href="#"><i class='fa fa-camera-retro'></i> <span>{{ trans('labels.byphoto') }}</span></a></li>
+                </ul>
+            </li>
+
+
+            <li class="active treeview">
+                <a href="#"><i class='fa fa-cogs'></i> <span>{{ trans('labels.templates') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li><a href="#"><i class='fa fa-envelope'></i> <span>{{ trans('labels.emails') }}</span></a></li>
+                    <li><a href="#"><i class='fa fa-balance-scale'></i> <span>{{ trans('labels.legal') }}</span></a></li>
                 </ul>
             </li>
 
