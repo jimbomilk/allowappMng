@@ -20,8 +20,7 @@ class GroupsController extends Controller
 
     public function index(Request $request)
     {
-        return view('common.index', ['searchable' => '1', 'name' => 'groups', 'set' => $request->user()->getGroups()]);
-
+        return view('common.index', ['searchable' => '1', 'name' => 'groups','hide_new'=>$request->user()->checkRole('admin'), 'set' => $request->user()->getGroups()]);
     }
 
     public function sendView(Request $request,$element=null)

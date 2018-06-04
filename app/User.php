@@ -37,6 +37,25 @@ class User extends Authenticatable
         }
     }
 
+    public function checkRole($reference)
+    {
+        $type = Auth::user()->profile->type;
+
+        if ($this->roleVal($type) > $this->roleVal($reference)) {
+            return true;
+        }
+        return false;
+    }
+
+    private function roleVal($rol){
+        switch($rol){
+            case "super":return 100;
+            case "admin":return 50;
+            case "owner":return 10;
+        }
+        return 1;
+    }
+
     public function getGroupTutors(){
         if ($this->profile->type == 'admin') {
             //dd($this);
@@ -94,7 +113,7 @@ class User extends Authenticatable
         return $count;
     }
 
-        public function getPathAttribute()
+    public function getPathAttribute()
     {
         return $this->location->path.'/'.$this->table;
     }
