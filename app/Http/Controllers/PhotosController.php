@@ -7,6 +7,7 @@ use App\Contract;
 use App\Face;
 use App\General;
 use App\Group;
+use App\Historic;
 use App\Http\Requests\CreatePhotoRequest;
 use App\Http\Requests\EditPhotoRequest;
 use App\Location;
@@ -235,7 +236,7 @@ class PhotosController extends Controller
                     $person = $photo->group->findPerson($faceID);
                     //dd($req->get('location'));
                     if (isset($person)) {
-                        $this->newContract($req->get('location'),$photo->id,$person->id);
+                        $this->newContract($req,$photo->id,$person->id);
                         $faceObj->person_id = $person->id;
 
                         $faceObj->save();
@@ -255,7 +256,7 @@ class PhotosController extends Controller
         }
     }
 
-    public function newContract($photoId,$personId){
+    public function newContract(Request $req, $photoId,$personId){
         // abrir la people y meterle una nueva persona
         $photo = Photo::find($photoId);
         $person = Person::find($personId);
@@ -277,8 +278,10 @@ class PhotosController extends Controller
             }
             $photo->data = json_encode($data);
             $photo->save();
-            return $photo->data;
 
+
+
+            return $photo->data;
         }
     }
 
@@ -293,6 +296,7 @@ class PhotosController extends Controller
             $photo->data = json_encode($data);
             $photo->save();
             return $data->people;
+
         }
 
 
@@ -311,7 +315,7 @@ class PhotosController extends Controller
 
     public function addContract(Request $req,$location,$photo_id,$person_id){
 
-        $this->newContract($photo_id,$person_id);
+        $this->newContract($req,$photo_id,$person_id);
         return back();
     }
 
@@ -330,6 +334,8 @@ class PhotosController extends Controller
                     Mail::to($rh->email)->queue(new RequestSignature($rhp, $email_text, $req->user()->email, $photo->getData('remoteSrc')));
                     //Log::debug('email:'.$ret);
                     $count++;
+                    $h = new Historic();
+                    $h->register($req->user()->id,"Solicitud de consentimiento enviada a ". $rh->person->name,$photo->id,$rh->person->id, $rh->id);
                 }
 
             }

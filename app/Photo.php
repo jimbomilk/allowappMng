@@ -37,6 +37,11 @@ class Photo extends General
         return $this->hasMany('App\RightholderPhoto');
     }
 
+    public function getHistoric(){
+        return Historic::where('photo_id',$this->id)->orderBy('created_at')->get();
+
+    }
+
 
     public function getSharingAsText(){
         $text = ": ";
@@ -121,7 +126,7 @@ class Photo extends General
     {
         $localoffset = Carbon::now()->offsetHours;
         $created = Carbon::parse($this->created_at);
-        $ret = $created->addHours($localoffset)->format('d-M-Y, H:m');
+        $ret = $created->addHours($localoffset)->format('d-M-Y, H:i');
         return $ret;
     }
 
@@ -250,5 +255,8 @@ class Photo extends General
         return Share::load($route,$this->name)->$share();
 
     }
+
+
+
 
 }

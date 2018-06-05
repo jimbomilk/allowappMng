@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Share;
 use Illuminate\Database\Eloquent\Model;
 use Waavi\UrlShortener\Facades\UrlShortener;
@@ -26,5 +27,24 @@ class Rightholder extends Model
         return $route;
     }
 
+    public function getHistoric($personId=null,$photoId=null){
+        if ($photoId == null && $personId==null){
+            return Historic::where(['rightholder_id',$this->id])->orderBy('created_at')->get();
+        }
+        else if ($photoId == null){
+            return Historic::where([['rightholder_id',$this->id],['person_id',$personId]])->orderBy('created_at')->get();
+        }
+
+        return Historic::where([['rightholder_id',$this->id],['photo_id',$photoId]])->orderBy('created_at')->get();
+
+    }
+
+    public function getConsentDateAttribute(){
+
+        $localoffset = Carbon::now()->offsetHours;
+        $created = Carbon::parse($this->consent_date);
+        $ret = $created->addHours($localoffset)->format('d-M-Y, H:i');
+        return $ret;
+    }
 
 }

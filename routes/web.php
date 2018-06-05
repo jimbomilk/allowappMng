@@ -26,13 +26,16 @@ Route::group([
 
     Route::get('historic/rightholders', 'HistoricController@indexRightholders');
     Route::get('historic/rightholders/show/{id}', 'HistoricController@showRightholder');
+    Route::post('historic/emails',['uses' => 'HistoricController@emails']);
 
 
 
     Route::resource('rightholders', 'RightholdersController');
     Route::get('rightholders/consentimientos/all', ['uses'=>'RightholdersController@consentimientos']);
     Route::get('rightholders/consentimientos/{id}', ['uses'=>'RightholdersController@consentimientos']);
-    Route::post('rightholders/emails',['uses' => 'RightholdersController@emails']);
+    Route::post('rightholders/emails/byperson',['uses' => 'RightholdersController@emailsPerson']);
+    Route::post('rightholders/emails/byphoto',['uses' => 'RightholdersController@emailsPhoto']);
+    Route::post('rightholders/emails/byrightholder',['uses' => 'RightholdersController@emailsRightholder']);
 
     Route::get('groups/publicationsites/{id}', 'PublicationsitesController@index');
     Route::resource('publicationsites', 'PublicationsitesController');

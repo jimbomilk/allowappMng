@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Historic;
 use App\Person;
 use App\Photo;
 use App\PhotoData;
@@ -38,8 +39,8 @@ class LinkController extends Controller
         $userId = $req->get('user_id');
         $personId = $req->get('person_id');
         $rightholderId = $req->get('rightholder_id');
-
         $dni = $req->get('dni');
+
         $resToken = Token::generate($photoId,$userId,$personId,$rightholderId);
         if (hash_equals($resToken,$token)){
             $photo = Photo::find($photoId);
@@ -55,6 +56,10 @@ class LinkController extends Controller
                         $photoData->status = Status::STATUS_PROCESED;
                     $photo->data = json_encode($photoData);
                     $photo->save();
+
+                    $h = new Historic();
+                    $h->register($req->user()->id,"Solicitud recibida con DNI :".$dni." y contine los siguientes permisos: ".json_encode($sharing),$photo->id,$personId, $rightholderId);
+
                     return view('pages.photook',['link'=>$photo->link]);
                 }else{
                     return view('pages.errordni',['link'=>URL::previous()]);
@@ -113,6 +118,10 @@ class LinkController extends Controller
                     $rightholder->consent = json_encode($sharing);
                     $rightholder->consent_date = Carbon::now();
                     $rightholder->save();
+
+                    $h = new Historic();
+                    $h->register($req->user()->id,"Solicitud recibida con DNI :".$dni." y contiene los siguientes permisos de valided anual: ".json_encode($sharing),null,$rightholder->person->id, $rightholderId);
+
                     return view('pages.photook',['link'=>$rightholder->link]);
                 }else{
                     return view('pages.errordni',['link'=>URL::previous()]);

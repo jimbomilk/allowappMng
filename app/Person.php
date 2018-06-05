@@ -70,4 +70,9 @@ class Person extends General
         return $photos;
     }
 
+    public function getHistoric($photoId){
+        return Historic::where([['person_id',$this->id],['photo_id',$photoId]])->orderBy('created_at')->get();
+
+    }
+
 }
