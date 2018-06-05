@@ -21,7 +21,7 @@
                 <div class="row">
                     @foreach($element->people as $person)
                     <div class="col-sm-6">
-                        <span><i class='fa fa-users'></i></span> {{$person->name}}
+                        <span><i class='fa fa-users'></i></span> {{\App\Person::find($person->id)->name}}
                     </div>
                     @endforeach
                 </div>
