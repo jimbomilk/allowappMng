@@ -9,7 +9,7 @@ Route::get('/', function(){
 // Customer routes
 
 Route::group([
-    'domain' => '{location}.allowapp.test',
+    'domain' => '{location}.allowapp.eu',
     'middleware' => ['auth','location']], function ($location) {
 
     Route::resource('/', 'HomeController');
