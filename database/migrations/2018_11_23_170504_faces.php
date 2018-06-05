@@ -9,7 +9,7 @@ class Faces extends Migration
     /**
      * Run the migrations.
      *
-     * @return void try
+     * @return void
      */
     public function up()
     {
