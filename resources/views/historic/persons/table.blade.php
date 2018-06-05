@@ -15,7 +15,9 @@
             <td>{{$element->name}}</td>
             <td>{!! Html::image($element->photo, 'photo',array( 'width' => 100, 'height' => 100 )) !!}</td>
             <td>
-                @include("common.controls.btn_other",array('var'=>$element,'route'=>'show','label'=>'request', 'onlyicon'=>'true','small'=>'true','icon'=>'glyphicon-download-alt'))
+                <div class="col-sm-4">
+                <a href="{{ url(str_replace(".","/",$name)."/show/$element->id") }}" class="btn-sm btn-warning" title="{{trans("label.$name")}}"><span class="glyphicon glyphicon-download-alt"></span> </a>
+                </div>
             </td>
 
 

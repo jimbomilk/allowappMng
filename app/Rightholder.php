@@ -9,6 +9,7 @@ use Waavi\UrlShortener\Facades\UrlShortener;
 class Rightholder extends Model
 {
     protected $fillable = ['name','relation','email','phone','person_id'];
+    static $searchable = ['name','email','phone'];
 
     public function person(){
         return $this->belongsTo('App\Person');

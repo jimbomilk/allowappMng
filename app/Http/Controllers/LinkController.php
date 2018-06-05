@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Person;
 use App\Photo;
 use App\PhotoData;
 use App\Rightholder;
@@ -14,32 +15,32 @@ use Illuminate\Support\Facades\URL;
 class LinkController extends Controller
 {
 
-    public function link($photoId,$owner,$name,$phone,$rhname,$rhphone,$token)
+    public function link($photoId,$userId,$personId,$rightholderId,$token)
     {
-        $resToken = Token::generate($photoId,$owner,$name,$phone,$rhname,$rhphone);
+        $resToken = Token::generate($photoId,$userId,$personId,$rightholderId);
 
         if (hash_equals($resToken,$token)) {
             $photo = Photo::find($photoId);
+            $person = Person::find($personId);
             if (isset($photo)) {
                 $sharing = $photo->getData('sharing');
-                return view('pages.photo', ['name' => 'response', 'photo' => $photo, 'owner' => $owner, 'person_name' => $name, 'person_phone' => $phone, 'rhname' => $rhname, 'rhphone' => $rhphone, 'sh' => $sharing, 'token' => $token]);
+                return view('pages.photo', ['name' => 'response', 'photo_id' => $photo->id, 'url'=>$photo->url , 'user_id' => $userId, 'person_id' => $person->id, 'person_name' => $person->name, 'rightholder_id' => $rightholderId, 'sh' => $sharing, 'token' => $token]);
             }
         }
 
-        return view('pages.error',['photo'=>$photoId,'phone'=>$phone,'token'=>$token]);
+        return view('pages.error');
     }
 
     public function response(Request $req)
     {
         $token= $req->get('token');
         $photoId = $req->get('photo');
-        $owner = $req->get('owner');
-        $name = $req->get('name');
-        $phone = $req->get('phone');
-        $rhname = $req->get('rhname');
-        $rhphone = $req->get('rhphone');
+        $userId = $req->get('user_id');
+        $personId = $req->get('person_id');
+        $rightholderId = $req->get('rightholder_id');
+
         $dni = $req->get('dni');
-        $resToken = Token::generate($photoId,$owner,$name,$phone,$rhname,$rhphone);
+        $resToken = Token::generate($photoId,$userId,$personId,$rightholderId);
         if (hash_equals($resToken,$token)){
             $photo = Photo::find($photoId);
             if (isset($photo)){
@@ -49,7 +50,7 @@ class LinkController extends Controller
                     $sharing[]=[$share->name=>(int)$req->get($share->name,'0')];
                 }
                 $photoData  = new PhotoData($photo->data);
-                if ($rh = $photoData->setRightholderSharing($dni,$rhphone,$sharing)){
+                if ($rh = $photoData->setRightholderSharing($dni,$rightholderId,$sharing)){
                     if ($photoData->allRightholdersProcessed())
                         $photoData->status = Status::STATUS_PROCESED;
                     $photo->data = json_encode($photoData);

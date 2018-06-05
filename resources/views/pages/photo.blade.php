@@ -22,17 +22,15 @@
             {!! Form::open(['route'=> 'photo.link.response']) !!}
 
             @include("common.controls.input_hidden",['var'=>'token','val'=>$token])
-            @include("common.controls.input_hidden",['var'=>'photo','val'=>$photo->id])
-            @include("common.controls.input_hidden",['var'=>'owner','val'=>$owner])
-            @include("common.controls.input_hidden",['var'=>'name','val'=>$person_name])
-            @include("common.controls.input_hidden",['var'=>'phone','val'=>$person_phone])
-            @include("common.controls.input_hidden",['var'=>'rhname','val'=>$rhname])
-            @include("common.controls.input_hidden",['var'=>'rhphone','val'=>$rhphone])
+            @include("common.controls.input_hidden",['var'=>'photo','val'=>$photo_id])
+            @include("common.controls.input_hidden",['var'=>'user_id','val'=>$user_id])
+            @include("common.controls.input_hidden",['var'=>'person_id','val'=>$person_id])
+            @include("common.controls.input_hidden",['var'=>'rightholder_id','val'=>$rightholder_id])
 
             <div class="panel col-md-12">
                 <div  class="row" style="margin-top: 10px">
                     <div class="col-sm-5">
-                        <img class="img-responsive center" src="{{$photo->url}}">
+                        <img class="img-responsive center" src="{{$url}}">
                     </div>
 
 

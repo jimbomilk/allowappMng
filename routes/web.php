@@ -49,11 +49,15 @@ Route::group([
     Route::resource('persons', 'PersonsController');
     Route::resource('locations', 'LocationsController');
     Route::get('historic/persons', 'HistoricController@indexPersons');
+    Route::get('historic/persons/show/{id}', 'HistoricController@showPerson');
+
     Route::get('historic/photos', 'HistoricController@indexPhotos');
+    Route::get('historic/photos/show/{id}', 'HistoricController@showPhoto');
+
     Route::get('historic/rightholders', 'HistoricController@indexRightholders');
-    Route::get('historic.rightholders/show/{id}', 'HistoricController@showRightholder');
-    Route::get('historic.photos/show/{id}', 'HistoricController@showPhoto');
-    Route::get('historic.persons/show/{id}', 'HistoricController@showPerson');
+    Route::get('historic/rightholders/show/{id}', 'HistoricController@showRightholder');
+
+
 
     Route::resource('rightholders', 'RightholdersController');
     Route::get('rightholders/consentimientos/all', ['uses'=>'RightholdersController@consentimientos']);
@@ -75,7 +79,7 @@ Route::group([
 
 Route::group(['middleware' => ['web']], function () {
 
-Route::get('photo/{id}/owner/{owner}/name/{name}/phone/{phone}/rhname/{rhname}/rhphone/{rhphone}/{token}','LinkController@link')->name('photo.link')/*->middleware('throttle:5,5')*/;
+Route::get('photo/{id}/{user}/{person}/{rightholder}/{token}','LinkController@link')->name('photo.link')/*->middleware('throttle:5,5')*/;
 Route::post('photo/response','LinkController@response')->name('photo.link.response')/*->middleware('throttle:5,5')*/;
 
 Route::get('photo/shared/{id}/token/{token}','LinkController@shared')->name('photo.link.shared');

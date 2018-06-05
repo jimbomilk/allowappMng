@@ -7,7 +7,7 @@ use Waavi\UrlShortener\Facades\UrlShortener;
 
 class RightholderPhoto extends Model
 {
-    protected $fillable = ['owner','name','rhphone','rhname','rhemail','link','sharing'];
+    protected $fillable = ['link','status'];
 
 
 
@@ -16,53 +16,41 @@ class RightholderPhoto extends Model
         return $this->belongsTo('App\Photo','photo_id','id');
     }
 
+    public function person()
+    {
+        return $this->belongsTo('App\Person','person_id','id');
+    }
+
+    public function rightholder()
+    {
+        return $this->belongsTo('App\Rightholder','rightholder_id','id');
+    }
+
     public function getLink(){
-        $phone = ($this->phone=="")?"none":$this->phone;
-        $token = Token::generate($this->photo_id,$this->owner,$this->name,$phone,$this->rhname,$this->rhphone);
-        $route = route('photo.link', ['id' => $this->photo_id,'owner'=>$this->owner, 'name'=>$this->name, 'phone'=>$phone,'rhname'=>$this->rhname, 'rhphone' => $this->rhphone,'token' => $token],true);
+        $token = Token::generate($this->photo_id,$this->user_id,$this->person_id,$this->rightholder_id);
+        $route = route('photo.link', ['id' => $this->photo_id,'user'=>$this->user_id, 'person'=>$this->person_id, 'rightholder'=>$this->rightholder_id,'token' => $token],true);
         return  UrlShortener::shorten($route);
 
     }
 
     public function setValues($photo,$person,$rh){
-        $generateLink = false;
-        if($this->photo_id  != $photo->id)
-        {
-            $this->photo_id  = $photo->id;
-            $generateLink=true;
-        }
-        $owner = $photo->getData('owner');
-        if ($this->owner != $owner){
-            $this->owner     = $owner;
-            $generateLink=true;
-        }
-        if($this->name != $person->name){
-            $this->name      = $person->name;
-            $generateLink=true;
-        }
+        $this->user_id = $photo->user_id;
+        $this->photo_id = $photo->id;
+        $this->status = Status::RH_NOTREQUESTED;
+        $this->person_id = $person->id;
+        $this->rightholder_id = $rh->id;
+        $this->link = $this->getLink();
+    }
 
-        if($this->phone != $person->phone){
-            $this->phone     = $person->phone;
-            $generateLink=true;
-        }
+    public function getNameAttribute(){
+        return $this->person->name;
+    }
 
-        if($this->rhphone != $rh->phone){
-            $this->rhphone     = $rh->phone;
-            $generateLink=true;
-        }
+    public function getRhnameAttribute(){
+        return $this->rightholder->name;
+    }
 
-        if($this->rhname != $rh->name){
-            $this->rhname     = $rh->name;
-            $generateLink=true;
-        }
-
-        if($this->rhemail != $rh->email){
-            $this->rhemail     = $rh->email;
-            $generateLink=true;
-        }
-
-        $this->status    = 0;
-        if ($generateLink)
-            $this->link      = $this->getLink();
+    public function getRhrelationAttribute(){
+        return $this->rightholder->relation;
     }
 }

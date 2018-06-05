@@ -38,10 +38,11 @@ class PhotoData {
         $this->log = $data->log;
 
     }
-    public function setRightholderSharing($documentid,$rhphone,$sharing){
+    public function setRightholderSharing($documentid,$rhId,$sharing){
         foreach($this->people as $person){
             foreach($person->rightholders as $rh){
-                if ($rh->documentId==$documentid && $rh->phone == $rhphone){
+                $rightholder = Rightholder::find($rh->id);
+                if (isset($rightholder) && $rightholder->documentId == $documentid){
                     $rh->sharing = $sharing;
                     $rh->status = Status::RH_PROCESED; //procesed
                     return $rh;

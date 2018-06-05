@@ -13,6 +13,7 @@ class Photo extends General
 
     protected $table = 'photos';
     protected $path = 'photo';
+    static $searchable = ['label'];
 
     //id,photo,location_id
     protected $fillable = ['label','data','group_id'];
@@ -35,6 +36,7 @@ class Photo extends General
     public function rightholderphotos(){
         return $this->hasMany('App\RightholderPhoto');
     }
+
 
     public function getSharingAsText(){
         $text = ": ";
@@ -119,7 +121,7 @@ class Photo extends General
     {
         $localoffset = Carbon::now()->offsetHours;
         $created = Carbon::parse($this->created_at);
-        $ret = $created->addHours($localoffset)->format('d-M H:m');
+        $ret = $created->addHours($localoffset)->format('d-M-Y, H:m');
         return $ret;
     }
 

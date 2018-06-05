@@ -13,9 +13,9 @@ class Token extends Model
      */
 
 
-    public static function generate($photoId,$owner,$personname,$personphone,$rhname, $rhphone)
+    public static function generate($photoId,$userId,$personId,$rightholderId)
     {
-        return hash_hmac('sha256', $owner.$photoId.$personname.$personphone.$rhname.$rhphone, config('allowapi_key'));
+        return hash_hmac('sha256', $photoId.$userId.$personId.$rightholderId, config('allowapi_key'));
 
     }
 

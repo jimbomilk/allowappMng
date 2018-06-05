@@ -2,6 +2,8 @@
     <tr>
         <th>#</th>
         <th>{{Lang::get("label.$name.name")}}</th>
+        <th>{{Lang::get("label.$name.email")}}</th>
+        <th>{{Lang::get("label.$name.phone")}}</th>
         <th>{{Lang::get("label.$name.relation")}}</th>
         <th>{{Lang::get("label.$name.consents")}}</th>
         <th></th>
@@ -12,6 +14,8 @@
         <tr data-id="{{$element->id}}">
             <td>{{$element->id}}</td>
             <td>{{$element->name}}</td>
+            <td>{{$element->email}}</td>
+            <td>{{$element->phone}}</td>
             <td>{{$element->relation}} de {{$element->person->name}}</td>
             <td> @if($element->status==\App\Status::RH_PROCESED)
                     @foreach(json_decode($element->consent) as $share)
@@ -22,14 +26,12 @@
                 @else
                     <span style="color: red " aria-hidden="true">no recibido</span>
                 @endif
-
             </td>
-
             <td>
-                @include("common.controls.btn_other",array('var'=>$element,'route'=>'show','label'=>'request', 'onlyicon'=>'true','small'=>'true','icon'=>'glyphicon-download-alt'))
+                <div class="col-sm-4">
+                <a href="{{ url(str_replace(".","/",$name)."/show/$element->id") }}" class="btn-sm btn-warning" title="{{trans("label.$name")}}"><span class="glyphicon glyphicon-download-alt"></span> </a>
+                </div>
             </td>
-
-
         </tr>
     @endforeach
 

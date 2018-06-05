@@ -7,6 +7,7 @@
 
 
 @section('main-content')
+<div class="container">
 Todo el historico de la foto
 
 +

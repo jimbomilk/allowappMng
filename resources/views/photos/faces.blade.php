@@ -50,8 +50,8 @@
                 <div id="panel-detected" class="detected panel-body" style="padding: 8px" >
                     @foreach($element->people as $person)
                         <a href="#" class="faces-person" data-action="remove" data-personid="{{$person->id}}" data-imagenid="{{$element->id}}" style="margin: 2px;float: left">
-                            <img width="60px" height="60px" src="{{$person->photo}}">
-                            <div>{{$person->name}}</div>
+                            <img width="60px" height="60px" src="{{\App\Person::find($person->id)->photo}}">
+                            <div>{{\App\Person::find($person->id)->name}}</div>
                         </a>
                     @endforeach
                 </div>

@@ -15,8 +15,21 @@
                     <div class="panel-heading">
                         <div class="row">
                         <div class="col-md-6"><h4>{{trans("labels.$name")}}</h4></div>
-                        @if(!isset($hide_new) || !$hide_new)
                             <div class="col-md-6" style="text-align:right">
+                            @if (isset($searchable))
+                                {!! Form::model(Request::all(), array('url' => str_replace(".","/",$name), 'method' => 'GET', 'enctype' => 'multipart/form-data')) !!}
+                                <div  class="col-md-6" style="text-align:right">
+                                    {!! Form::text('search', null, ['class' => 'form-control', 'placeholder'=>trans("labels.search.$name")]) !!}
+
+                                </div>
+                                <div  class="col-md-2" >
+                                    <button type="submit" class="btn btn-default">{{trans('labels.search')}}</button>
+                                </div>
+                                {!! Form::close() !!}
+                            @endif
+
+                            @if(!isset($hide_new) || !$hide_new)
+
                                 @if(View::exists("$name.buttons"))
                                     @include("$name.buttons")
                                 @endif
@@ -24,9 +37,9 @@
                                 <a class="btn btn-info" href="{{ url("$name/create") }}" role="button">
                                     {{trans('labels.new')}} {{trans('label.'.$name)}}
                                 </a>
-
+                            @endif
                             </div>
-                        @endif
+
 
 
                         </div>

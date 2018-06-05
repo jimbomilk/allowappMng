@@ -13,6 +13,7 @@ use App\Location;
 use App\Mail\RequestSignature;
 use App\Person;
 use App\Photo;
+use App\Rightholder;
 use App\RightholderPhoto;
 use App\Status;
 use App\Token;
@@ -76,7 +77,7 @@ class PhotosController extends Controller
             'remoteSrc'=>$workingfile,
             'name'=>$photo->label,
             'src'=>$filename,
-            'owner'=>$request->user()->phone,
+            'owner'=>$request->user()->id,
             'status'=>Status::STATUS_CREADA,
             'timestamp'=>$photo->created_at,
             'sharing'=>$sharing,
@@ -151,16 +152,19 @@ class PhotosController extends Controller
 
         $photo = Photo::find($id);
         $people = $photo->getData('people');
+
         $rhs = array();
         //RightholderPhoto::where('photo_id', $photo->id)->delete();
         foreach($people as $person){
             foreach($person->rightholders as $rh){
-                $rhphoto = RightholderPhoto::where([['photo_id', $photo->id],['name',$person->name],['phone',$person->phone],['rhphone',$rh->phone]])->first();
+
+                $rhphoto = RightholderPhoto::where([['user_id', $photo->user_id],['photo_id', $photo->id],['person_id',$person->id],['rightholder_id',$rh->id]])->first();
                 if (!isset($rhphoto)) {
                     $rhphoto = new RightholderPhoto();
+                    $rhphoto->setValues($photo,$person,$rh);
+                    $rhphoto->save();
                 }
-                $rhphoto->setValues($photo,$person,$rh);
-                $rhphoto->save();
+
                 array_push($rhs,$rhphoto);
             }
         }
@@ -262,17 +266,12 @@ class PhotosController extends Controller
             $rightholders = array();
             foreach($person->rightholders as $rightholder){
                 $rh_data = ['id'=>$rightholder->id,
-                    'documentId'=>$rightholder->documentId,
-                    'relation'=>$rightholder->relation,
-                    'name'=>$rightholder->name,
-                    'phone'=>$rightholder->phone,
-                    'email'=>$rightholder->email,
                     'person_id'=>$person->id,
                     'location_id'=>$rightholder->location->id,
                     'status'=>0];
                 $rightholders[] = $rh_data;
             }
-            $person_data = ['id'=>$person->id,'name'=>$person->name,'phone'=>'','photo'=>$person->photo,'rightholders'=>$rightholders];
+            $person_data = ['id'=>$person->id,'rightholders'=>$rightholders];
             if (isset($data->people)) {
                 $data->people[] = $person_data;
             }
@@ -326,13 +325,13 @@ class PhotosController extends Controller
 
         try {
             foreach ($photo->rightholderphotos as $rhp) {
-                //Log::debug('antes email' . json_encode($rhp));
-                if ($rhp->rhemail && $rhp->rhemail != "") {
-
-                    $ret = Mail::to($rhp->rhemail)->queue(new RequestSignature($rhp, $email_text,$req->user()->email,$photo->getData('remoteSrc')));
+                $rh = Rightholder::find($rhp->rightholder_id);
+                if (isset($rh) && $rh->email != "") {
+                    Mail::to($rh->email)->queue(new RequestSignature($rhp, $email_text, $req->user()->email, $photo->getData('remoteSrc')));
                     //Log::debug('email:'.$ret);
                     $count++;
                 }
+
             }
         }catch (Exception $e){
             Session::flash('message',"¡Error!, se ha producido un error en el envio, inténtelo más tarde. Detalles:".$e->getMessage());
@@ -340,7 +339,14 @@ class PhotosController extends Controller
         }
         $photo->setData('status',Status::STATUS_PENDING);
         $photo->save();
-        Session::flash('message',"¡Felicidades!, se han enviado correctamente ".$count." emails solicitando el consentimiento.");
+
+        if ($count >0)
+            Session::flash('message',"¡Felicidades!, se han enviado correctamente ".$count." emails solicitando el consentimiento.");
+        else {
+            Session::flash('message',"¡Error!, se ha producido un error en el envio, inténtelo más tarde.");
+            return redirect()->back();
+        }
+
 
         return redirect('photos');
 

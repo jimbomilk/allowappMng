@@ -64,44 +64,71 @@ class User extends Authenticatable
         }
     }
 
-    public function getRightholders(){
+    public function getRightholders($search = null){
 
+        $set = null;
+        // Se selecciona el subconjunto de trabajo...
         if ($this->profile->type == 'admin') {
-            //dd($this);
-            return $this->location->rightholders;
+            $set =  $this->location->rightholders();
         }
         else {
-
-            return $this->location->rightholders->whereIn('person_id', $this->getGroups()->pluck('id'));
+            $set = $this->location->rightholders()->whereIn('person_id', $this->getGroups()->pluck('id'));
         }
+        // Se aplican los search...
+        if (isset($search) and $search != "") {
+            $where = General::getRawWhere(Rightholder::$searchable,$search);
+            $set = $set->whereRaw($where);
+        }
+
+        return $set->paginate(15);
     }
 
-    public function getPersons(){
+    public function getPersons($search = null){
+        $set = null;
 
+        // Se selecciona el subconjunto de trabajo...
         if ($this->profile->type == 'admin') {
-            return $this->location->persons;
-            }
-        else {
-            //dd($this->location->groups->where('user_id', $this->id));
-            return $this->location->persons->whereIn('group_id', $this->getGroups()->pluck('id'));
+            $set =  $this->location->persons();
         }
+        else {
+            $set =  $this->location->persons()->whereIn('group_id', $this->getGroups()->pluck('id'));
+        }
+
+        // Se aplican los search...
+        if (isset($search) and $search != "") {
+            //dd('hola');
+            $where = General::getRawWhere(Person::$searchable,$search);
+            $set = $set->whereRaw($where);
+        }
+        //dd($set);
+        return $set->paginate(15);
     }
 
-    public function getPhotos($all=false){
+    public function getPhotos($search = null,$all=false){
 
+        $set = null;
+
+        // Se selecciona el subconjunto de trabajo...
         if ($this->profile->type == 'admin' || $this->profile->type == 'super'  ) {
-            return $all?$this->location->photos:$this->location->photos()->orderBy('created_at','desc')->paginate(15);
+            $set =  !$all?$this->location->photos():$this->location->photos()->orderBy('created_at','desc');
         }
         else {
             //dd($this->location->groups->where('user_id', $this->id));
-            return $all?$this->location->photos->whereIn('group_id', $this->getGroups()->pluck('id')):$this->location->photos()->whereIn('group_id', $this->getGroups()->pluck('id'))->orderBy('created_at','desc')->paginate(15);
+            $set = $all?$this->location->photos()->whereIn('group_id', $this->getGroups()->pluck('id')):$this->location->photos()->whereIn('group_id', $this->getGroups()->pluck('id'))->orderBy('created_at','desc');
         }
+        // Se aplican los search...
+        if (isset($search) and $search != "") {
+            //dd($search);
+            $where = General::getRawWhere(Photo::$searchable,$search);
+            $set = $set->whereRaw($where);
+        }
+        return $set->paginate(15);
     }
 
     public function countPhotosByStatus($status){
         $count =0;
 
-        $photos = $this->getPhotos(true);
+        $photos = $this->getPhotos(null,true);
         foreach($photos as $photo){
             $data = json_decode($photo->data);
             if($data->status==$status){
@@ -117,7 +144,7 @@ class User extends Authenticatable
     }
 
     public function links(){
-        return Link::where('owner',$this->phone);
+        return RightholderPhoto::where('user_id',$this->id);
     }
 
 }

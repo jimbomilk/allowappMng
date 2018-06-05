@@ -111,4 +111,20 @@ return [
     //Response
     'response.dni'=>'Introduzca su DNI',
 
+    //HISTORIC
+
+    'historic.photos.name' => 'Etiqueta',
+    'historic.photos.date' => 'Fecha',
+    'historic.photos.people' => 'Personas identificadas',
+    'historic.persons.group_id' => 'Clase',
+    'historic.persons.name' => 'Nombre',
+    'historic.persons.photo' => 'Foto',
+    'historic.rightholders' => 'Mostrar historial de este responsable',
+    'historic.photos' => 'Mostrar historial de esta fotografía',
+    'historic.persons' => 'Mostrar historial de esta persona',
+    'historic.rightholders.name' => 'Nombre',
+    'historic.rightholders.email' => 'Email',
+    'historic.rightholders.phone' => 'Teléfono',
+    'historic.rightholders.relation' => 'Relación',
+    'historic.rightholders.consents' => 'Consentimientos',
 ];

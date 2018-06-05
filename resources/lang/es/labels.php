@@ -8,7 +8,7 @@ return [
     'groups' => 'Clases',
     'persons' => 'Alumnos',
     'photos' => 'Fotos',
-    'rightholders' => 'Tutores',
+    'rightholders' => 'Responsables',
     'contracts'=> 'Contratos',
     'edit'=>'Editar',
     'delete'=>'Borrar',
@@ -50,4 +50,12 @@ return [
     'templates'=> 'Plantillas',
     'emails'=> 'Emails',
     'legal'=> ' Textos legales',
+
+    'historic.photos' => 'Historial de fotografías',
+    'historic.persons' => 'Historial por persona',
+    'historic.rightholders' => 'Historial de Responsables',
+    'search.historic.photos' => 'Búsqueda por etiqueta',
+    'search.historic.persons' => 'Búsqueda por nombre',
+    'search.historic.rightholders' => 'Búsqueda por nombre,email,teléfono',
+    'search' => ' Buscar',
 ];

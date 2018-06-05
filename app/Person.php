@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Person extends General
@@ -9,6 +10,7 @@ class Person extends General
     //id,name,group_id,location_id,photo,photo_id
     protected $table = 'persons';
     protected $path = 'person';
+    static $searchable = ['name'];
 
     protected $fillable = ['name','photo','group_id'];
 
@@ -46,8 +48,26 @@ class Person extends General
         return $this->group->path.'/'.$this->table.'/'.basename(urldecode($this->photo));
     }
 
-    public function sendEmails()
+    public function getCreatedAttribute()
     {
-
+        $localoffset = Carbon::now()->offsetHours;
+        $created = Carbon::parse($this->created_at);
+        $ret = $created->addHours($localoffset)->format('d-M-Y, H:m');
+        return $ret;
     }
+
+    public function getPhotosAttribute(){
+        $photos = Photo::all();
+        $photos = $photos->filter(function ($value){
+            $data = json_decode($value->data);
+            foreach($data->people as $person)
+            {
+                if ($person->id == $this->id)
+                    return true;
+            }
+            return false;
+        });
+        return $photos;
+    }
+
 }

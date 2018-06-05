@@ -34,7 +34,7 @@
 
                         @foreach($rhs as $rh)
                             <div class="col-xs-4">{{$rh->name}}</div>
-                            <div class="col-xs-4">{{$rh->rhname}}</div>
+                            <div class="col-xs-4">{{$rh->rhname}}({{$rh->rhrelation}})</div>
                             <div class="col-xs-4"><a target="_blank"  href="{{$rh->link}}">{{trans("label.$name.link")}}</a></div>
                         @endforeach
                     </div>
