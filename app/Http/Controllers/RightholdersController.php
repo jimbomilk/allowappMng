@@ -32,7 +32,7 @@ class RightholdersController extends Controller
         }
         else{
 
-            $set = $request->user()->getTutors();
+            $set = $request->user()->getRightholders();
             //return json_encode($set);
         }
 
@@ -97,7 +97,7 @@ class RightholdersController extends Controller
         else if(isset($person_id))
             $set =  Rightholder::where('person_id',$person_id)->get();
         else{
-            $set = $request->user()->getTutors();
+            $set = $request->user()->getRightholders();
         }
 
 
@@ -154,7 +154,7 @@ class RightholdersController extends Controller
         $count=0;
         try {
             if ($element == 'all'){
-                foreach ($req->user()->getTutors() as $rh){
+                foreach ($req->user()->getRightholders() as $rh){
                     $this->sendEmail($rh,$email_text,$req->user()->email);
                     $count++;
                 }

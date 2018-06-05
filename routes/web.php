@@ -48,6 +48,12 @@ Route::group([
     Route::resource('groups', 'GroupsController');
     Route::resource('persons', 'PersonsController');
     Route::resource('locations', 'LocationsController');
+    Route::get('historic/persons', 'HistoricController@indexPersons');
+    Route::get('historic/photos', 'HistoricController@indexPhotos');
+    Route::get('historic/rightholders', 'HistoricController@indexRightholders');
+    Route::get('historic.rightholders/show/{id}', 'HistoricController@showRightholder');
+    Route::get('historic.photos/show/{id}', 'HistoricController@showPhoto');
+    Route::get('historic.persons/show/{id}', 'HistoricController@showPerson');
 
     Route::resource('rightholders', 'RightholdersController');
     Route::get('rightholders/consentimientos/all', ['uses'=>'RightholdersController@consentimientos']);

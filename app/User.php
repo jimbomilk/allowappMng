@@ -64,7 +64,7 @@ class User extends Authenticatable
         }
     }
 
-    public function getTutors(){
+    public function getRightholders(){
 
         if ($this->profile->type == 'admin') {
             //dd($this);

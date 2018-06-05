@@ -65,9 +65,9 @@
             <li class="active treeview">
                 <a href="#"><i class='fa fa-history'></i> <span>{{ trans('labels.historial') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class='fa fa-users'></i> <span>{{ trans('labels.byperson') }}</span></a></li>
-                    <li><a href="#"><i class='fa fa-id-card'></i> <span>{{ trans('labels.byrightholder') }}</span></a></li>
-                    <li><a href="#"><i class='fa fa-camera-retro'></i> <span>{{ trans('labels.byphoto') }}</span></a></li>
+                    <li><a href="{{ url('historic/persons')}}"><i class='fa fa-users'></i> <span>{{ trans('labels.byperson') }}</span></a></li>
+                    <li><a href="{{ url('historic/rightholders')}}"><i class='fa fa-id-card'></i> <span>{{ trans('labels.byrightholder') }}</span></a></li>
+                    <li><a href="{{ url('historic/photos')}}"><i class='fa fa-camera-retro'></i> <span>{{ trans('labels.byphoto') }}</span></a></li>
                 </ul>
             </li>
 
