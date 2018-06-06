@@ -7,14 +7,14 @@ Route::get('/', function(){
 });*/
 
 // Customer routes
-if (env('APP_ENV') == 'local'){
+/*if (env('APP_ENV') == 'local'){
     $domain = '{location}.allowapp.test';
 }else{
     $domain = '{location}.allowapp.eu}';
-}
+/*}*/
 
 Route::group([
-    'domain' => $domain ,
+    'domain' => '{location}.allowapp.eu}' ,
     'middleware' => ['auth','location']], function ($location) {
 
     Route::resource('/', 'HomeController');
