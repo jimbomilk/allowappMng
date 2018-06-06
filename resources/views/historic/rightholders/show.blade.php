@@ -89,7 +89,7 @@
                 </div>
                 <div class="panel-body">
                     {!! Form::open(array('url' => 'historic/emails/byrightholder', 'method' => 'POST', 'enctype' => 'multipart/form-data')) !!}
-                    {!! Form::hidden('personId', $element->id) !!}
+                    {!! Form::hidden('rightholderId', $element->id) !!}
 
                     @include("common.controls.input_text",array('var'=>'to','val'=>$element->email))
                     @include("common.controls.input_text",array('var'=>'title','val'=>"Informe para $element->name"))

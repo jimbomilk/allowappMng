@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Mail\PersonEmail;
+use App\Mail\PhotoEmail;
+use App\Mail\RightholderEmail;
 use App\Person;
 use App\Photo;
 use App\Rightholder;
@@ -95,9 +97,74 @@ class HistoricController extends Controller
     }
 
     public function emailsPhoto(Request $req,$location)
-    {}
+    {
+        //return json_encode($req->all());
+        $photo = Photo::find($req->get('photoId'));
+        $to = $req->get('to');
+        $title = $req->get('title');
+        $email_text = $req->get('email');
+        //Log::debug('antes email');
+        $count=0;
+
+        try {
+            if (isset($photo) ) {
+                Mail::to($to)->queue(new PhotoEmail($photo,$title, $email_text, $req->user()->email));
+                //Log::debug('email:'.$ret);
+                $count++;
+            }
+
+        }catch (Exception $e){
+            Session::flash('message',"¡Error!, se ha producido un error en el envio, inténtelo más tarde. Detalles:".$e->getMessage());
+            return redirect()->back();
+        }
+
+        if ($count >0)
+            Session::flash('message',"¡Felicidades!, se han enviado correctamente ".$count." emails.");
+        else {
+            Session::flash('message',"¡Error!, se ha producido un error en el envio, inténtelo más tarde.");
+            return redirect()->back();
+        }
+
+
+        return redirect('historic/photos');
+
+
+    }
 
     public function emailsRightholder(Request $req,$location)
-    {}
+    {
+        //return json_encode($req->all());
+        $rh = Rightholder::find($req->get('rightholderId'));
+        $to = $req->get('to');
+        $title = $req->get('title');
+        $email_text = $req->get('email');
+        //Log::debug('antes email');
+        $count=0;
+
+        try {
+            if (isset($rh) ) {
+                Mail::to($to)->queue(new RightholderEmail($rh,$title, $email_text, $req->user()->email));
+                //Log::debug('email:'.$ret);
+                $count++;
+            }
+
+        }catch (Exception $e){
+            Session::flash('message',"¡Error!, se ha producido un error en el envio, inténtelo más tarde. Detalles:".$e->getMessage());
+            return redirect()->back();
+        }
+
+        if ($count >0)
+            Session::flash('message',"¡Felicidades!, se han enviado correctamente ".$count." emails.");
+        else {
+            Session::flash('message',"¡Error!, se ha producido un error en el envio, inténtelo más tarde.");
+            return redirect()->back();
+        }
+
+
+        return redirect('historic/rightholders');
+
+
+
+    }
 
 }

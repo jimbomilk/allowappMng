@@ -261,6 +261,7 @@ p img {
 .panel img{
     float: left;
     width: 200px;
+    height: auto;
     border-radius: 50%;
 }
 
@@ -274,7 +275,8 @@ p img {
 }
 .mini_panel img{
     float: left;
-    height: 150px;
+    width: 150px;
+
 }
 
 .square_photo img{

@@ -38,15 +38,11 @@
         <strong>#Fecha: </strong> {{$photo->created}}<br>
         <strong>#Etiqueta: </strong> {{$photo->label}}<br>
         <strong>#Responsable: </strong> {{$photo->user->name}}<br>
-
-        <p style="float:left;margin-top:12px;margin-left: 18px;font-size: 10px">
         <strong>#Acciones: </strong><br>
-        @foreach($element->getHistoric($photo->id) as $index=>$h)
-        {{$index+1}}.{{$h->created}} : {{$h->log}}<br>
-        @endforeach
+            @foreach($element->getHistoric($photo->id) as $index=>$h)
+                {{$index+1}}.{{$h->created}} : {{$h->log}}<br>
+            @endforeach
         </p>
-        </p>
-
         @endcomponent
     </td>
 @endforeach

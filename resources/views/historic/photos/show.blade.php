@@ -21,7 +21,7 @@
                     </div>
                     <div class="col-sm-6">
                         <h5><strong>#Id:</strong> {{$element->id}}</h5>
-                        <h5><strong>#Gestionada por :</strong> {{$element->user->name}}<h5>
+                        <h5><strong>#Gestionada por :</strong> {{$element->user->name}}</h5>
                         <h5><strong>#Etiqueta :</strong> {{$element->label}}</h5>
                         <h5><strong>#Curso :</strong> {{$element->group->name}}</h5>
                         <h5><strong>#Personas identificadas en la imagen:</strong></h5>
@@ -66,8 +66,8 @@
                     Envíar informe
                 </div>
                 <div class="panel-body">
-                    {!! Form::open(array('url' => 'historic/emails/byperson', 'method' => 'POST', 'enctype' => 'multipart/form-data')) !!}
-                    {!! Form::hidden('personId', $element->id) !!}
+                    {!! Form::open(array('url' => 'historic/emails/byphoto', 'method' => 'POST', 'enctype' => 'multipart/form-data')) !!}
+                    {!! Form::hidden('photoId', $element->id) !!}
 
                     @include("common.controls.input_text",array('var'=>'to','val'=>$destinatarios))
                     @include("common.controls.input_text",array('var'=>'title','val'=>"Informe de $element->name"))
