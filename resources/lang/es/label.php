@@ -90,7 +90,7 @@ return [
     'photos.origen' => 'Imagen',
 
 
-    //CONTRACTS
+    //CONTRACTS s
     'contracts' => 'Contrato',
     'contracts.person' => 'Alumno reconocido',
     'contracts.group' => 'Clase del Alumno',
