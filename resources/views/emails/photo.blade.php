@@ -9,8 +9,7 @@
 <strong>#Gestionada por :</strong> {{$element->user->name}}<br>
 <strong>#Etiqueta :</strong> {{$element->label}}<br>
 <strong>#Curso :</strong> {{$element->group->name}}<br>
-
-<h3><strong>#Personas identificadas en la imagen:</strong></h3>
+<strong>#Personas identificadas en la imagen:</strong>
     @foreach($element->people as $index=>$person)
         <strong>{{$index+1}}. {{\App\Person::find($person->id)->name}}</strong><br>
         @foreach(\App\Person::find($person->id)->rightholders as $rh)
@@ -22,12 +21,12 @@
                 @elseif($rh->status == \App\Status::RH_PROCESED)
                     activo:{{$rh->consentDate}}<br>{{json_encode($rh->consent)}}
                 @endif
-                <br>
+                <br><br>
         @endforeach
     @endforeach
 </div>
 <div style="float:left;margin-left: 20px">
-    <h3><strong>#Acciones:</strong></h3>
+    <br><h3><strong>#Acciones:</strong></h3>
     @foreach($element->getHistoric($element->id) as $index=>$h)
         {{$index+1}}. {{$h->created}} : {{$h->log}}<br>
     @endforeach

@@ -23,7 +23,7 @@
         }
     </style>
 
-    <table class="wrapper" width="100%" cellpadding="0" cellspacing="0">
+    <table class="wrapper" width="80%" cellpadding="0" cellspacing="0">
         <tr>
             <td align="center">
                 <table class="content" width="100%" cellpadding="0" cellspacing="0">

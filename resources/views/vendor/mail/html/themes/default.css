@@ -103,8 +103,9 @@ img {
 /* Header */
 
 .header {
-    padding: 25px 0;
+    padding: 10px 0;
     text-align: center;
+    width: 80%;
 }
 
 .header a {
@@ -130,7 +131,7 @@ p img {
     border-top: 1px solid #EDEFF2;
     margin: 0;
     padding: 0;
-    width: 100%;
+    width: 80%;
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
     -premailer-width: 100%;
@@ -275,7 +276,7 @@ p img {
 }
 .mini_panel img{
     float: left;
-    width: 150px;
+    width: 180px;
 
 }
 
