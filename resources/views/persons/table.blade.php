@@ -2,7 +2,6 @@
     <tr>
         <th>#</th>
         <th>{{Lang::get("label.$name.group_id")}}</th>
-        <th>{{Lang::get("label.$name.name")}}</th>
         <th>{{Lang::get("label.$name.rightholders")}}</th>
         <th></th>
 
@@ -10,12 +9,12 @@
 
     @foreach($set as $element)
         <tr data-id="{{$element->id}}">
-            <td><div style="width: 8vw">
+            <td><div class="person">
                     <img class="img-responsive" src={{$element->photo}} alt="imagen">
-
+                    <div>{{$element->name}}</div>
                 </div> </td>
             <th>{{$element->group->name}}</th>
-            <td>{{$element->name}}</td>
+
 
 
             <th>@include("common.controls.emphasis_label",array('var'=>$element->numRightholders,'color'=>($element->numRightholders>0)?'primary':'danger'))</th>

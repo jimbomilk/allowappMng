@@ -87,7 +87,7 @@
                     {!! Form::open(array('url' => 'historic/emails/byperson', 'method' => 'POST', 'enctype' => 'multipart/form-data')) !!}
                     {!! Form::hidden('personId', $element->id) !!}
 
-                    @include("common.controls.input_text",array('var'=>'to','val'=>implode(",",$element->rightholders->pluck('email')->toArray()).",".$element->email))
+                    @include("common.controls.input_text",array('var'=>'to','val'=>$destinatarios))
                     @include("common.controls.input_text",array('var'=>'title','val'=>"Informe de $element->name"))
                     @include("common.controls.input_textarea",array('var'=>'email','value'=>"Les adjunto informe de los datos de $element->name"))
 

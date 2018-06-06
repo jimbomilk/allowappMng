@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Session;
 class RightholdersController extends Controller
 {
     //
-
+    public $titles = ['Padre','Madre','Tutor'];
     public function index(Request $request)
     {
         $location_id  = $request->get('location');
@@ -48,12 +48,12 @@ class RightholdersController extends Controller
             $persons = Person::where('id',$person_id)->pluck('name','id');
         else
             $persons = Person::pluck('name','id');
-        $titles = ['Padre','Madre','Tutor'];
+
         if (isset($element)) {
-            return view('common.edit', ['name' => 'rightholders', 'element' => $element,'titles'=>$titles,'persons'=>$persons]);
+            return view('common.edit', ['name' => 'rightholders', 'element' => $element,'titles'=>$this->titles,'persons'=>$persons]);
         }
         else
-            return view('common.create',['name'=>'rightholders','titles'=>$titles,'persons'=>$persons]);
+            return view('common.create',['name'=>'rightholders','titles'=>$this->titles,'persons'=>$persons]);
     }
 
     public function create(Request $req)
@@ -63,8 +63,10 @@ class RightholdersController extends Controller
 
     public function store(CreateRightholderRequest $request,$location)
     {
+
         $rightholder = new Rightholder($request->all());
         $rightholder->location_id= $request->get('location');
+        $rightholder->relation = $this->titles[$request->get('relation')];
         $rightholder->save();
 
         return redirect('rightholders');
@@ -112,6 +114,7 @@ class RightholdersController extends Controller
         if (isset($rightholder)) {
             $rightholder->fill($request->all());
             $rightholder->location_id= $request->get('location');
+            $rightholder->relation = $this->titles[$request->get('relation')];
             $rightholder->save();
         }
 

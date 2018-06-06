@@ -140,10 +140,10 @@ p img {
     background-color: #FFFFFF;
     margin: 0 auto;
     padding: 0;
-    width: 570px;
+    width: 80%;
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
-    -premailer-width: 570px;
+    -premailer-width: 80%;
 }
 
 /* Subcopy */
@@ -164,10 +164,10 @@ p img {
     margin: 0 auto;
     padding: 0;
     text-align: center;
-    width: 570px;
+    width: 80%;
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
-    -premailer-width: 570px;
+    -premailer-width: 80%;
 }
 
 .footer p {
@@ -256,6 +256,29 @@ p img {
 .panel-content {
     background-color: #EDEFF2;
     padding: 16px;
+}
+
+.panel img{
+    float: left;
+    width: 200px;
+    border-radius: 50%;
+}
+
+.mini_panel {
+    margin: 0 0 21px;
+}
+
+.mini_panel {
+    background-color: rgb(246, 216, 88);
+    padding: 16px;
+}
+.mini_panel img{
+    float: left;
+    height: 150px;
+}
+
+.square_photo img{
+    border-radius:0;
 }
 
 .panel-item {

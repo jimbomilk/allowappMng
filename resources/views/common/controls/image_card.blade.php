@@ -1,6 +1,6 @@
 
-<div class="col-sm-4">
-    <div class="panel panel-primary">
+<div class="col-sm-3">
+    <div class="panel panel-{{$imagen->status['color']}}">
         <div class="panel-heading">
             <div class="row">
                 <div class="col-xs-4">{{$imagen->label}}#{{$imagen->id}}</div>
@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-4">{{$imagen->created}}</div>
+                <div class="col-xs-4" style="font-size: 0.7vw;">{{$imagen->created}}</div>
 
                 <div class="col-xs-offset-3 col-xs-5 ">
                     @include("common.controls.status",['status'=>$imagen->status])

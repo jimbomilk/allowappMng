@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PersonEmail;
 use App\Person;
 use App\Photo;
 use App\Rightholder;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 
 class HistoricController extends Controller
 {
@@ -31,19 +35,29 @@ class HistoricController extends Controller
     public function showRightholder($location,$id)
     {
         $element = Rightholder::find($id);
+
         return view('historic.rightholders.show', ['name' => 'historic.rightholders.show', 'element' => $element]);
     }
 
     public function showPhoto($location,$id)
     {
         $element = Photo::find($id);
-        return view('historic.photos.show', ['name' => 'historic.photo.show', 'element' => $element]);
+        $destinatarios = implode(",",$element->rightholderphotos->pluck('rhemail')->toArray());
+
+
+        return view('historic.photos.show', ['name' => 'historic.photo.show', 'element' => $element,'destinatarios'=>$destinatarios]);
     }
 
     public function showPerson($location,$id)
     {
         $element = Person::find($id);
-        return view('historic.persons.show', ['name' => 'historic.person.show', 'element' => $element]);
+        $destinatarios = implode(",",$element->rightholders->pluck('email')->toArray());
+        if (isset($element->email) && $element->email!=""){
+            $destinatarios .=",";
+            $destinatarios .=$element->email;
+        }
+
+        return view('historic.persons.show', ['name' => 'historic.person.show', 'element' => $element,'destinatarios'=>$destinatarios]);
     }
 
     public function emailsPerson(Request $req,$location)
@@ -76,7 +90,14 @@ class HistoricController extends Controller
         }
 
 
-        return redirect('historic.persons');
+        return redirect('historic/persons');
 
     }
+
+    public function emailsPhoto(Request $req,$location)
+    {}
+
+    public function emailsRightholder(Request $req,$location)
+    {}
+
 }

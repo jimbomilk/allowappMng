@@ -1,7 +1,11 @@
 <tr>
-<td class="header">
-<a href="{{ $url }}">
-{{ Illuminate\Mail\Markdown::parse($slot) }}
-</a>
-</td>
+    <td>
+        <table class="header" align="center" width="80%" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="content-cell" align="center">
+                    {{ Illuminate\Mail\Markdown::parse($slot) }}
+                </td>
+            </tr>
+        </table>
+    </td>
 </tr>

@@ -74,3 +74,8 @@
     font-size: 14px;
     border: 1px solid white;
 }
+
+.person img{
+    border-radius: 50%;
+    width: 6vw;
+}

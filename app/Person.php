@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Person extends General
 {
@@ -72,6 +73,13 @@ class Person extends General
 
     public function getHistoric($photoId){
         return Historic::where([['person_id',$this->id],['photo_id',$photoId]])->orderBy('created_at')->get();
+
+    }
+
+    public function getUrlAttribute(){
+
+        return  Storage::disk('s3')->temporaryUrl($this->getPhotopathAttribute(),Carbon::now()->addMinutes(5));
+
 
     }
 

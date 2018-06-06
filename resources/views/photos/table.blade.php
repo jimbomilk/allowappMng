@@ -1,7 +1,11 @@
 <div class="row">
+    <div class="col-sm-12">
+        <div class="row">
 @foreach($set as $element)
     @include("common.controls.image_card",array('imagen'=>$element))
 @endforeach
+        </div>
+    </div>
 </div>
 <div class="row">
     <div class="col-sm-12">

@@ -127,4 +127,14 @@ return [
     'historic.rightholders.phone' => 'Teléfono',
     'historic.rightholders.relation' => 'Relación',
     'historic.rightholders.consents' => 'Consentimientos',
+
+    'historic.photo.show.to'=>'Enviar a',
+    'historic.photo.show.title'=>'Titulo',
+    'historic.photo.show.request'=>'Enviar informe',
+    'historic.person.show.to'=>'Enviar a',
+    'historic.person.show.title'=>'Titulo',
+    'historic.person.show.request'=>'Enviar informe',
+    'historic.rightholders.show.to'=>'Enviar a',
+    'historic.rightholders.show.title'=>'Titulo',
+    'historic.rightholders.show.request'=>'Enviar informe',
 ];

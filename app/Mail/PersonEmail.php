@@ -19,16 +19,20 @@ class PersonEmail extends Mailable
      *
      * @return void
      */
-    Public $person;
-    Public $title;
-    Public $text;
+    public $element;
+    public $title;
+    public $text;
+    public $from_;
 
 
-    public function __construct($person,$title,$text)
+    public function __construct($person,$title,$text,$from)
     {
-        $this->$person = $person;
-        $this->$title = $title;
-        $this->$text = $text;
+
+        $this->element = $person;
+        $this->title = $title;
+        $this->text = $text;
+        $this->from_= $from;
+
     }
 
     /**
@@ -38,7 +42,9 @@ class PersonEmail extends Mailable
      */
     public function build()
     {
-        return  $this->from('usuarios@allowapp.com')
-                    ->markdown('emails.person');
+
+        return $this->from('usuarios@allowapp.com')
+            ->markdown('emails.person');
+
     }
 }

@@ -7,54 +7,14 @@ Route::get('/', function(){
 });*/
 
 // Customer routes
+if (env('APP_ENV') == 'local'){
+    $domain = '{location}.allowapp.test';
+}else{
+    $domain = '{location}.allowapp.eu}';
+}
 
 Route::group([
-    'domain' => '{location}.allowapp.eu',
-    'middleware' => ['auth','location']], function ($location) {
-
-    Route::resource('/', 'HomeController');
-    Route::resource('users', 'UsersController');
-    Route::resource('profiles', 'ProfilesController');
-    Route::resource('groups', 'GroupsController');
-    Route::resource('persons', 'PersonsController');
-    Route::resource('locations', 'LocationsController');
-    Route::get('historic/persons', 'HistoricController@indexPersons');
-    Route::get('historic/persons/show/{id}', 'HistoricController@showPerson');
-
-    Route::get('historic/photos', 'HistoricController@indexPhotos');
-    Route::get('historic/photos/show/{id}', 'HistoricController@showPhoto');
-
-    Route::get('historic/rightholders', 'HistoricController@indexRightholders');
-    Route::get('historic/rightholders/show/{id}', 'HistoricController@showRightholder');
-    Route::post('historic/emails',['uses' => 'HistoricController@emails']);
-
-
-
-    Route::resource('rightholders', 'RightholdersController');
-    Route::get('rightholders/consentimientos/all', ['uses'=>'RightholdersController@consentimientos']);
-    Route::get('rightholders/consentimientos/{id}', ['uses'=>'RightholdersController@consentimientos']);
-    Route::post('rightholders/emails/byperson',['uses' => 'RightholdersController@emailsPerson']);
-    Route::post('rightholders/emails/byphoto',['uses' => 'RightholdersController@emailsPhoto']);
-    Route::post('rightholders/emails/byrightholder',['uses' => 'RightholdersController@emailsRightholder']);
-
-    Route::get('groups/publicationsites/{id}', 'PublicationsitesController@index');
-    Route::resource('publicationsites', 'PublicationsitesController');
-    Route::resource('photos', 'PhotosController');
-    Route::get('photos/recognition/{id}',['uses' => 'PhotosController@recognition']);
-    Route::get('photos/run/{id}',['uses' => 'PhotosController@makeRecognition']);
-    Route::get('photos/send/{id}',['uses' => 'PhotosController@send']);
-    Route::post('photos/emails',['uses' => 'PhotosController@emails']);
-    Route::get('addContract/{photo}/{person}',['uses' => 'PhotosController@addContract']);
-    Route::get('deleteContract/{photo}/{person}',['uses' => 'PhotosController@deleteContract']);
-    Route::get('photos/share/{id}/{share}',['uses' => 'PhotosController@share']);
-
-
-});
-
-
-
-Route::group([
-    'domain' => '{location}.allowapp.test',
+    'domain' => $domain ,
     'middleware' => ['auth','location']], function ($location) {
 
     Route::resource('/', 'HomeController');
@@ -72,7 +32,9 @@ Route::group([
     Route::get('historic/rightholders', 'HistoricController@indexRightholders');
     Route::get('historic/rightholders/show/{id}', 'HistoricController@showRightholder');
 
-
+    Route::post('historic/emails/byperson',['uses' => 'HistoricController@emailsPerson']);
+    Route::post('historic/emails/byphoto',['uses' => 'HistoricController@emailsPhoto']);
+    Route::post('historic/emails/byrightholder',['uses' => 'HistoricController@emailsRightholder']);
 
     Route::resource('rightholders', 'RightholdersController');
     Route::get('rightholders/consentimientos/all', ['uses'=>'RightholdersController@consentimientos']);
@@ -89,7 +51,11 @@ Route::group([
     Route::get('addContract/{photo}/{person}',['uses' => 'PhotosController@addContract']);
     Route::get('deleteContract/{photo}/{person}',['uses' => 'PhotosController@deleteContract']);
     Route::get('photos/share/{id}/{share}',['uses' => 'PhotosController@share']);
+
+
 });
+
+
 
 
 Route::group(['middleware' => ['web']], function () {

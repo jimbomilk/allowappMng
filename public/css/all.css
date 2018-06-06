@@ -22588,6 +22588,10 @@ label,
     border: 1px solid white;
 }
 
+.person img{
+    border-radius: 50%;
+    width: 6vw;
+}
 /* iCheck plugin Square skin, blue
 ----------------------------------- */
 .icheckbox_square-blue,

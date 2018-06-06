@@ -135,27 +135,27 @@ class Photo extends General
         $data = json_decode($this->data);
         $label_color="";$label_text="";
         if ($data->status==10) {
-            $label_color = 'label-primary';
+            $label_color = 'info';
             $label_text = trans('labels.created');
         }
         else if ($data->status==20) {
-            $label_color = 'label-warning';
+            $label_color = 'warning';
             $label_text = trans('labels.pending');
         }
         elseif ($data->status==30) {
-            $label_color = 'label-success';
+            $label_color = 'success';
             $label_text = trans('labels.processed');
         }
         else if ($data->status==100) {
-            $label_color = 'label-danger';
+            $label_color = 'danger';
             $label_text = trans('labels.rejected');
         }
         else if ($data->status==200) {
-            $label_color = 'label-success';
+            $label_color = 'success';
             $label_text = trans('labels.success');
         }
         else{
-            $label_color = 'label-default';
+            $label_color = 'default';
             $label_text = trans('labels.unknown');
         }
 
@@ -191,10 +191,10 @@ class Photo extends General
 
     public function getUrlAttribute(){
 
-        return  Storage::disk('s3')->temporaryUrl($this->getPhotopathAttribute(),Carbon::now()->addMinutes(5));
+    return  Storage::disk('s3')->temporaryUrl($this->getPhotopathAttribute(),Carbon::now()->addMinutes(5));
 
 
-    }
+}
 
     public function getUrlfinalAttribute(){
 

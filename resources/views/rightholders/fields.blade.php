@@ -3,8 +3,9 @@
 @include("common.controls.input_select",array('var'=>'relation','col'=>$titles,'val'=>isset($element)?array_search("$element->relation",$titles):''))
 @include("common.controls.input_text",array('var'=>'email'))
 @include("common.controls.input_text",array('var'=>'phone'))
+@include("common.controls.input_text",array('var'=>'documentId'))
 
-@if(isset($element))
+@if(isset($element)&&isset($element->consent))
 @foreach( json_decode($element->consent) as $consent)
 
     <div class="row social">
