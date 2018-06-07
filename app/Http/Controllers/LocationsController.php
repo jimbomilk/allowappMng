@@ -14,9 +14,11 @@ use App\Person;
 use App\Profile;
 use App\Rightholder;
 use App\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Larareko\Rekognition\RekognitionFacade;
 
 class LocationsController extends Controller
 {
@@ -76,6 +78,29 @@ class LocationsController extends Controller
 
         return redirect('locations');
     }
+
+    public function show($location,$collectionId=null)
+    {
+        $faces  = null;
+        $collections = RekognitionFacade::ListCollections();
+        $lugar = Location::find($location);
+        //dd($collections);
+        if (count($collections['CollectionIds'])>0 && isset($collectionId)) {
+            try {
+                $faces = RekognitionFacade::ListFaces($collectionId, 4096);
+            }catch (Exception  $t){}
+            //dd($faces);
+        }
+        return view('locations.show', ['name' => 'locations','location'=>$lugar,'set' => $collections,'collectionSel'=>$collectionId, 'faces'=> $faces]);
+
+    }
+    public function deleteCollection($location,$collectionId)
+    {
+        RekognitionFacade::DeleteCollection($collectionId);
+
+        return redirect()->back();
+    }
+
 
     public function destroy($id,Request $request)
     {

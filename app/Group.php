@@ -25,7 +25,7 @@ class Group extends Model
     }
 
     public function photos(){
-        return $this->hasMany('App\Photos');
+        return $this->hasMany('App\Photo');
     }
 
     public function publicationsites(){
@@ -33,11 +33,11 @@ class Group extends Model
     }
 
     public function getCollectionAttribute(){
-        return "$this->table-$this->id";
+        return $this->location->collection."_"."$this->table"."$this->id";
     }
 
     public function findPerson($faceId){
-        return $this->persons->where('photoId',$faceId)->first();
+        return $this->persons->where('faceId',$faceId)->first();
     }
 
     public function getPathAttribute()

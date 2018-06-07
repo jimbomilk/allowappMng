@@ -17,7 +17,7 @@ class Persons extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('photo')->nullable();
-            $table->string('photoId')->nullable(); // Rekognition id
+            $table->string('faceId')->nullable(); // Rekognition id
 
             $table->integer('location_id')->unsigned();
             $table->foreign('location_id')

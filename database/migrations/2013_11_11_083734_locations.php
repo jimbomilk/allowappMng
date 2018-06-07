@@ -27,6 +27,10 @@ class Locations extends Migration
      */
     public function down()
     {
+        /*$locations = \App\Location::all();
+        foreach($locations as $location){
+
+        }*/
         Schema::dropIfExists('locations');
     }
 }

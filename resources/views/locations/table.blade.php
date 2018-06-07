@@ -14,6 +14,7 @@
 
             <td>
                 @include("common.controls.btn_edit",array('var'=>$element))
+                @include("common.controls.btn_show",array('var'=>$element))
                 @include("common.controls.btn_delete",array('var'=>$element))
             </td>
 

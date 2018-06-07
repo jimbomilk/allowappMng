@@ -51,4 +51,8 @@ class Location extends Model
         return $this->table.'/'.$this->path.$this->id;
     }
 
+    public function getCollectionAttribute(){
+        return $this->table.$this->id;
+    }
+
 }

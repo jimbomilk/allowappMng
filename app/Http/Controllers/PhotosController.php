@@ -13,12 +13,14 @@ use App\Http\Requests\EditPhotoRequest;
 use App\Location;
 use App\Mail\RequestSignature;
 use App\Person;
+use App\PersonPhoto;
 use App\Photo;
 use App\Rightholder;
 use App\RightholderPhoto;
 use App\Status;
 use App\Token;
 use App\User;
+use Larareko\Rekognition\RekognitionFacade;
 use Share;
 use Exception;
 use Illuminate\Http\Request;
@@ -63,8 +65,8 @@ class PhotosController extends Controller
         $photo->user_id = $request->user()->id;
         $photo->group_id = $request->get('group_id');
         $photo->save();
-        $filename = $request->saveWatermarkFile('origen',$photo->path,600,'final');
-        $workingfile = $request->saveWatermarkFile('origen',$photo->path,350,'working');
+        $filename = $request->saveWatermarkFile('origen',$photo->path,'final',400);
+        $workingfile = $request->saveWatermarkFile('origen',$photo->path,'working',300);
 
         $group = Group::find($request->get('group_id'));
         $sharing = [];
@@ -185,82 +187,59 @@ class PhotosController extends Controller
     public function makeRecognition(Request $req,$location,$photo_id){
 
         $photo = Photo::find($photo_id);
-
+        //dd('hola');
         if (isset ($photo))
         {
             try {
-                \Rekognition::deleteCollection($photo->collection);
+                RekognitionFacade::deleteCollection($photo->collection);
             }catch(Exception  $t){}
             try {
-                \Rekognition::createCollection($photo->collection);
+                RekognitionFacade::createCollection($photo->collection);
             }catch(Exception  $t){}
 
             // borrar todas las faces de la imagen
-            $photo->deleteFaces();
-
-            $result= \Rekognition::indexFaces([ 'CollectionId'=>$photo->group->collection,
-                                                'DetectionAttributes'=>['DEFAULT'],
-                                                'Image'=>['S3Object'=>[
+            //dd($photo->group->collection);
+            $result= RekognitionFacade::indexFaces(['CollectionId'=>$photo->group->collection,
+                                                    'DetectionAttributes'=>['DEFAULT'],
+                                                    'Image'=>['S3Object'=>[
                                                     'Bucket'=>env('AWS_BUCKET'),
-                                                    'Name'=>$photo->photopath]]]);
-
-            //dd($result);
-
-            $img = Image::make($photo->origen);
-
+                                                    'Name'=>$photo->photoFinalpath]]]);
+            $toDelete = []; // se han añadido al grupo y hay que eliminarlos al terminar.
             $faces = $result['FaceRecords'];
-            $matches=array();
-
+            $photo->faces = json_encode($result['FaceRecords']);
             // Recorremos por cada cara encontrada en la imagen
             foreach($faces as $i=>$face){
-                $x = $face['Face']['BoundingBox']['Left']*$img->width();
-                $y = $face['Face']['BoundingBox']['Top']*$img->height();
-                $w = $face['Face']['BoundingBox']['Width']*$img->width();
-                $h = $face['Face']['BoundingBox']['Height']*$img->height();
+                $box = $face['Face']['BoundingBox'];
+                $results= null;
+                $toDelete[] = $face['Face']['FaceId'];
+                try {
+                    $params = RekognitionFacade::setSearchFacesParams($photo->group->collection,$face['Face']['FaceId'],70,40);
+                    $results= RekognitionFacade::searchFaces($params);
+                }catch(Exception  $t){dd($t);};
 
-
-                $img->rectangle($x,$y,$x+$w,$y+$h, function ($draw) {
-                    $draw->background('rgba(255, 255, 255, 0.2)');
-                    $draw->border(2, '#000');
-                });
-
-                $faceObj = $photo->newFace($x,$y,$w,$h);
-
-                $params = \Rekognition::setSearchFacesParams($photo->group->collection,$face['Face']['FaceId'],40,100);
-                $results= \Rekognition::searchFaces($params);
                 // Nos devuelve una matriz de coincidencias
                 if (count($results['FaceMatches'])>0) {
-
                     $faceID=$results['FaceMatches'][0]['Face']['FaceId']; // OJO sólo cojo el primero!!!
-
                     $person = $photo->group->findPerson($faceID);
-                    //dd($req->get('location'));
-                    if (isset($person)) {
-                        $this->newContract($req,$photo->id,$person->id);
-                        $faceObj->person_id = $person->id;
-
-                        $faceObj->save();
+                    //dd($faceID);
+                    if (isset($person) ) {
+                        $this->newContract($req,$photo->id,$person->id,['faceID'=>$faceID,'box'=>$box]);
                     }
-                    $matches[] = $results;
-
                 }
             }
-            $filename = General::saveImage('photo',$photo->path,$img->stream()->__toString(),'jpg');
-            //dd($filename);
-            if(isset($filename))
-                $photo->photo = $filename;
+            RekognitionFacade::deleteFaces($photo->group->collection,$toDelete); // se borran las imagenes de la foto q se habían añadido para la búsqueda.
 
-            $photo->findings=count($matches);
+            //$photo->findings=count($matches);
             $photo->save();
             return back();
         }
     }
 
-    public function newContract(Request $req, $photoId,$personId){
+    public function newContract(Request $req, $photoId,$personId,$face=null){
         // abrir la people y meterle una nueva persona
         $photo = Photo::find($photoId);
         $person = Person::find($personId);
-        if (isset($photo)&&isset($person)) {
+        if (isset($photo)&&isset($person) &&!$photo->findPerson($personId)) {
 
             $data = json_decode($photo->data);
             // ahora vamos a la people
@@ -272,15 +251,11 @@ class PhotosController extends Controller
                     'status'=>0];
                 $rightholders[] = $rh_data;
             }
-            $person_data = ['id'=>$person->id,'rightholders'=>$rightholders];
             if (isset($data->people)) {
-                $data->people[] = $person_data;
+                $data->people[] = new PersonPhoto($person->id,$rightholders,$face);
             }
             $photo->data = json_encode($data);
             $photo->save();
-
-
-
             return $photo->data;
         }
     }

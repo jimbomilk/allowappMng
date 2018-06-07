@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1349403051575be04dcf388a2e917f73",
+    "content-hash": "546b317dd2975b0a495a05f50953c2b0",
     "packages": [
         {
             "name": "acacha/admin-lte-template-laravel",
@@ -1873,6 +1873,58 @@
                 "time"
             ],
             "time": "2018-05-29T15:23:46+00:00"
+        },
+        {
+            "name": "nicksynev/make-observer-command",
+            "version": "v0.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/NickSynev/make-observer-command.git",
+                "reference": "336da27b3113cfd330bfe06e157782dea357e38b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/NickSynev/make-observer-command/zipball/336da27b3113cfd330bfe06e157782dea357e38b",
+                "reference": "336da27b3113cfd330bfe06e157782dea357e38b",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "~5",
+                "illuminate/support": "~5"
+            },
+            "type": "laravel-artisan-command",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "NickSynev\\MakeObserverCommand\\MakeObserverCommandServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "NickSynev\\MakeObserverCommand\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nick Synov",
+                    "email": "niksynev@gmail.com"
+                }
+            ],
+            "description": "Artisan command for creating Observer classes in Laravel",
+            "homepage": "https://github.com/NickSynev/make-observer-command",
+            "keywords": [
+                "artisan",
+                "command",
+                "laravel",
+                "observer",
+                "package"
+            ],
+            "time": "2018-05-30T18:33:43+00:00"
         },
         {
             "name": "nikic/php-parser",

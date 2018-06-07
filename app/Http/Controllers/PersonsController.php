@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Larareko\Rekognition\Rekognition;
+use Larareko\Rekognition\RekognitionFacade;
 
 class PersonsController extends Controller
 {
@@ -51,23 +52,26 @@ class PersonsController extends Controller
         if (isset($filename)) {
             $person->photo = $filename;
             //Borramos las faces
-            try{
+            /*if ($person->faceId) {
+                try {
+                    //dd($person->faceId);
+                    $ret=RekognitionFacade::deleteFaces($person->collection, [$person->faceId]);
+                    //dd($ret);
+                } catch (\Exception $t) {
 
-                \Rekognition::deleteFaces($person->group->collection,array($person->photoId));
-            }catch (\Exception $t){};
-
+                };
+            }*/
             try{
-                $result= \Rekognition::indexFaces([ 'CollectionId'=>$person->group->collection,
+                $result= RekognitionFacade::indexFaces([ 'CollectionId'=>$person->collection,
                 'DetectionAttributes'=>['DEFAULT'],
                 'Image'=>['S3Object'=>[
                     'Bucket'=>env('AWS_BUCKET'),
                     'Name'=>$person->photopath]]]);
+                $person->faceId = $result['FaceRecords'][0]['Face']['FaceId'];
 
-                $person->photoId = $result['FaceRecords'][0]['Face']['FaceId'];
-                //dd($person->photoId);
-            }catch (\Exception $t){};
-
-
+            }catch (\Exception $t){
+                dd($t);
+            };
         }
     }
 
@@ -76,6 +80,8 @@ class PersonsController extends Controller
         $person = new Person($request->all());
         $person->location_id = $request->get('location');
         //dd($person);
+
+
         $this->photoUp($request,$person);
         $person->save();
         return redirect('persons');

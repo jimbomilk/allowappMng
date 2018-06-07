@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <img  class="img-responsive" src={{$element->url}}>
+                    <img  class="img-responsive" src={{$element->urlFinal}}>
                     <div class="pull-right" style="margin: 12px">
                     @include("common.controls.btn_other",array('route'=> 'run','icon'=>'glyphicon-eye-open', 'var'=>$element,'label'=>'recognition','style'=>'btn-info'))
                     </div>

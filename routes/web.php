@@ -23,6 +23,9 @@ Route::group([
     Route::resource('groups', 'GroupsController');
     Route::resource('persons', 'PersonsController');
     Route::resource('locations', 'LocationsController');
+    Route::get('locations/{location}/{collection}', 'LocationsController@show');
+    Route::get('locations/{location}/delete/{collection}', 'LocationsController@deleteCollection');
+
     Route::get('historic/persons', 'HistoricController@indexPersons');
     Route::get('historic/persons/show/{id}', 'HistoricController@showPerson');
 

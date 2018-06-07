@@ -57,7 +57,7 @@ class Photo extends General
 
 
     public function getCollectionAttribute(){
-        return "$this->table-$this->id";
+        return $this->location->collection."_"."$this->table"."$this->id";
     }
 
     public function getPathAttribute()
@@ -162,6 +162,14 @@ class Photo extends General
         return ['color'=>$label_color,'text' => $label_text];
     }
 
+    public function findPerson($personId){
+        $data = json_decode($this->data);
+        foreach($data->people as $person) {
+            if ($person->id == $personId)
+                return true;
+        }
+        return false;
+    }
 
     public function getStatuspendingtxtAttribute()
     {

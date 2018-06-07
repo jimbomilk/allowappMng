@@ -32,7 +32,7 @@ class Request extends FormRequest
     }
 
     /**** Watermak values : working, final */
-    public function saveWatermarkFile($field,$folder,$height='full', $watermark_type = 'working'){
+    public function saveWatermarkFile($field,$folder, $watermark_type = 'working',$height='full'){
 
         if (!isset($field) || $field == '')
             return null;
@@ -55,6 +55,7 @@ class Request extends FormRequest
             $watermark->resize(100, 40);
             if ($watermark_type == 'final' ) {
                 $img->insert($watermark, 'top-right');
+                //$img->brightness(35);
 
             }else {
                 $img->insert($watermark, 'top-left');

@@ -32,7 +32,7 @@ class Person extends General
     }
 
     public function getCollectionAttribute(){
-        return "$this->table-$this->id";
+        return $this->group->collection;
     }
 
     public function getNumRightholdersAttribute(){
@@ -56,6 +56,8 @@ class Person extends General
         $ret = $created->addHours($localoffset)->format('d-M-Y, H:m');
         return $ret;
     }
+
+
 
     public function getPhotosAttribute(){
         $photos = Photo::all();

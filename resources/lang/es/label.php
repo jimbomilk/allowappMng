@@ -13,6 +13,8 @@ return [
     // LOCATIONS
     'locations' => "Colegio",
     "locations.name" => "Nombre del colegio",
+    'locations.show' => 'Mostrar',
+    'locations.delete' => 'Borrar',
 
     // USERS
     'users' => 'usuario',
@@ -50,6 +52,7 @@ return [
     'persons.photo' => 'Foto',
     'persons.show' => 'Responsables',
     'persons.rightholders' => 'Tutores',
+    'persons.FaceId'=> 'Face Id',
 
     // RIGHTHOLDERS
     'rightholders' => 'Responsables',

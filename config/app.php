@@ -186,6 +186,7 @@ return [
         Waavi\UrlShortener\UrlShortenerServiceProvider::class,
         \Eduardokum\LaravelMailAutoEmbed\ServiceProvider::class,
         Chencha\Share\ShareServiceProvider::class,
+        NickSynev\MakeObserverCommand\MakeObserverCommandServiceProvider::class,
 
 
     ],
