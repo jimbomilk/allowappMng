@@ -8,6 +8,7 @@ use Faker\Factory as Faker;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Larareko\Rekognition\RekognitionFacade;
 
 class MainSeeder extends Seeder {
 
@@ -74,8 +75,8 @@ class MainSeeder extends Seeder {
 
 
         // ** PERSONS **
-        $this->addPersons($idlocation,$group1);
-        $this->addPersons($idlocation,$group2);
+        //$this->addPersons($idlocation,$group1);
+        //$this->addPersons($idlocation,$group2);
 
 
         // ** PHOTOS **
@@ -115,21 +116,32 @@ class MainSeeder extends Seeder {
             'user_id'       => $userId,
             'location_id'   => $idlocation,
             'name'          => $name ));
+        \Larareko\Rekognition\RekognitionFacade::createCollection('locations'.$idlocation."_"."groups".$id);
         return $id;
     }
 
     function addPersons($idlocation,$groupId){
+
+
         for($i=0; $i< 1 ; $i++) {
+
+            $path = $this->faker->imageUrl(200,200,'people');
             $idPerson = DB::table('persons')->insertGetId( array (
                 'location_id'      => $idlocation,
                 'group_id'      => $groupId,
-                'photo'         => $this->faker->imageUrl(200,200,'people'),
+                'photo'         => $path,
                 'name'          => $this->faker->name()));
 
             // ** RIGHTHOLDERS **
             $rightholder1 = $this->addRightHolders($idlocation,$idPerson);
             //$rightholder2 = $this->addRightHolders($idlocation,$idPerson);
+            $collection = 'locations'.$idlocation."_"."groups".$groupId;
 
+            RekognitionFacade::indexFaces([ 'CollectionId'=>$collection,
+                'DetectionAttributes'=>['DEFAULT'],
+                'Image'=>['S3Object'=>[
+                    'Bucket'=>env('AWS_BUCKET'),
+                    'Name'=>$path]]]);
 
         }
     }

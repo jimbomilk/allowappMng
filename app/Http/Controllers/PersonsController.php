@@ -51,16 +51,6 @@ class PersonsController extends Controller
         $filename = $request->saveFile('photo',$person->path);
         if (isset($filename)) {
             $person->photo = $filename;
-            //Borramos las faces
-            /*if ($person->faceId) {
-                try {
-                    //dd($person->faceId);
-                    $ret=RekognitionFacade::deleteFaces($person->collection, [$person->faceId]);
-                    //dd($ret);
-                } catch (\Exception $t) {
-
-                };
-            }*/
             try{
                 $result= RekognitionFacade::indexFaces([ 'CollectionId'=>$person->collection,
                 'DetectionAttributes'=>['DEFAULT'],
