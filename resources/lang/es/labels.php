@@ -58,4 +58,5 @@ return [
     'search.historic.persons' => 'Búsqueda por nombre',
     'search.historic.rightholders' => 'Búsqueda por nombre,email,teléfono',
     'search' => ' Buscar',
+    'no-rightholders' => 'No se han definido destinatarios',
 ];

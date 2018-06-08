@@ -63,6 +63,7 @@ desired effect
 
     @include('adminlte::layouts.partials.footer')
 
+
 </div><!-- ./wrapper -->
 </div>
 @section('scripts')

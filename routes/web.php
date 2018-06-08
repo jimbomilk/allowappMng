@@ -48,7 +48,7 @@ Route::group([
     Route::resource('publicationsites', 'PublicationsitesController');
     Route::resource('photos', 'PhotosController');
     Route::get('photos/recognition/{id}',['uses' => 'PhotosController@recognition']);
-    Route::get('photos/run/{id}',['uses' => 'PhotosController@makeRecognition']);
+    Route::get('photos/recognition/run/{id}',['uses' => 'PhotosController@makeRecognition']);
     Route::get('photos/send/{id}',['uses' => 'PhotosController@send']);
     Route::post('photos/emails',['uses' => 'PhotosController@emails']);
     Route::get('addContract/{photo}/{person}',['uses' => 'PhotosController@addContract']);

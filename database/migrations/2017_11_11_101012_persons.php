@@ -16,6 +16,9 @@ class Persons extends Migration
         Schema::create('persons', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->smallInteger('minor');
+            $table->string('email')->nullable();
+            $table->string('documentId')->nullable();
             $table->string('photo')->nullable();
             $table->string('faceId')->nullable(); // Rekognition id
 

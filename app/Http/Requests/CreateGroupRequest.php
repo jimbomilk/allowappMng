@@ -22,9 +22,17 @@ class CreateGroupRequest extends Request {
 	public function rules()
 	{
 		return [
-            'name'      => 'required',
+            'name'      => 'alpha_dash|required',
 
 		];
 	}
+
+    public function attributes()
+    {
+        return [
+            'name' => 'clase'
+
+        ];
+    }
 
 }

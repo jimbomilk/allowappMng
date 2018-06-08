@@ -20,12 +20,17 @@ class EditGroupRequest extends Request {
 	 *
 	 * @return array
 	 */
-	public function rules()
-	{
-		return [
-            'name'      => 'required',
+    public function rules()
+    {
+        return [
+            'name'      => 'alpha_dash|required',
 
-		];
-	}
-
+        ];
+    }
+    public function attributes()
+    {
+        return [
+            'name' => 'clase',
+        ];
+    }
 }

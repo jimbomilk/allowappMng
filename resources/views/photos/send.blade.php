@@ -23,7 +23,7 @@
             </div>
             <div class=" col-md-6 panel panel-default">
                 <div class="panel-heading">{{ trans('labels.rightholders')}}</div>
-                @if($element->group )
+
                     <strong>
                         <div class="col-xs-4">{{trans("label.$name.name-person")}}</div>
                         <div class="col-xs-4">{{trans("label.$name.name-rightholder")}}</div>
@@ -31,16 +31,17 @@
                     </strong>
 
                     <div id = "panel-group" class="detected panel-body"  style="padding: 8px">
-
-                        @foreach($rhs as $rh)
-                            <div class="col-xs-4">{{$rh->name}}</div>
-                            <div class="col-xs-4">{{$rh->rhname}}({{$rh->rhrelation}})</div>
-                            <div class="col-xs-4"><a target="_blank"  href="{{$rh->link}}">{{trans("label.$name.link")}}</a></div>
-                        @endforeach
+                        @if(count($rhs)>0)
+                            @foreach($rhs as $rh)
+                                <div class="col-xs-4">{{$rh->name}}</div>
+                                <div class="col-xs-4">{{$rh->rhname}}({{$rh->rhrelation}})</div>
+                                <div class="col-xs-4"><a target="_blank"  href="{{$rh->link}}">{{trans("label.$name.link")}}</a></div>
+                            @endforeach
+                        @else
+                            <div class="col-xs-12 text-danger"> <p> {{trans('labels.no-rightholders')}}</p></div>
+                        @endif
                     </div>
-                @else
-                    <div> <p> {{trans('labels.no-rightholders')}}</p></div>
-                @endif
+
 
             </div>
 
@@ -59,8 +60,15 @@
                 <div><strong>{{trans('labels.derechos')}}: </strong>{{trans('labels.derechos_text')}}</div>
 
                 <p style="text-align: center;margin: 12px">
-                    <button type="submit" class="btn btn-primary">{{ trans("label.$name.request")}} </button>
+                    <a href="#" class="btn btn-primary {{$enabled}}" data-toggle="modal" data-target="#modal" >
+                        {{ trans("label.$name.request")}}
+                    </a>
                 </p>
+
+
+
+                @include('adminlte::layouts.partials.modal',['text'=>"Se va a proceder a enviar ". count($rhs)." emails. "])
+
 
                 {!! Form::close() !!}
 

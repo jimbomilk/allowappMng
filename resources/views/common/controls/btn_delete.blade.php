@@ -1,1 +1,5 @@
-<a href="{{url("$name/$var->id")}}" class="btn-sm" style="margin-left: 5px" title="{{trans("labels.delete")}}" data-method="delete" data-confirm="{{trans("labels.deleteareyousure")."$var->name?"}}" data-token="{{ csrf_token() }}"><span class="glyphicon glyphicon-trash"></span></a>
+@include('adminlte::layouts.partials.modal_delete',['text'=>"¿Confirma el borrado del elemento?"])
+
+<a href="#" class="btn-sm" data-toggle="modal" data-target="#modal" title="{{trans("labels.delete")}}">
+    <span class="glyphicon glyphicon-trash"></span>
+</a>

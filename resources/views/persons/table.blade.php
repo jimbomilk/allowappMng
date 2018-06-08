@@ -1,6 +1,9 @@
 <table class="table table-responsive table-striped">
     <tr>
         <th>#</th>
+        <th>{{Lang::get("label.$name.minor")}}</th>
+        <th>{{Lang::get("label.$name.email")}}</th>
+        <th>{{Lang::get("label.$name.documentId")}}</th>
         <th>{{Lang::get("label.$name.group_id")}}</th>
         <th>{{Lang::get("label.$name.rightholders")}}</th>
         @if($user->checkRole('admin')) <th>{{Lang::get("label.$name.FaceId")}}</th> @endif
@@ -11,10 +14,13 @@
     @foreach($set as $element)
         <tr data-id="{{$element->id}}">
             <td><div class="person">
-                    <img class="img-responsive" src={{$element->photo}} alt="imagen">
-                    <div>{{$element->name}}</div>
+                    <div class="col-sm-offset-1 col-sm-10"><img class="img-responsive" src={{$element->photo}} alt="imagen"></div>
+                    <div class="col-sm-offset-2 col-sm-10">{{$element->name}}</div>
                 </div> </td>
-            <th>{{$element->group->name}}</th>
+            <td>{{$element->minor?'Si':''}}</td>
+            <td>{{$element->email}}</td>
+            <td>{{$element->documentId}}</td>
+            <td>{{$element->group->name}}</td>
 
 
 

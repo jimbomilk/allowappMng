@@ -3,6 +3,7 @@
 return [
 
     "create_new" => "Añadir",
+    'name' => 'nombre',
 
     //PROFILES
     'profiles.super'=> 'Super usuario',
@@ -48,15 +49,18 @@ return [
     // PERSONS
     'persons' => 'Alumno',
     'persons.name' => 'Nombre',
+    'persons.minor' => 'Menor de 16 años',
+    'persons.email' => 'DNI/NIE/Pasaporte',
+    'persons.documentId' => 'Email',
     'persons.group_id' => 'Clase',
     'persons.photo' => 'Foto',
     'persons.show' => 'Responsables',
-    'persons.rightholders' => 'Tutores',
+    'persons.rightholders' => 'Responsables',
     'persons.FaceId'=> 'Face Id',
 
     // RIGHTHOLDERS
     'rightholders' => 'Responsables',
-    'rightholders.name' => 'Nombre del tutor',
+    'rightholders.name' => 'Nombre del responsable',
     'rightholders.person' => 'Nombre del alumno',
     'rightholders.title' => 'Relación',
     'rightholders.mother' => 'Madre',
@@ -68,6 +72,7 @@ return [
     'rightholders.relation' =>'Relación',
     'rightholders.request' => 'Solicitar consentimientos',
     'rightholders.consents' => 'Consentimientos',
+    'rightholders.documentId' => 'DNI/NIE/Pasaporte',
     'rightholders.template' => 'Solicito su consentimiento para publicar y bla,bla,bla. <br> Por favor pulse el botón y siga las instrucciones.',
 
 

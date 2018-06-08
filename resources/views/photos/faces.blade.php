@@ -8,25 +8,31 @@
     <div class="container-fluid spark-screen">
 
         <div class="row">
-            <div class="col-md-6 panel panel-default">
+            <div class="col-md-4 panel panel-default">
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-6"><span style="padding-top: 15px">{{$element->label}}#{{$element->id}}</span></div>
-                        <div class="col-xs-6"> @include("common.controls.status",['status'=>$element->status]) </div>
 
                     </div>
                 </div>
                 <div class="panel-body">
-                    <img  class="img-responsive" src={{$element->urlFinal}}>
-                    <div class="pull-right" style="margin: 12px">
-                    @include("common.controls.btn_other",array('route'=> 'run','icon'=>'glyphicon-eye-open', 'var'=>$element,'label'=>'recognition','style'=>'btn-info'))
+                    <div class="col-sm-offset-1 col-sm-10">
+                        <img  class="img-responsive" src={{$element->urlFinal}}>
+                        <div style="margin: 22px">
+                        @include('adminlte::layouts.partials.modal_wait',['text'=>"Realizando análisis facial, por favor espere..."])
+
+                            <a href="#" class="facial_recognition btn btn-warning" data-action="run" data-photoid="{{$element->id}}" data-toggle="modal" data-target="#modal">
+                                <span> <i class="glyphicon glyphicon-eye-open"></i> {{trans("label.$name.recognition")}}</span>
+                            </a>
+
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class=" col-md-6 panel panel-default">
-                <div class="panel-heading">{{ trans('labels.group')}}</div>
+            <div class=" col-md-8 panel panel-default">
+
                 @if($element->group )
-                    <div class="panel-heading">{{ trans('labels.persons')." ".$element->group->name}} </div>
+                    <div class="panel-heading">{{ trans('labels.persons')." ".$element->group->name}} - Pulse en las personas para añadirlas a la fotografía</div>
                     <div id = "panel-group" class="detected panel-body"  style="padding: 8px">
 
                         @foreach($element->group->persons as $person)
@@ -46,7 +52,7 @@
         </div>
         <div  class="row">
             <div  class="col-md-12 panel panel-default">
-                <div class="panel-heading">{{ trans('labels.face_detected')}}  </div>
+                <div class="panel-heading">{{ trans('labels.face_detected')}} - Para eliminar una persona de la imagen, pulse sobre ella  </div>
                 <div id="panel-detected" class="detected panel-body" style="padding: 8px" >
                     @foreach($element->people as $person)
                         <a href="#" class="faces-person" data-action="remove" data-personid="{{$person->id}}" data-imagenid="{{$element->id}}" style="margin: 2px;float: left">
@@ -68,6 +74,31 @@
 @section('scripts')
 @parent
 <script>
+
+    $(".facial_recognition").on('click',function (e){
+        var photoid = e.target.parentElement.dataset.photoid;
+        var action = e.target.parentElement.dataset.action;
+        var update = action=='run'?'#panel-detected':'#panel-group';
+        $.ajax({
+            type: "GET",
+            url: action+'/'+photoid,
+            data: "",
+            success: function (res) {
+                $('#panel-detected').load(window.location.href + " "+ '#panel-detected');
+                $('#panel-group').load(window.location.href + " "+ '#panel-group');
+                $('#modal').hide();
+                $('#modal').modal('hide');
+
+
+
+                console.log("exito:"+res);
+            },
+            error: function () {
+                console.log("error");
+            }
+        })
+    });
+
     $(".detected").on('click',function (e) {
         console.log(e);
         var imagenId = e.target.parentElement.dataset.imagenid;

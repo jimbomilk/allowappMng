@@ -10,8 +10,10 @@ use App\Observers\PersonObserver;
 use App\Observers\PhotoObserver;
 use App\Person;
 use App\Photo;
+use App\Services\EmailValidator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Dusk\DuskServiceProvider;
 
@@ -32,6 +34,10 @@ class AppServiceProvider extends ServiceProvider
         Group::observe(GroupObserver::class);
         Person::observe(PersonObserver::class);
         Photo::observe(PhotoObserver::class);
+
+        Validator::extend('rightholders', function($attribute, $value, $parameters,$validator){
+            return EmailValidator::validate_rhs($attribute, $value, $parameters,$validator);
+        });
 
     }
 

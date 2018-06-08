@@ -19,12 +19,20 @@ class CreatePhotoRequest extends Request {
 	 *
 	 * @return array
 	 */
-	public function rules()
-	{
-		return [
-            'label'      => 'required',
+    public function rules()
+    {
+        return [
+            'label'      => 'required|bail|alpha_dash',
+            'origen'      => 'required|bail|image',
+        ];
+    }
 
-		];
-	}
+    public function attributes()
+    {
+        return [
+            'label' => 'etiqueta',
+            'origen' => 'imágen'
+        ];
+    }
 
 }

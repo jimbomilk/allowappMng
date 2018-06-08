@@ -10,6 +10,7 @@ use App\Group;
 use App\Historic;
 use App\Http\Requests\CreatePhotoRequest;
 use App\Http\Requests\EditPhotoRequest;
+use App\Http\Requests\SendPhotoRequest;
 use App\Location;
 use App\Mail\RequestSignature;
 use App\Person;
@@ -152,13 +153,15 @@ class PhotosController extends Controller
     }
 
     public function send(Request $req, $location,$id){
-
+        $enabled = false;
         $photo = Photo::find($id);
         $people = $photo->getData('people');
 
         $rhs = array();
         //RightholderPhoto::where('photo_id', $photo->id)->delete();
         foreach($people as $person){
+            $person_rhs=0;
+            $person_ok=false;
             foreach($person->rightholders as $rh){
 
                 $rhphoto = RightholderPhoto::where([['user_id', $photo->user_id],['photo_id', $photo->id],['person_id',$person->id],['rightholder_id',$rh->id]])->first();
@@ -166,14 +169,21 @@ class PhotosController extends Controller
                     $rhphoto = new RightholderPhoto();
                     $rhphoto->setValues($photo,$person,$rh);
                     $rhphoto->save();
+                    $person_rhs++;
+                    if ($rh->relation=='tutor')
+                     $person_ok=true; // al menos tiene un rightholder
                 }
 
                 array_push($rhs,$rhphoto);
             }
+            $person_ok = $person_ok?true:($person_rhs>=2);//
+
         }
         $template_email = trans('labels.template.consentimiento').$req->user()->name;
 
-        return view('photos.send', ['name' => 'photos', 'element' => $photo,'rhs'=>$rhs,'template'=>$template_email]);
+
+
+        return view('photos.send', ['name' => 'photos', 'element' => $photo,'rhs'=>$rhs,'template'=>$template_email,'enabled'=>$enabled]);
     }
 
     public  function recognition(Request $req,$location,$id)
@@ -294,7 +304,7 @@ class PhotosController extends Controller
         return back();
     }
 
-    public function emails(Request $req,$location)
+    public function emails(SendPhotoRequest $req,$location)
     {
         //return json_encode($req->all());
         $photo = Photo::find($req->get('photoId'));

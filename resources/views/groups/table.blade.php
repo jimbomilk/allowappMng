@@ -11,8 +11,8 @@
     @foreach($set as $element)
         <tr data-id="{{$element->id}}">
             <td>{{$element->id}}</td>
-            <td>{{$element->name}}</td>
-            <th>{{$element->user->name}}</th>
+            <td><strong>{{$element->name}}</strong></td>
+            <td>{{$element->user->name}}</td>
             <td>{{count($element->persons)}}</td>
             <td>
                 @include("common.controls.btn_edit",array('var'=>$element))

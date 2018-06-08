@@ -29,4 +29,12 @@ class EditUserRequest extends Request {
 		];
 	}
 
+
+    public function attributes()
+    {
+        return [
+            'name' => 'nombre',
+            'phone' => 'teléfono',
+        ];
+    }
 }

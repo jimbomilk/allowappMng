@@ -6,10 +6,13 @@ return [
     'users.phone'=> 'Introducir teléfono',
 
     'persons.name' => 'Introducir nombre',
+    'persons.email' => 'Introducir email (sólo para mayores de 16 años)',
+    'persons.documentId' => 'Para poder identificarlo (sólo para mayores de 16 años)',
 
     'rightholders.name' => 'Introducir nombre del responsable',
     'rightholders.email' => 'Introducir email',
     'rightholders.phone' => 'Número de teléfono',
+    'rightholders.documentId' => 'Obligatorio para poderlo identificar',
     //Response
     'response.dni'=>'Introduzca su DNI como identificación',
 

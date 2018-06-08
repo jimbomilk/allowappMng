@@ -23,9 +23,16 @@ class EditPhotoRequest extends Request {
 	public function rules()
 	{
 		return [
-            'name'      => 'required',
-
+            'name'      => 'required|bail|alpha_dash',
+            'photo'      => 'required|bail|image',
 		];
 	}
 
+    public function attributes()
+    {
+        return [
+            'name' => 'etiqueta',
+            'photo' => 'imágen'
+        ];
+    }
 }

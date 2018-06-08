@@ -20,14 +20,24 @@ class EditRightholderRequest extends Request {
 	 *
 	 * @return array
 	 */
-	public function rules()
-	{
-		return [
-            'name'      => 'required',
-            'phone'     => 'required',
-            'email'     => 'required'
+    public function rules()
+    {
+        return [
+            'name'      => 'required|bail|alpha_dash|',
+            'phone'     => 'required|bail|numeric',
+            'email'     => 'required|bail|email',
+            'documentId' => 'required|bail|alpha_num'
 
-		];
-	}
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'name' => 'nombre del tutor',
+            'phone' => 'teléfono',
+            'documentId' => 'documento de identidad'
+        ];
+    }
 
 }

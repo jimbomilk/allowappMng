@@ -67,6 +67,7 @@ class PersonsController extends Controller
 
     public function store(CreatePersonRequest $request,$location)
     {
+
         $person = new Person($request->all());
         $person->location_id = $request->get('location');
         //dd($person);

@@ -26,7 +26,9 @@
             <!--Card content-->
             <div class="card-body" id="front{{$imagen->id}}">
                 <!--Card image-->
+                <div class="col-sm-offset-1 col-sm-10">
                 <img class="img-responsive" src={{$imagen->url}} alt="imagen">
+                </div>
                 <div><strong>{{trans('labels.responsable')}}: </strong>{{$imagen->user->name}}</div>
                 <div><strong>{{trans('labels.finalidad')}}: </strong>{{trans('labels.finalidad_text')}} {{$imagen->getSharingAsText()}}</div>
                 <div><strong>{{trans('labels.legitimacion')}}: </strong>{{trans('labels.legitimacion_text')}}</div>

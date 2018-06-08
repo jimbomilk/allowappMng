@@ -22,9 +22,25 @@ class CreatePersonRequest extends Request {
 	public function rules()
 	{
 		return [
-            'name'      => 'required',
-
+            'name'      => 'alpha_dash|required',
+            'photo'      => 'image|required',
+            'email'     => 'required_if:minor,0',
+            'documentId'     => 'required_if:minor,0'
 		];
 	}
+
+
+    public function attributes()
+    {
+        return [
+            'name' => 'nombre',
+            'photo' => 'foto',
+
+        ];
+    }
+
+    public function messages(){
+        return ['required_if'          => 'El campo :attribute es obligatorio para mayores de 16 años.'];
+    }
 
 }
