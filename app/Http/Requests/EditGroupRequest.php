@@ -23,7 +23,7 @@ class EditGroupRequest extends Request {
     public function rules()
     {
         return [
-            'name'      => 'alpha_dash|required',
+            'name'      => 'required|bail|alpha_dash',
 
         ];
     }

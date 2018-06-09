@@ -24,7 +24,7 @@ class EditPhotoRequest extends Request {
 	{
 		return [
             'name'      => 'required|bail|alpha_dash',
-            'photo'      => 'required|bail|image',
+            'photo'      => 'required|bail|mimes:jpeg,png',
 		];
 	}
 

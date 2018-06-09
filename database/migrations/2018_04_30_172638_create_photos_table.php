@@ -17,6 +17,7 @@ class CreatePhotosTable extends Migration
             $table->increments('id');
             $table->longText('data')->nullable();
             $table->longText('faces')->nullable();
+            $table->longText('box')->nullable();
 
             $table->string('label');
             $table->unsignedInteger('user_id');

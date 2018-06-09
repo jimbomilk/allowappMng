@@ -66,8 +66,10 @@ class PhotosController extends Controller
         $photo->user_id = $request->user()->id;
         $photo->group_id = $request->get('group_id');
         $photo->save();
-        $filename = $request->saveWatermarkFile('origen',$photo->path,'final',400);
-        $workingfile = $request->saveWatermarkFile('origen',$photo->path,'working',300);
+        $box_original=null;
+        $box_working=null;
+        $filename = $request->saveWatermarkFile($box_original,'origen',$photo->path,'final',400);
+        $workingfile = $request->saveWatermarkFile($box_working,'origen',$photo->path,'working',300);
 
         $group = Group::find($request->get('group_id'));
         $sharing = [];
@@ -88,6 +90,7 @@ class PhotosController extends Controller
             'people'=>[],
             'log'=>[]];
         $photo->data = json_encode($data);
+        $photo->box = json_encode($box_original);
         /*
         if (isset($filename)) {
             $photo->origen = $filename;
@@ -189,8 +192,23 @@ class PhotosController extends Controller
     public  function recognition(Request $req,$location,$id)
     {
         $photo = Photo::find($id);
+        if (isset ($photo)) {
 
-        return view('photos.faces', ['name' => 'photos', 'element' => $photo]);
+            // borrar todas las faces de la imagen
+            //dd($photo->group->collection);
+            $result = RekognitionFacade::indexFaces(['CollectionId' => $photo->group->collection,
+                'DetectionAttributes' => ['DEFAULT'],
+                'Image' => ['S3Object' => [
+                    'Bucket' => env('AWS_BUCKET'),
+                    'Name' => $photo->photoFinalpath]]]);
+
+            //dd($result);
+            $faces = $result['FaceRecords'];
+            $photo->faces = json_encode($faces);
+            $photo->save();
+
+        }
+        return view('photos.faces', ['name' => 'photos', 'element' => $photo, 'faces'=>$faces]);
 
     }
 
@@ -200,23 +218,7 @@ class PhotosController extends Controller
         //dd('hola');
         if (isset ($photo))
         {
-            try {
-                RekognitionFacade::deleteCollection($photo->collection);
-            }catch(Exception  $t){}
-            try {
-                RekognitionFacade::createCollection($photo->collection);
-            }catch(Exception  $t){}
-
-            // borrar todas las faces de la imagen
-            //dd($photo->group->collection);
-            $result= RekognitionFacade::indexFaces(['CollectionId'=>$photo->group->collection,
-                                                    'DetectionAttributes'=>['DEFAULT'],
-                                                    'Image'=>['S3Object'=>[
-                                                    'Bucket'=>env('AWS_BUCKET'),
-                                                    'Name'=>$photo->photoFinalpath]]]);
-            $toDelete = []; // se han añadido al grupo y hay que eliminarlos al terminar.
-            $faces = $result['FaceRecords'];
-            $photo->faces = json_encode($result['FaceRecords']);
+            $faces =  json_decode($photo->faces);
             // Recorremos por cada cara encontrada en la imagen
             foreach($faces as $i=>$face){
                 $box = $face['Face']['BoundingBox'];
@@ -231,15 +233,11 @@ class PhotosController extends Controller
                 if (count($results['FaceMatches'])>0) {
                     $faceID=$results['FaceMatches'][0]['Face']['FaceId']; // OJO sólo cojo el primero!!!
                     $person = $photo->group->findPerson($faceID);
-                    //dd($faceID);
                     if (isset($person) ) {
                         $this->newContract($req,$photo->id,$person->id,['faceID'=>$faceID,'box'=>$box]);
                     }
                 }
             }
-            RekognitionFacade::deleteFaces($photo->group->collection,$toDelete); // se borran las imagenes de la foto q se habían añadido para la búsqueda.
-
-            //$photo->findings=count($matches);
             $photo->save();
             return back();
         }

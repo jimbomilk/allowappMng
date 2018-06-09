@@ -22592,6 +22592,16 @@ label,
     border-radius: 50%;
     width: 6vw;
 }
+
+.btn-remove{
+    position: absolute;
+    margin-left: -40px;
+    color: white;
+    width: 40px;
+    height: 40px;
+    /* background-color: white; */
+    background: rgba(0,0,0,0.2);
+}
 /* iCheck plugin Square skin, blue
 ----------------------------------- */
 .icheckbox_square-blue,

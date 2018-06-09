@@ -22,8 +22,6 @@
             <td>{{$element->documentId}}</td>
             <td>{{$element->group->name}}</td>
 
-
-
             <th>@include("common.controls.emphasis_label",array('var'=>$element->numRightholders,'color'=>($element->numRightholders>0)?'primary':'danger'))</th>
             @if($user->checkRole('admin')) <td>{{$element->faceId}}</td> @endif
             <td>

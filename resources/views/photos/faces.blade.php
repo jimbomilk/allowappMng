@@ -8,7 +8,7 @@
     <div class="container-fluid spark-screen">
 
         <div class="row">
-            <div class="col-md-4 panel panel-default">
+            <div class="col-md-5 panel panel-default">
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-6"><span style="padding-top: 15px">{{$element->label}}#{{$element->id}}</span></div>
@@ -16,9 +16,24 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div class="col-sm-offset-1 col-sm-10">
-                        <img  class="img-responsive" src={{$element->urlFinal}}>
-                        <div style="margin: 22px">
+                    <div class="row">
+                        <div class="col-sm-offset-1 col-sm-11"  >
+
+                        <img id="foto" class="img-responsive" src={{$element->urlFinal}}>
+
+                        @foreach(json_decode($element->faces) as $face)
+
+                            <div class="face" style="background:rgba(0,0,0,0.8); position: absolute;border: solid 3px red"
+                                 data-width="{{$face->FaceDetail->BoundingBox->Width}}"
+                                 data-height="{{$face->FaceDetail->BoundingBox->Height}}"
+                                 data-top="{{$face->FaceDetail->BoundingBox->Top}}"
+                                 data-left="{{$face->FaceDetail->BoundingBox->Left}}">
+
+                            </div>
+                        @endforeach
+
+
+                        <div style="margin-top: 22px;text-align: center">
                         @include('adminlte::layouts.partials.modal_wait',['text'=>"Realizando análisis facial, por favor espere..."])
 
                             <a href="#" class="facial_recognition btn btn-warning" data-action="run" data-photoid="{{$element->id}}" data-toggle="modal" data-target="#modal">
@@ -26,10 +41,12 @@
                             </a>
 
                         </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
-            <div class=" col-md-8 panel panel-default">
+            <div class=" col-md-7 panel panel-default">
 
                 @if($element->group )
                     <div class="panel-heading">{{ trans('labels.persons')." ".$element->group->name}} - Pulse en las personas para añadirlas a la fotografía</div>
@@ -74,6 +91,31 @@
 @section('scripts')
 @parent
 <script>
+
+    $('.face').on("change", function(e) {
+        var width = e.target.parentElement.dataset.width;
+        alert('face w:',width);
+    });
+
+    $( window ).on("load resize", function(){
+        // Change the width of the div
+        var img = document.getElementById('foto');
+        var width = img.clientWidth;
+        var height = img.clientHeight;
+
+        $(".face").each( function (){
+            var w=this.dataset.width*width +10;
+            var h=this.dataset.height*height;
+            var t=this.dataset.top*height;
+            var l=this.dataset.left*width+10;
+            this.style.width = w+'px';
+            this.style.height = h+'px';
+            this.style.top = t+'px';
+            this.style.left = l+'px';
+            this.style.color = "blue";
+        });
+
+    });
 
     $(".facial_recognition").on('click',function (e){
         var photoid = e.target.parentElement.dataset.photoid;

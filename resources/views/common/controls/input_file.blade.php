@@ -1,7 +1,7 @@
 <div class="form-group">
 {!! Form::label($var, Lang::get('label.'.$name.'.'.$var)) !!}
 
-    <div id="imgdata" class="container-photo form-group" style="display:none">
+    <div id="imgdata" class="form-group" style="display:none">
         {!! Html::image(isset($element)?$element->$var:null, $var,array('id'=>$var.'-image-tag', 'width' => $width, 'height' => $height,'float'=>'left')) !!}
         <a class="btn btn-remove" id="{{$var}}-remove"><span class="glyphicon glyphicon-trash form-control-feedback"></span></a>
     </div>
@@ -31,12 +31,17 @@
 
         $('#{{$var}}-image-tag').one('load', function() {
             s=$('#{{$var}}-image-tag').attr('src');
-            if (s != "")
+            if (s != "") {
                 $('#{{$var}}-remove').show();
+                $('#imgdata').css('display', 'block');
+                $('#imgfile').css('display', 'none');
+            }
 
             $("#{{$var}}file").val(s);
         }).each(function() {
-            if(this.complete) $(this).load();
+            if(this.complete){
+
+            }
         });
 
         $('#{{$var}}-remove').click(function(){

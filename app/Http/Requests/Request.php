@@ -32,7 +32,7 @@ class Request extends FormRequest
     }
 
     /**** Watermak values : working, final */
-    public function saveWatermarkFile($field,$folder, $watermark_type = 'working',$height='full'){
+    public function saveWatermarkFile(&$box,$field,$folder, $watermark_type = 'working',$height='full'){
 
         if (!isset($field) || $field == '')
             return null;
@@ -51,6 +51,8 @@ class Request extends FormRequest
                 });
             }
 
+
+
             $watermark = Image::make(public_path() . '/img/watermark_' . $watermark_type.'.png');
             $watermark->resize(100, 40);
             if ($watermark_type == 'final' ) {
@@ -63,6 +65,7 @@ class Request extends FormRequest
                 $img->insert($watermark, 'bottom-right');
             }
 
+            $box = ['width'=>$img->width(),'height'=>$img->height()];
             $filename = $folder . '/'. $watermark_type .Carbon::now(). '.' . $file->getClientOriginalExtension();
             if (Storage::disk('s3')->put($filename, $img->stream()->__toString(),'public')) {
                 return Storage::disk('s3')->url($filename);

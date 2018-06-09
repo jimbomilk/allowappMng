@@ -29,8 +29,9 @@ class User extends Authenticatable
     }
 
     public function getGroups(){
-        if ($this->profile->type == 'admin')
+        if ($this->checkRole('admin')) {
             return $this->location->groups;
+        }
         else {
             //dd($this->location->groups->where('user_id', $this->id));
             return $this->location->groups->where('user_id', $this->id);
@@ -55,7 +56,7 @@ class User extends Authenticatable
     }
 
     public function getGroupTutors(){
-        if ($this->profile->type == 'admin') {
+        if ($this->checkRole('admin')) {
             //dd($this);
             return $this->location->users;
         }
@@ -68,7 +69,7 @@ class User extends Authenticatable
 
         $set = null;
         // Se selecciona el subconjunto de trabajo...
-        if ($this->profile->type == 'admin') {
+        if ($this->checkRole('admin')) {
             $set =  $this->location->rightholders();
         }
         else {
@@ -87,7 +88,7 @@ class User extends Authenticatable
         $set = null;
 
         // Se selecciona el subconjunto de trabajo...
-        if ($this->profile->type == 'admin') {
+        if ($this->checkRole('admin')) {
             $set =  $this->location->persons();
         }
         else {
@@ -109,7 +110,7 @@ class User extends Authenticatable
         $set = null;
 
         // Se selecciona el subconjunto de trabajo...
-        if ($this->profile->type == 'admin' || $this->profile->type == 'super'  ) {
+        if ($this->checkRole('admin')) {
             $set =  !$all?$this->location->photos():$this->location->photos()->orderBy('created_at','desc');
         }
         else {

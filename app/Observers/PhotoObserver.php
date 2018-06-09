@@ -24,6 +24,7 @@ class PhotoObserver
 
     public function updated(Photo $photo)
     {
+
     }
 
     public function saving(Photo $photo)
@@ -33,7 +34,19 @@ class PhotoObserver
 
     public function saved(Photo $photo)
     {
-        //
+        if($photo->faces) {
+            $toDelete = [];
+            $faces=json_decode($photo->faces);
+            foreach($faces as $face)
+                $toDelete[] = $face->Face->FaceId;
+
+            //dd($toDelete);
+            try {
+
+                RekognitionFacade::deleteFaces($photo->group->collection, $toDelete); // se borran las imagenes de la foto q se habían añadido para la búsqueda.
+            } catch (Exception  $t) {
+            }
+        }
     }
 
     public function deleting(Photo $photo)

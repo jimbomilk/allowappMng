@@ -23,8 +23,8 @@ class EditPersonRequest extends Request {
     public function rules()
     {
         return [
-            'name'      => 'alpha_dash|required',
-            'photo'      => 'image|required',
+            'name'      => 'required|bail|alpha_dash',
+            'photo'      => 'required',
             'email'     => 'required_if:minor,0',
             'documentId'     => 'required_if:minor,0'
         ];
