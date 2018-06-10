@@ -34,7 +34,7 @@
                             <div style="margin-top: 22px;">
                             @include('adminlte::layouts.partials.modal_wait',['text'=>"Realizando análisis facial, por favor espere..."])
 
-                                <a href="#" class="facial_recognition btn btn-warning" data-action="run" data-photoid="{{$element->id}}" data-toggle="modal" data-target="#modal">
+                                <a href="#" class="facial_recognition btn btn-warning center-block" data-action="run" data-photoid="{{$element->id}}" data-toggle="modal" data-target="#modal">
                                     <span> <i class="glyphicon glyphicon-eye-open"></i> {{trans("label.$name.recognition")}}</span>
                                 </a>
 
@@ -52,7 +52,8 @@
                                         @if(!in_array($person->id,$element->assigned))
                                             <a href="#" class="faces-person" data-action="add" data-personid="{{$person->id}}" data-imagenid="{{$element->id}}" style="margin: 2px;float: left">
                                                 <img width="60px" height="60px" src="{{$person->photo}}">
-                                                <div style="text-align: center"><small>{{$person->name}} </small></div>
+                                                <div style="text-align: center"><small>{{$person->name}} </small>
+                                                </div>
                                             </a>
                                         @endif
                                     @endforeach
@@ -73,7 +74,7 @@
                 <div class="panel-heading">{{ trans('labels.face_detected')}} - Para eliminar una persona de la imagen, pulse sobre ella  </div>
                 <div id="panel-detected" class="detected panel-body" style="padding: 8px" >
                     @foreach($element->people as $person)
-                        <a href="#" class="faces-person" data-action="remove" data-personid="{{$person->id}}" data-imagenid="{{$element->id}}" style="margin: 2px;float: left">
+                        <a href="#" class="faces-person" data-action="remove" data-personid="{{$person->id}}" data-imagenid="{{$element->id}}" data-photoface="{{isset($person->face)?$person->face->facePhotoId:""}}" style="margin: 2px;float: left">
                             <img width="60px" height="60px" src="{{\App\Person::find($person->id)->photo}}">
                             <div>{{\App\Person::find($person->id)->name}}</div>
                         </a>
@@ -93,13 +94,7 @@
 @parent
 <script>
 
-    $('.face').on("change", function(e) {
-        var width = e.target.parentElement.dataset.width;
-        alert('face w:',width);
-    });
-
-    $( window ).on("load resize", function(){
-        // Change the width of the div
+    function photoBoxes(){
         var img = document.getElementById('foto');
         var width = img.clientWidth;
         var height = img.clientHeight;
@@ -114,26 +109,39 @@
             this.style.top = t+'px';
             this.style.left = l+'px';
             this.style.color = "blue";
-            this.style.border= "3px solid green";
+            this.style.border= "3px solid red";
+
+            _this = this;
+            $("a[data-photoface="+this.id+"]").each( function (){
+                _this.style.border= "3px solid green";
+            });
+
         });
 
+    }
+
+    $( window ).on("load resize", function(){
+        // Change the width of the div
+        photoBoxes();
     });
 
     $(".facial_recognition").on('click',function (e){
-        var photoid = e.target.parentElement.dataset.photoid;
-        var action = e.target.parentElement.dataset.action;
+        var photoid = $(".facial_recognition").data('photoid');
+        var action = $(".facial_recognition").data('action');
         var update = action=='run'?'#panel-detected':'#panel-group';
         $.ajax({
             type: "GET",
             url: action+'/'+photoid,
             data: "",
             success: function (res) {
-                $('#panel-detected').load(window.location.href + " "+ '#panel-detected');
+                $('#panel-detected').load(window.location.href + " "+ '#panel-detected',function(){
+                    photoBoxes();
+                });
                 $('#panel-group').load(window.location.href + " "+ '#panel-group');
                 $('#modal').hide();
                 $('#modal').modal('hide');
 
-                console.log("exito:"+res);
+                //console.log("exito:"+res);
             },
             error: function (e) {
                 console.log("error:"+e);
@@ -155,17 +163,11 @@
             url: '/'+verb+'/'+imagenId+'/'+personId,
             data: "",
             success: function (res) {
-                $(e.target.parentElement).fadeOut(600, function(){
-                    $(update).load(window.location.href + " "+ update);
-
+                $('#panel-detected').load(window.location.href + " #panel-detected", function() {
+                    photoBoxes();
                 });
 
-                $('html, body').animate({
-                    scrollTop: $(e.target.parentElement).offset().top-200
-                }, 1000);
-
-
-
+                $('#panel-group').load(window.location.href + " #panel-group");
                 console.log("exito:"+res);
             },
             error: function () {

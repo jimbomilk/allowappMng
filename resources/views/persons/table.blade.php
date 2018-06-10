@@ -13,9 +13,9 @@
 
     @foreach($set as $element)
         <tr data-id="{{$element->id}}">
-            <td><div class="person">
-                    <div class="col-sm-offset-1 col-sm-10"><img class="img-responsive" src={{$element->photo}} alt="imagen"></div>
-                    <div class="col-sm-offset-2 col-sm-10">{{$element->name}}</div>
+            <td><div class="person" >
+                    <div style="margin-left: auto; margin-right: auto; width: 40%;text-align: center" ><img class="img-responsive" src={{$element->photo}} alt="imagen">
+                    {{$element->name}}</div>
                 </div> </td>
             <td>{{$element->minor?'Si':''}}</td>
             <td>{{$element->email}}</td>

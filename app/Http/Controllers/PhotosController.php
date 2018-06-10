@@ -155,9 +155,31 @@ class PhotosController extends Controller
         return redirect()->back();
     }
 
+    private function deleteFaces($photo){
+        if($photo->faces) {
+            $toDelete = [];
+            $faces=json_decode($photo->faces);
+            foreach($faces as $face)
+                $toDelete[] = $face->Face->FaceId;
+
+            //dd($toDelete);
+            try {
+
+                RekognitionFacade::deleteFaces($photo->group->collection, $toDelete); // se borran las imagenes de la foto q se habían añadido para la búsqueda.
+            } catch (Exception  $t) {
+            }
+        }
+    }
+
     public function send(Request $req, $location,$id){
         $enabled = false;
         $photo = Photo::find($id);
+
+        if(!isset($photo))
+            return;
+
+        // Borramos las faces del grupo para que se vuelvan a utilizar en la siguiente.
+        $this->deleteFaces($photo);
         $people = $photo->getData('people');
 
         $rhs = array();
@@ -166,14 +188,15 @@ class PhotosController extends Controller
             $person_rhs=0;
             $person_ok=false;
             foreach($person->rightholders as $rh){
+                $rh_real = Rightholder::find($rh->id);
 
                 $rhphoto = RightholderPhoto::where([['user_id', $photo->user_id],['photo_id', $photo->id],['person_id',$person->id],['rightholder_id',$rh->id]])->first();
                 if (!isset($rhphoto)) {
                     $rhphoto = new RightholderPhoto();
-                    $rhphoto->setValues($photo,$person,$rh);
+                    $rhphoto->setValues($photo,$person,$rh_real);
                     $rhphoto->save();
                     $person_rhs++;
-                    if ($rh->relation=='tutor')
+                    if ($rh_real->relation=='tutor')
                      $person_ok=true; // al menos tiene un rightholder
                 }
 
@@ -215,27 +238,25 @@ class PhotosController extends Controller
     public function makeRecognition(Request $req,$location,$photo_id){
 
         $photo = Photo::find($photo_id);
-        dd('hola');
+
         if (isset ($photo))
         {
             $faces =  json_decode($photo->faces);
             // Recorremos por cada cara encontrada en la imagen
-            dd($faces);
             foreach($faces as $i=>$face){
-                $box = $face['Face']['BoundingBox'];
+                $facePhotoID = $face->Face->FaceId;
+                $box = $face->Face->BoundingBox;
                 $results= null;
-                $toDelete[] = $face['Face']['FaceId'];
                 try {
-                    $params = RekognitionFacade::setSearchFacesParams($photo->group->collection,$face['Face']['FaceId'],70,40);
+                    $params = RekognitionFacade::setSearchFacesParams($photo->group->collection,$face->Face->FaceId,70,40);
                     $results= RekognitionFacade::searchFaces($params);
                 }catch(Exception  $t){dd($t);};
-                dd($results);
                 // Nos devuelve una matriz de coincidencias
                 if (count($results['FaceMatches'])>0) {
                     $faceID=$results['FaceMatches'][0]['Face']['FaceId']; // OJO sólo cojo el primero!!!
                     $person = $photo->group->findPerson($faceID);
                     if (isset($person) ) {
-                        $this->newContract($req,$photo->id,$person->id,['faceID'=>$faceID,'box'=>$box]);
+                        $this->newContract($req,$photo->id,$person->id,['faceID'=>$faceID,'box'=>$box,'facePhotoId'=>$facePhotoID]);
                     }
                 }
             }

@@ -5,9 +5,9 @@
         {!! Html::image(isset($element)?$element->$var:null, $var,array('id'=>$var.'-image-tag', 'width' => $width, 'height' => $height,'float'=>'left')) !!}
         <a class="btn btn-remove" id="{{$var}}-remove"><span class="glyphicon glyphicon-trash form-control-feedback"></span></a>
     </div>
-    <div id="imgfile" class="form-group" style="display:block">
-        {!! Form::hidden($var.'file', null, array('name'=>$var,'id'=>$var.'file')) !!}
-        <span>{!! Form::file($var, null) !!}</span>
+    <div id="imgfile" class="form-group dash-box center inputfile" style="text-align:center;height: {{$height}}px; width:{{$width}}px ">
+        <input type="file" name="{{$var}}" id="{{$var}}" class="hidden"/>
+        <label for="{{$var}}">Selecciona un fichero</label>
     </div>
 </div>
 <br>

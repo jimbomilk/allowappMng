@@ -236,16 +236,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.61.1",
+            "version": "3.61.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "527d7d10b30a2294686d146b0a12b587f28057b0"
+                "reference": "82e0865e4d54333a10121ee68f4f496b48f6b51d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/527d7d10b30a2294686d146b0a12b587f28057b0",
-                "reference": "527d7d10b30a2294686d146b0a12b587f28057b0",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/82e0865e4d54333a10121ee68f4f496b48f6b51d",
+                "reference": "82e0865e4d54333a10121ee68f4f496b48f6b51d",
                 "shasum": ""
             },
             "require": {
@@ -312,7 +312,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2018-06-05T22:44:12+00:00"
+            "time": "2018-06-08T16:08:43+00:00"
         },
         {
             "name": "chencha/share",
@@ -2126,16 +2126,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.9.5",
+            "version": "v0.9.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "0951e91ac04ca28cf317f3997a0adfc319e80106"
+                "reference": "4a2ce86f199d51b6e2524214dc06835e872f4fce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/0951e91ac04ca28cf317f3997a0adfc319e80106",
-                "reference": "0951e91ac04ca28cf317f3997a0adfc319e80106",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/4a2ce86f199d51b6e2524214dc06835e872f4fce",
+                "reference": "4a2ce86f199d51b6e2524214dc06835e872f4fce",
                 "shasum": ""
             },
             "require": {
@@ -2194,7 +2194,7 @@
                 "interactive",
                 "shell"
             ],
-            "time": "2018-06-02T16:39:22+00:00"
+            "time": "2018-06-10T17:57:20+00:00"
         },
         {
             "name": "ramsey/uuid",
