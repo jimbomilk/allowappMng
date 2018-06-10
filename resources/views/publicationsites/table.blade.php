@@ -1,6 +1,5 @@
 <table class="table table-responsive table-striped">
     <tr>
-        <th>#</th>
         <th>{{Lang::get("label.$name.name")}}</th>
         <th>{{Lang::get("label.$name.url")}}</th>
         <th></th>
@@ -9,7 +8,6 @@
 
     @foreach($set as $element)
         <tr data-id="{{$element->id}}">
-            <td>{{$element->id}}</td>
             <th>{{$element->name}}</th>
             <td>{{$element->url}}</td>
             <td>

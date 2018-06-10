@@ -24,10 +24,10 @@
         </div>
         <div class="card">
             <!--Card content-->
-            <div class="card-body" id="front{{$imagen->id}}">
+            <div class="card-body" id="front{{$imagen->id}}" >
                 <!--Card image-->
                 <div class="col-sm-offset-1 col-sm-10">
-                <img class="img-responsive" src={{$imagen->url}} alt="imagen">
+                    <img class="img-responsive center-block" src={{$imagen->url}} alt="imagen">
                 </div>
                 <div><strong>{{trans('labels.responsable')}}: </strong>{{$imagen->user->name}}</div>
                 <div><strong>{{trans('labels.finalidad')}}: </strong>{{trans('labels.finalidad_text')}} {{$imagen->getSharingAsText()}}</div>

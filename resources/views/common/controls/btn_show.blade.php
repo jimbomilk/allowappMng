@@ -1,1 +1,1 @@
-<a href="{{ url("$name/$var->id") }}" class="btn-sm btn-primary" style="margin-left: 5px" title="{{trans('label.'.$name.'.show')}}"><span ><i class="glyphicon glyphicon-list-alt"></i>{{trans('label.'.$name.'.show')}}</span></a>
+<a href="{{ url("$name/$var->id") }}" class="btn-sm" style="margin-left: 5px" title="{{trans('label.'.$name.'.show')}}"><span ><i class="glyphicon glyphicon-list-alt"></i></span></a>

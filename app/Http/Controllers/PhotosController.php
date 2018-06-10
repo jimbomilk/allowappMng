@@ -215,11 +215,12 @@ class PhotosController extends Controller
     public function makeRecognition(Request $req,$location,$photo_id){
 
         $photo = Photo::find($photo_id);
-        //dd('hola');
+        dd('hola');
         if (isset ($photo))
         {
             $faces =  json_decode($photo->faces);
             // Recorremos por cada cara encontrada en la imagen
+            dd($faces);
             foreach($faces as $i=>$face){
                 $box = $face['Face']['BoundingBox'];
                 $results= null;
@@ -228,7 +229,7 @@ class PhotosController extends Controller
                     $params = RekognitionFacade::setSearchFacesParams($photo->group->collection,$face['Face']['FaceId'],70,40);
                     $results= RekognitionFacade::searchFaces($params);
                 }catch(Exception  $t){dd($t);};
-
+                dd($results);
                 // Nos devuelve una matriz de coincidencias
                 if (count($results['FaceMatches'])>0) {
                     $faceID=$results['FaceMatches'][0]['Face']['FaceId']; // OJO sólo cojo el primero!!!

@@ -25,7 +25,7 @@ class EditUserRequest extends Request {
 		return [
             'name'      => 'required',
             'email'     => 'required|unique:users,email,'.$this->user, //busca en la tabla users el campo email pero excluyendo el del propio usuario.
-            'password'  => ''
+            'password'  => 'required'
 		];
 	}
 

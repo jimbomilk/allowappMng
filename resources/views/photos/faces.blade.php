@@ -8,7 +8,7 @@
     <div class="container-fluid spark-screen">
 
         <div class="row">
-            <div class="col-md-5 panel panel-default">
+            <div class="col-md-12 panel panel-default">
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-6"><span style="padding-top: 15px">{{$element->label}}#{{$element->id}}</span></div>
@@ -17,53 +17,56 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-sm-offset-1 col-sm-10"  >
+                        <div class="col-sm-3"  >
 
-                        <img id="foto" class="img-responsive" src={{$element->urlFinal}}>
+                            <img id="foto" class="img-responsive" src={{$element->urlFinal}}>
 
-                        @foreach(json_decode($element->faces) as $face)
-                            <div class="facebox" id="{{$face->Face->FaceId}}" style="background:rgba(0,0,0,0.2); position: absolute;border: solid 3px red"
-                                 data-width="{{$face->FaceDetail->BoundingBox->Width}}"
-                                 data-height="{{$face->FaceDetail->BoundingBox->Height}}"
-                                 data-top="{{$face->FaceDetail->BoundingBox->Top}}"
-                                 data-left="{{$face->FaceDetail->BoundingBox->Left}}">
+                            @foreach(json_decode($element->faces) as $face)
+                                <div class="facebox" id="{{$face->Face->FaceId}}" style="background:rgba(0,0,0,0.2); position: absolute;border: solid 3px red"
+                                     data-width="{{$face->FaceDetail->BoundingBox->Width}}"
+                                     data-height="{{$face->FaceDetail->BoundingBox->Height}}"
+                                     data-top="{{$face->FaceDetail->BoundingBox->Top}}"
+                                     data-left="{{$face->FaceDetail->BoundingBox->Left}}">
+                                </div>
+                            @endforeach
+
+
+                            <div style="margin-top: 22px;">
+                            @include('adminlte::layouts.partials.modal_wait',['text'=>"Realizando análisis facial, por favor espere..."])
+
+                                <a href="#" class="facial_recognition btn btn-warning" data-action="run" data-photoid="{{$element->id}}" data-toggle="modal" data-target="#modal">
+                                    <span> <i class="glyphicon glyphicon-eye-open"></i> {{trans("label.$name.recognition")}}</span>
+                                </a>
+
                             </div>
-                        @endforeach
-
-
-                        <div style="margin-top: 22px;text-align: center">
-                        @include('adminlte::layouts.partials.modal_wait',['text'=>"Realizando análisis facial, por favor espere..."])
-
-                            <a href="#" class="facial_recognition btn btn-warning" data-action="run" data-photoid="{{$element->id}}" data-toggle="modal" data-target="#modal">
-                                <span> <i class="glyphicon glyphicon-eye-open"></i> {{trans("label.$name.recognition")}}</span>
-                            </a>
-
                         </div>
+
+
+                        <div class=" col-sm-5  panel panel-default">
+
+                            @if($element->group )
+                                <div class="panel-heading">{{ trans('labels.persons')." ".$element->group->name}} - Pulse en las personas para añadirlas a la fotografía</div>
+                                <div id = "panel-group" class="detected panel-body"  style="padding: 8px">
+
+                                    @foreach($element->group->persons as $person)
+                                        @if(!in_array($person->id,$element->assigned))
+                                            <a href="#" class="faces-person" data-action="add" data-personid="{{$person->id}}" data-imagenid="{{$element->id}}" style="margin: 2px;float: left">
+                                                <img width="60px" height="60px" src="{{$person->photo}}">
+                                                <div style="text-align: center"><small>{{$person->name}} </small></div>
+                                            </a>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            @else
+                                <div> <p> La foto no está asociada a ningún grupo</p></div>
+                            @endif
+
                         </div>
 
                     </div>
                 </div>
             </div>
-            <div class=" col-md-7 panel panel-default">
 
-                @if($element->group )
-                    <div class="panel-heading">{{ trans('labels.persons')." ".$element->group->name}} - Pulse en las personas para añadirlas a la fotografía</div>
-                    <div id = "panel-group" class="detected panel-body"  style="padding: 8px">
-
-                        @foreach($element->group->persons as $person)
-                            @if(!in_array($person->id,$element->assigned))
-                            <a href="#" class="faces-person" data-action="add" data-personid="{{$person->id}}" data-imagenid="{{$element->id}}" style="margin: 2px;float: left">
-                                <img width="60px" height="60px" src="{{$person->photo}}">
-                                <div>{{$person->name}} </div>
-                            </a>
-                            @endif
-                        @endforeach
-                    </div>
-                @else
-                    <div> <p> La foto no está asociada a ningún grupo</p></div>
-                @endif
-
-            </div>
         </div>
         <div  class="row">
             <div  class="col-md-12 panel panel-default">
@@ -132,8 +135,10 @@
 
                 console.log("exito:"+res);
             },
-            error: function () {
-                console.log("error");
+            error: function (e) {
+                console.log("error:"+e);
+                $('#modal').hide();
+                $('#modal').modal('hide');
             }
         })
     });

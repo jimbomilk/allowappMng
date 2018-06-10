@@ -22,7 +22,7 @@ class CreateGroupRequest extends Request {
 	public function rules()
 	{
 		return [
-            'name'      => 'alpha_dash|required',
+            'name'      => 'required|bail|string',
 
 		];
 	}
