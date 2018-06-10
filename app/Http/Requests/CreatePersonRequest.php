@@ -22,10 +22,10 @@ class CreatePersonRequest extends Request {
 	public function rules()
 	{
 		return [
-            'name'      => 'alpha_dash|required',
-            'photo'      => 'image|required',
-            'email'     => 'required_if:minor,0',
-            'documentId'     => 'required_if:minor,0'
+            'name'          => 'required|bail|string',
+            'photo'         => 'required|bail|image',
+            'email'         => 'required_if:minor,0',
+            'documentId'    => 'required_if:minor,0'
 		];
 	}
 

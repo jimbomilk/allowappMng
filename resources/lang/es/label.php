@@ -14,6 +14,8 @@ return [
     // LOCATIONS
     'locations' => "Colegio",
     "locations.name" => "Nombre del colegio",
+    'locations.description' => 'Descripción',
+    'locations.logo' => 'Logo',
     'locations.show' => 'Mostrar',
     'locations.delete' => 'Borrar',
 

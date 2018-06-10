@@ -1,5 +1,5 @@
 
-<div class="col-sm-3">
+<div class="col-sm-4">
     <div class="panel panel-{{$imagen->status['color']}}">
         <div class="panel-heading">
             <div class="row">

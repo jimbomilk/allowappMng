@@ -1,6 +1,5 @@
 <table class="table table-responsive table-striped">
     <tr>
-        <th>#</th>
         <th>{{Lang::get('label.groups.name')}}</th>
         <th>{{Lang::get('label.groups.user_id')}}</th>
         <th>{{Lang::get('label.groups.count')}}</th>
@@ -10,7 +9,6 @@
 
     @foreach($set as $element)
         <tr data-id="{{$element->id}}">
-            <td>{{$element->id}}</td>
             <td><strong>{{$element->name}}</strong></td>
             <td>{{$element->user->name}}</td>
             <td>{{count($element->persons)}}</td>

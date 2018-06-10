@@ -17,18 +17,16 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-sm-offset-1 col-sm-11"  >
+                        <div class="col-sm-offset-1 col-sm-10"  >
 
                         <img id="foto" class="img-responsive" src={{$element->urlFinal}}>
 
                         @foreach(json_decode($element->faces) as $face)
-
-                            <div class="face" style="background:rgba(0,0,0,0.8); position: absolute;border: solid 3px red"
+                            <div class="facebox" id="{{$face->Face->FaceId}}" style="background:rgba(0,0,0,0.2); position: absolute;border: solid 3px red"
                                  data-width="{{$face->FaceDetail->BoundingBox->Width}}"
                                  data-height="{{$face->FaceDetail->BoundingBox->Height}}"
                                  data-top="{{$face->FaceDetail->BoundingBox->Top}}"
                                  data-left="{{$face->FaceDetail->BoundingBox->Left}}">
-
                             </div>
                         @endforeach
 
@@ -103,16 +101,17 @@
         var width = img.clientWidth;
         var height = img.clientHeight;
 
-        $(".face").each( function (){
+        $(".facebox").each( function (){
             var w=this.dataset.width*width +10;
-            var h=this.dataset.height*height;
-            var t=this.dataset.top*height;
+            var h=this.dataset.height*height+10;
+            var t=this.dataset.top*height-5;
             var l=this.dataset.left*width+10;
             this.style.width = w+'px';
             this.style.height = h+'px';
             this.style.top = t+'px';
             this.style.left = l+'px';
             this.style.color = "blue";
+            this.style.border= "3px solid green";
         });
 
     });
@@ -130,8 +129,6 @@
                 $('#panel-group').load(window.location.href + " "+ '#panel-group');
                 $('#modal').hide();
                 $('#modal').modal('hide');
-
-
 
                 console.log("exito:"+res);
             },

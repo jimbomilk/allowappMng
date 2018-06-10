@@ -22,9 +22,9 @@ class CreateUserRequest extends Request {
 	public function rules()
 	{
 		return [
-            'name'      => 'required|alpha_dash',
-            'email'     => 'email|required|unique:users,email', //busca en la tabla users el campo email
-            'phone'  => 'numeric|required',
+            'name'      => 'required|bail|string',
+            'email'     => 'required|bail|email|unique:users,email', //busca en la tabla users el campo email
+            'phone'     => 'required|bail|numeric',
             'password'  => 'required',
 		];
 	}

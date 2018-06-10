@@ -22,7 +22,10 @@ class EditLocationRequest extends Request {
 	 */
 	public function rules()
 	{
-		return [];
+		return [
+            'name'          => 'required|bail|string',
+            'description'   => 'required|bail|string'
+        ];
 	}
 
 }

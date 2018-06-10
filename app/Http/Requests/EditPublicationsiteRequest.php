@@ -23,8 +23,8 @@ class EditPublicationsiteRequest extends Request {
 	public function rules()
 	{
 		return [
-            'name'      => 'required',
-            'url'       => 'required'
+            'name'      => 'required|bail|string',
+            'url'       => 'required|bail|url'
 
 		];
 	}

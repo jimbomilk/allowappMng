@@ -22,7 +22,7 @@ class CreateRightholderRequest extends Request {
     public function rules()
     {
         return [
-            'name'      => 'required|bail|alpha_dash|',
+            'name'      => 'required|bail|string|',
             'phone'     => 'required|bail|numeric',
             'email'     => 'required|bail|email',
             'documentId' => 'required|bail|alpha_num'

@@ -1,6 +1,6 @@
 <table class="table table-responsive table-striped">
     <tr>
-        <th>#</th>
+        <th>Alumno</th>
         <th>{{Lang::get("label.$name.minor")}}</th>
         <th>{{Lang::get("label.$name.email")}}</th>
         <th>{{Lang::get("label.$name.documentId")}}</th>
