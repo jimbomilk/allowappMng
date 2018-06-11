@@ -8,7 +8,7 @@
     <div class="container-fluid spark-screen">
 
         <div class="row">
-            <div class="col-md-6 panel panel-default">
+            <div class="col-sm-12 panel panel-default">
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-6"><span style="padding-top: 15px">{{$element->label}}#{{$element->id}}</span></div>
@@ -17,35 +17,35 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <img  class="img-responsive" src={{$element->url}}>
-
-                </div>
-            </div>
-            <div class=" col-md-6 panel panel-default">
-                <div class="panel-heading">{{ trans('labels.rightholders')}}</div>
-
-                    <strong>
-                        <div class="col-xs-4">{{trans("label.$name.name-person")}}</div>
-                        <div class="col-xs-4">{{trans("label.$name.name-rightholder")}}</div>
-                        <div class="col-xs-4"></div>
-                    </strong>
-
-                    <div id = "panel-group" class="detected panel-body"  style="padding: 8px">
+                    <div class=" col-md-4 ">
+                        <img  class="img-responsive center-block " src={{$element->url}}>
+                    </div>
+                    <div class=" col-md-8 ">
+                        <div class="row">
+                            <div class="col-xs-3"><strong>{{trans("label.$name.name-person")}}</strong></div>
+                            <div class="col-xs-4"><strong>{{trans("label.$name.name-rightholder")}}</strong></div>
+                            <div class="col-xs-5"><strong>{{trans("label.$name.name-email")}}</strong></div>
+                        </div>
                         @if(count($rhs)>0)
                             @foreach($rhs as $rh)
-                                <div class="col-xs-4">{{$rh->name}}</div>
-                                <div class="col-xs-4">{{$rh->rhname}}({{$rh->rhrelation}})</div>
-                                <div class="col-xs-4"><a target="_blank"  href="{{$rh->link}}">{{trans("label.$name.link")}}</a></div>
+                                <div class="row">
+                                    <div class="col-xs-3"><small>{{$rh->name}}</small></div>
+                                    <div class="col-xs-4"><small>{{$rh->rhname}}({{$rh->rhrelation}})</small></div>
+                                    <div class="col-xs-5"><small>{{$rh->rhemail}}</small></div>
+                                </div>
                             @endforeach
                         @else
-                            <div class="col-xs-12 text-danger"> <p> {{trans('labels.no-rightholders')}}</p></div>
+                            <div class="row">
+                                <div class="col-xs-12 text-danger"> <p> {{trans('labels.no-rightholders')}}</p></div>
+                            </div>
                         @endif
                     </div>
 
-
+                </div>
             </div>
 
-            <div  class="col-md-6 panel panel-default">
+
+            <div  class="col-sm-12 panel panel-default">
                 <div class="panel-heading">{{ trans('labels.message')}}  </div>
 
                 {!! Form::open(array('url' => 'photos/emails', 'method' => 'POST', 'enctype' => 'multipart/form-data')) !!}

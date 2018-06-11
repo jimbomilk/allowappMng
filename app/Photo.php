@@ -171,6 +171,8 @@ class Photo extends General
         return false;
     }
 
+
+
     public function getStatuspendingtxtAttribute()
     {
         $text = ": ";
@@ -226,6 +228,15 @@ class Photo extends General
         return  $processed."/".$total;
     }
 
+    public function checkRighholdersConsent($rhId, $network){
+        $rightholder = Rightholder::find($rhId);
+        if (isset($rightholder) && $rightholder->status == Status::RH_PROCESED) {
+            $consents = json_decode($rightholder->consent);
+            if (isset($consents) && isset($consents->$network) && $consents->$network)
+                return true;
+        }
+    }
+
     private function combineSharing($sharing1,$sharing2){
         $sharing_ret = [];
         $new_share =null;
@@ -239,6 +250,16 @@ class Photo extends General
             }
         }
         return $sharing_ret;
+    }
+
+    // Retorna la persona cuya cara coincide con algunas de las personas de la foto.
+    public function findFacePerson($faceFotoId){
+        $data = json_decode($this->data);
+        foreach($data->people as $person) {
+            if ($person->face->faceFotoId == $faceFotoId)
+                return $person;
+        }
+        return null;
     }
 
     public function cumulativeSharingRightholders(){
@@ -258,12 +279,16 @@ class Photo extends General
 
     public function getSharedLink($share){
         $token = Token::generateShared($this->id);
-        $route = route('photo.link.shared', ['id' => $this->id,'token' => $token],true);
+        $route = route('photo.link.shared', ['id' => $this->id,'network'=>$share,'token' => $token],true);
 
         return Share::load($route,$this->name)->$share();
 
     }
 
+
+    public function pixelate($faceId){
+        return true;
+    }
 
 
 

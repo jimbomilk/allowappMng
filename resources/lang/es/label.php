@@ -98,6 +98,7 @@ return [
     'photos.request'=>'Solicitar consentimientos',
     'photos.label' => 'Etiqueta identificativa',
     'photos.origen' => 'Imagen',
+    'photos.name-email'=>'Email',
 
 
     //CONTRACTS s

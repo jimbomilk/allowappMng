@@ -79,10 +79,16 @@ class Person extends General
     }
 
     public function getUrlAttribute(){
-
         return  Storage::disk('s3')->temporaryUrl($this->getPhotopathAttribute(),Carbon::now()->addMinutes(5));
+    }
 
-
+    public function checkRighholderConsent($rhId, $network){
+        $rightholder = Rightholder::find($rhId);
+        if (isset($rightholder) && $rightholder->status == Status::RH_PROCESED) {
+            $consents = json_decode($rightholder->consent);
+            if (isset($consents) && isset($consents->$network) && $consents->$network)
+                return true;
+        }
     }
 
 }

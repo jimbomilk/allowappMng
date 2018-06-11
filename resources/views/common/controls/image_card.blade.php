@@ -51,14 +51,16 @@
                     </a>
                 @endif
 
-                @foreach($imagen->cumulativeSharingRightholders() as $share)
-                    @if($share[key($share)])
-                    <a  target="_blank" href="{{$imagen->getSharedLink(key($share)) }}" class="btn btn-block btn-social btn-{{key($share)}}  btn-reddit">
-                        <span class="fa glyphicon-globe fa-envelope-o fa-{{key($share)}}"></span> Compartir en {{key($share)}}
-                       </a>
-                    @endif
+                @if($imagen->getData('status')>10)
+                    @foreach($imagen->getData('sharing') as $share)
 
-                @endforeach
+                        <a  target="_blank" href="{{$imagen->getSharedLink($share->name) }}" class="btn btn-block btn-social btn-{{$share->name}}  btn-reddit">
+                            <span class="fa glyphicon-globe fa-envelope-o fa-{{$share->name}}"></span> Compartir en {{$share->name}}
+                       </a>
+
+
+                    @endforeach
+                @endif
 
                 <a href="#" data-imagenid="{{$imagen->id}}" class="details btn btn-block btn-social btn-openid">
                     <span class="fa fa-info-circle"></span> Detalles

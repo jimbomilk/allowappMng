@@ -73,12 +73,57 @@ class LinkController extends Controller
 
     }
 
-    public function shared($photoId,$token)
+    public function shared($photoId,$network,$token)
     {
         $resToken = Token::generateShared($photoId);
 
         if (hash_equals($resToken,$token)) {
             $photo = Photo::find($photoId);
+
+            if (!isset($photo))
+                return view('pages.error');
+
+            $faces = $photo->getData('faces');
+            if (!isset($faces))
+                return view('pages.error');
+
+            //Recorremos cada cara de la imagen
+            foreach($faces as $face){
+                //1. Comprobar si la cara está asociada a una persona
+                $person = $photo->findFacePerson($face->Face->FaceId);
+                if (!isset($person)){
+                    $photo->pixelate($face->Face->FaceId);
+                }else{
+
+                    //2. Comprobar si la persona tiene rightholders
+                    if (!isset($person->rightholders)){
+                        $photo->pixelate($face->Face->FaceId);
+                    }else{
+                        $global_consents = false;
+                        //3. Comprobamos los permisos globales del los rightholders para esa red
+                        foreach($person->rightholders as $rh){
+                            $rightholder = Rightholder::find($rh->id);
+                            if (isset($rightholder) && isset($rightholder->consents)){
+                                $consents = json_decode($rightholder->consents);
+                                $global_consents = $global_consents && $consents->$network;
+                            }
+                        }
+                        if (!$global_consents){
+                            //4. Comprobar los permisos de foto de los rightholders de la persona en esa red
+                            $local_consents = false;
+                            foreach($person->rightholders as $rh) {
+                                if (isset($rh->sharing)){
+                                    $local_consents = $local_consents && $rh->sharing->$network;
+                                }
+                            }
+                            if (!$local_consents)
+                                $photo->pixelate($face->Face->FaceId);
+                            // FIN
+                        }
+                    }
+                }
+            }
+
             return view('pages.shared',['photo'=>$photo]);
         }
 

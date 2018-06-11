@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Photo;
+use App\Rightholder;
+use App\Status;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\File;
@@ -32,6 +35,36 @@ class Request extends FormRequest
     }
 
     /**** Watermak values : working, final */
+    public function savePixelateImagen($photoId){
+
+        $photo = Photo::find($photoId);
+        if (!isset($photo))
+            return null;
+        $photoData = json_decode($photo->data);
+        // Creamos la imagen de trabajo
+        $img = Image::make($photoData->src);
+
+
+        // Recorremos las caras de la imagen
+        $photoFaces = json_decode($photo->faces);
+        foreach($photoFaces as $face){
+            // Tenemos que comprobar si esa cara está identificada en personFaces y si tienen todos los permisos de
+            // los rightholders
+            $person = $photo->findFacePerson();
+
+            // si hemos encontrado una persona comprobamos sus rightholders
+            $person->checkRighholdersConsents($network);
+            if (isset($person)){
+
+            }
+
+        }
+
+        return null;
+    }
+
+
+    /**** Watermak values : working, final */
     public function saveWatermarkFile(&$box,$field,$folder, $watermark_type = 'working',$height='full'){
 
         if (!isset($field) || $field == '')
@@ -50,8 +83,6 @@ class Request extends FormRequest
                     $constraint->aspectRatio();
                 });
             }
-
-
 
             $watermark = Image::make(public_path() . '/img/watermark_' . $watermark_type.'.png');
             $watermark->resize(100, 40);
