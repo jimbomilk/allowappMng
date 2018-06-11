@@ -7,6 +7,10 @@
 @section('main-content')
     <div class="container-fluid spark-screen">
 
+        <div id='loader' style='display: none;'>
+            <img src="{{asset('img/loading.gif')}}" width='100px' height='100px'>
+        </div>
+
         <div class="row">
             <div class="col-md-12 panel panel-default">
                 <div class="panel-heading">
@@ -50,7 +54,7 @@
 
                                     @foreach($element->group->persons as $person)
                                         @if(!in_array($person->id,$element->assigned))
-                                            <a href="#" class="faces-person" data-action="add" data-personid="{{$person->id}}" data-imagenid="{{$element->id}}" style="margin: 2px;float: left">
+                                            <a href="#" class="faces-person" data-action="add" data-personid="{{$person->id}}" data-imagenid="{{$element->id}}" data-faceid="{{$person->faceId}}" style="margin: 2px;float: left">
                                                 <img width="60px" height="60px" src="{{$person->photo}}">
                                                 <div style="text-align: center"><small>{{$person->name}} </small>
                                                 </div>
@@ -110,6 +114,7 @@
             this.style.left = l+'px';
             this.style.color = "blue";
             this.style.border= "3px solid red";
+            $(this).removeClass('blink');
 
             _this = this;
             $("a[data-photoface="+this.id+"]").each( function (){
@@ -125,25 +130,48 @@
         photoBoxes();
     });
 
+    $(".facebox,#panel-detected .faces-person,#panel-group .faces-person").on('click',function (e){
+
+        if ($(this).is(".facebox")) {
+            $(".facebox").each(function () {
+                $(this).removeClass('blink');
+            });
+        }
+
+        if ($(this).is("#panel-detected .faces-person")) {
+            $("#panel-detected .faces-person").each(function () {
+                $(this).removeClass('blink');
+            });
+        }
+
+        if ($(this).is("#panel-group .faces-person")) {
+            $("#panel-group .faces-person").each(function () {
+                $(this).removeClass('blink');
+            });
+        }
+
+        $(this).addClass('blink');
+    });
+
     $(".facial_recognition").on('click',function (e){
         var photoid = $(".facial_recognition").data('photoid');
         var action = $(".facial_recognition").data('action');
         var update = action=='run'?'#panel-detected':'#panel-group';
+        $("#loader").show();
         $.ajax({
             type: "GET",
             url: action+'/'+photoid,
             data: "",
             success: function (res) {
-                $('#panel-detected').load(window.location.href + " "+ '#panel-detected',function(){
-                    photoBoxes();
-                });
-                $('#panel-group').load(window.location.href + " "+ '#panel-group');
+                $("#loader").hide();
+                location.reload();
                 $('#modal').hide();
                 $('#modal').modal('hide');
 
                 //console.log("exito:"+res);
             },
             error: function (e) {
+                $("#loader").hide();
                 console.log("error:"+e);
                 $('#modal').hide();
                 $('#modal').modal('hide');
@@ -151,29 +179,47 @@
         })
     });
 
-    $(".detected").on('click',function (e) {
-        console.log(e);
-        var imagenId = e.target.parentElement.dataset.imagenid;
-        var personId = e.target.parentElement.dataset.personid;
-        var action = e.target.parentElement.dataset.action;
-        var update = action=='add'?'#panel-detected':'#panel-group';
-        verb = ( action == 'add')?'addContract':'deleteContract';
-        $.ajax({
-            type: "GET",
-            url: '/'+verb+'/'+imagenId+'/'+personId,
-            data: "",
-            success: function (res) {
-                $('#panel-detected').load(window.location.href + " #panel-detected", function() {
-                    photoBoxes();
+    $(".detected,.facebox").on('click',function (e) {
+        var imagenId = $('.faces-person.blink').data('imagenid');
+        var personId = $('.faces-person.blink').data('personid');
+        var action = $('.faces-person.blink').data('action');
+        var faceId = $('.faces-person.blink').data('faceid');
+
+        var faceBlinking = $('.facebox.blink').attr('id');
+        var boxFaceBlinkingHeight = $('.facebox.blink').data('height');
+        var boxFaceBlinkingWidth = $('.facebox.blink').data('width');
+        var boxFaceBlinkingTop = $('.facebox.blink').data('top');
+        var boxFaceBlinkingLeft = $('.facebox.blink').data('left');
+
+        //Si estamos añadiendo y no se han seleccionado una cara y una persona...nos vamos
+        if ((typeof action === 'undefined' || action == 'add') && (typeof imagenId === "undefined" || typeof faceBlinking === "undefined"))
+            return;
+
+        var update = action == 'add' ? '#panel-detected' : '#panel-group';
+        verb = ( action == 'add') ? 'addContract' : 'deleteContract';
+        $("#loader").show();
+        $.post(verb, {
+            "_token": "{{ csrf_token() }}",
+            'imagenId': imagenId,
+            'personId': personId,
+            'faceId': faceId,
+            'photoFace': faceBlinking,
+            'boxHeight': boxFaceBlinkingHeight,
+            'boxWidth': boxFaceBlinkingWidth,
+            'boxTop': boxFaceBlinkingTop,
+            'boxLeft': boxFaceBlinkingLeft
+        })
+                .done(function () {
+
+                    location.reload();
+
+                })
+                .always( function() {
+                    $("#loader").hide();
                 });
 
-                $('#panel-group').load(window.location.href + " #panel-group");
-                console.log("exito:"+res);
-            },
-            error: function () {
-                console.log("error");
-            }
-        })
+
+
     });
 
 </script>

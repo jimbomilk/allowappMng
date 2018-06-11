@@ -51,8 +51,8 @@ Route::group([
     Route::get('photos/recognition/run/{id}',['uses' => 'PhotosController@makeRecognition']);
     Route::get('photos/send/{id}',['uses' => 'PhotosController@send']);
     Route::post('photos/emails',['uses' => 'PhotosController@emails']);
-    Route::get('addContract/{photo}/{person}',['uses' => 'PhotosController@addContract']);
-    Route::get('deleteContract/{photo}/{person}',['uses' => 'PhotosController@deleteContract']);
+    Route::post('photos/recognition/addContract',['uses' => 'PhotosController@addContract']);
+    Route::post('photos/recognition/deleteContract',['uses' => 'PhotosController@deleteContract']);
     Route::get('photos/share/{id}/{share}',['uses' => 'PhotosController@share']);
 
 

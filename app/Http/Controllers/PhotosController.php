@@ -178,8 +178,6 @@ class PhotosController extends Controller
         if(!isset($photo))
             return;
 
-        // Borramos las faces del grupo para que se vuelvan a utilizar en la siguiente.
-        $this->deleteFaces($photo);
         $people = $photo->getData('people');
 
         $rhs = array();
@@ -290,13 +288,16 @@ class PhotosController extends Controller
         }
     }
 
-    public function deleteContract(Request $req,$location,$photo_id,$person_id){
+    public function deleteContract(Request $req,$location){
 
-        $photo = Photo::find($photo_id);
-        $person = Person::find($person_id);
+        $photoId= $req->get('imagenId');
+        $personId= $req->get('personId');
+
+        $photo = Photo::find($photoId);
+        $person = Person::find($personId);
         if (isset($photo)&&isset($person)) {
             $data = json_decode($photo->data);
-            $this->array_remove_object($data->people,$person_id,'id');
+            $this->array_remove_object($data->people,$personId,'id');
             $data->people = array_values($data->people);
             $photo->data = json_encode($data);
             $photo->save();
@@ -318,9 +319,18 @@ class PhotosController extends Controller
         }
     }
 
-    public function addContract(Request $req,$location,$photo_id,$person_id){
+    public function addContract(Request $req,$location){
 
-        $this->newContract($req,$photo_id,$person_id);
+        $photoId= $req->get('imagenId');
+        $personId= $req->get('personId');
+        $faceId = $req->get('faceId');
+        $photoFaceId = $req->get('photoFace');
+        $boxHeight= $req->get('boxHeight');
+        $boxWidth= $req->get('boxWidth');
+        $boxTop= $req->get('boxTop');
+        $boxLeft= $req->get('boxLeft');
+
+        $this->newContract($req,$photoId,$personId,['faceID'=>$faceId,'box'=>['Width'=>$boxWidth, 'Height'=>$boxHeight, 'Top' => $boxTop, 'Left'=> $boxLeft],'facePhotoId'=>$photoFaceId]);
         return back();
     }
 
@@ -329,8 +339,10 @@ class PhotosController extends Controller
         //return json_encode($req->all());
         $photo = Photo::find($req->get('photoId'));
         $email_text = $req->get('email');
-        //Log::debug('antes email');
         $count=0;
+
+        // Borramos las faces del grupo para que se vuelvan a utilizar en la siguiente.
+        $this->deleteFaces($photo);
 
         try {
             foreach ($photo->rightholderphotos as $rhp) {
@@ -350,6 +362,9 @@ class PhotosController extends Controller
         }
         $photo->setData('status',Status::STATUS_PENDING);
         $photo->save();
+
+
+
 
         if ($count >0)
             Session::flash('message',"¡Felicidades!, se han enviado correctamente ".$count." emails solicitando el consentimiento.");

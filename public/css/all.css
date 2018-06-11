@@ -22622,6 +22622,25 @@ label,
     color: white;
     background-color: red;
 }
+
+/* FACES PAGE */
+#loader{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+}
+
+.blink{
+    animation:blink 700ms infinite alternate;
+}
+
+@keyframes blink {
+    from { opacity:1; }
+    to { opacity:0; }
+}
 /* iCheck plugin Square skin, blue
 ----------------------------------- */
 .icheckbox_square-blue,
