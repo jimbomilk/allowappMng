@@ -352,7 +352,7 @@ class PhotosController extends Controller
                     //Log::debug('email:'.$ret);
                     $count++;
                     $h = new Historic();
-                    $h->register($req->user()->id,"Solicitud de consentimiento enviada a ". $rh->person->name,$photo->id,$rh->person->id, $rh->id);
+                    $h->register($req->user()->id,"Solicitud de consentimiento enviada a ". $rh->name,$photo->id,$rh->person->id, $rh->id);
                 }
 
             }

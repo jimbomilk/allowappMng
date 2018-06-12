@@ -36,12 +36,16 @@
                 <div><strong>{{trans('labels.derechos')}}: </strong>{{trans('labels.derechos_text')}}</div>
             </div>
 
-            <div class="card-body" id="back{{$imagen->id}}" style="display: none">
-                <div><strong>{{trans('labels.responsable')}}: </strong>{{$imagen->user->name}}</div>
-                <div><strong>{{trans('labels.finalidad')}}: </strong>{{trans('labels.finalidad_text')}} {{$imagen->getSharingAsText()}}</div>
-                <div><strong>{{trans('labels.legitimacion')}}: </strong>{{trans('labels.legitimacion_text')}}</div>
-                <div><strong>{{trans('labels.destinatario')}}: </strong>{{trans('labels.destinatario_text')}}</div>
-                <div><strong>{{trans('labels.derechos')}}: </strong>{{trans('labels.derechos_text')}}</div>
+            <div class="card-body" id="back{{$imagen->id}}" style="display: none;margin: 0px;height:40vh;overflow-y: scroll;overflow-x: hidden">
+                <div class="row">
+                    <div class="col-xs-12"><small><strong>{{$imagen->created}}</strong> - Creación de la imagen</small></div>
+                </div>
+                @foreach($imagen->getHistoric() as $action)
+                    <div class="row">
+                    <div class="col-xs-12"><small><strong>{{$action->created}}</strong> - {{$action->log}}</small></div>
+                    </div>
+                @endforeach
+
             </div>
 
             <div class="text-right"  style="margin: 8px">

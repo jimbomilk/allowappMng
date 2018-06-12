@@ -90,7 +90,7 @@ return [
     'photos.requests' => 'Solicitar aprobación',
     'photos.date' => 'Fecha',
     'photos.requests_received' => 'Aprobaciones',
-    'photos.recognition' => 'Buscar coincidencias mediante reconocimiento facial',
+    'photos.recognition' => 'Reconocimiento facial',
     'photos.sharing' => 'Publicar',
     'photos.name-person'=>'Nombre',
     'photos.name-rightholder'=>'Responsable',
