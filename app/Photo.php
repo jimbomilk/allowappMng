@@ -4,6 +4,7 @@ namespace App;
 
 
 use Carbon\Carbon;
+use Intervention\Image\Facades\Image;
 use Share;
 use Illuminate\Support\Facades\Storage;
 use Waavi\UrlShortener\Facades\UrlShortener;
@@ -255,8 +256,9 @@ class Photo extends General
     // Retorna la persona cuya cara coincide con algunas de las personas de la foto.
     public function findFacePerson($faceFotoId){
         $data = json_decode($this->data);
+
         foreach($data->people as $person) {
-            if ($person->face->faceFotoId == $faceFotoId)
+            if ($person->face->facePhotoId == $faceFotoId)
                 return $person;
         }
         return null;
@@ -286,9 +288,7 @@ class Photo extends General
     }
 
 
-    public function pixelate($faceId){
-        return true;
-    }
+
 
 
 

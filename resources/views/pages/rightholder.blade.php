@@ -24,20 +24,20 @@
 
         @include("common.controls.input_hidden",['var'=>'token','val'=>$token])
         @include("common.controls.input_hidden",['var'=>'rightholderId','val'=>$rightholder->id])
-        @foreach( json_decode($rightholder->consent) as $share)
+        @foreach( $publicationsites as $site)
 
         <div class="row" style="margin-top:20px;color: white">
             <div class="row">
                 <div class="col-sm-offset-3 col-sm-6">
-                    <strong>Compartir en {{$share->name}} :</strong>
+                    <strong>Compartir en {{$site}} :</strong>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-offset-4 col-sm-2">
-                    {!! Form::radio($share->name, '1') !!} Consiente
+                    {!! Form::radio($site, '1') !!} Consiente
                 </div>
                 <div class="col-sm-2">
-                    {!! Form::radio($share->name, '0') !!} No consiente
+                    {!! Form::radio($site, '0') !!} No consiente
                 </div>
             </div>
         </div>

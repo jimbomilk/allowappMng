@@ -27,6 +27,10 @@ class Rightholder extends Model
         return $route;
     }
 
+    public function getPublicationsitesAttribute(){
+        return Publicationsite::where('group_id',$this->person->group_id)->get();
+    }
+
     public function getHistoric($personId=null,$photoId=null){
         if ($photoId == null && $personId==null){
             return Historic::where(['rightholder_id',$this->id])->orderBy('created_at')->get();

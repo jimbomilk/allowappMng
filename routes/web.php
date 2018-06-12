@@ -66,7 +66,7 @@ Route::group(['middleware' => ['web']], function () {
 Route::get('photo/{id}/{user}/{person}/{rightholder}/{token}','LinkController@link')->name('photo.link')/*->middleware('throttle:5,5')*/;
 Route::post('photo/response','LinkController@response')->name('photo.link.response')/*->middleware('throttle:5,5')*/;
 
-Route::get('photo/shared/{id}/token/{token}','LinkController@shared')->name('photo.link.shared');
+Route::get('photo/shared/{id}/network/{network}/token/{token}','LinkController@shared')->name('photo.link.shared');
 
 Route::get('rightholder/shared/{id}/token/{token}','LinkController@rightholder')->name('rightholder.link.shared')/*->middleware('throttle:5,5')*/;
 Route::post('rightholder/response','LinkController@rightholderResponse')->name('rightholder.link.response')/*->middleware('throttle:5,5')*/;
