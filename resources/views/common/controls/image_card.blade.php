@@ -49,6 +49,10 @@
                     <a href="{{ url("$name/recognition/$imagen->id") }}" data-imagenid="{{$imagen->id}}" class="details btn btn-block btn-social btn-foursquare">
                         <span class="fa fa-eye"></span> {{trans("label.$name.faces")}}
                     </a>
+                @else
+                    <a href="{{ url("$name/recognition/$imagen->id") }}" data-imagenid="{{$imagen->id}}" class="details btn btn-block btn-social btn-foursquare">
+                        <span class="fa fa-eye"></span> Enviar recordatorio
+                    </a>
                 @endif
 
                 @if($imagen->getData('status')>10)
