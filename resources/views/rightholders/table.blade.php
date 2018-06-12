@@ -13,9 +13,9 @@
             <td>{{$element->id}}</td>
             <td>{{$element->name}}</td>
             <td>{{$element->relation}} de {{$element->person->name}}</td>
-            <td> @if($element->status==\App\Status::RH_PROCESED)
-                    @foreach(json_decode($element->consent) as $share)
-                        <span class="fa glyphicon-globe fa-envelope-o fa-{{$share->name}}"  style=" font-size: 20px; color:{{ ($share->value?'rgb(136,177,75)':'grey') }}" title="{{$share->name}}:{{$share->value?'ok':'ko'}} "></span>
+            <td> @if($element->status==\App\Status::RH_PROCESED && isset($element->consent) )
+                    @foreach(json_decode($element->consent) as $key=>$value)
+                        <span class="fa glyphicon-globe fa-envelope-o fa-{{$key}}"  style=" font-size: 20px; color:{{ ($value?'rgb(136,177,75)':'grey') }}" title="{{$key}}:{{$value?'ok':'ko'}} "></span>
                     @endforeach
                 @elseif($element->status==\App\Status::RH_NOTREQUESTED)
                     <span style="color: blue " aria-hidden="true">no solicitado</span>

@@ -114,9 +114,9 @@ class Request extends FormRequest
         // Extraemos la imagen original
         $photoData = json_decode($photo->data);
         $img = Image::make($photoData->src);
-        $pixelated = Image::make($photoData->remoteSrc);
+        $pixelated = Image::make($photoData->src);
 
-        $pixelated->pixelate(4);
+        $pixelated->pixelate(12);
         $streamPixelated = $pixelated->stream();
 
         $img_width = $img->width();
