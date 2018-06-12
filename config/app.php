@@ -187,7 +187,7 @@ return [
         \Eduardokum\LaravelMailAutoEmbed\ServiceProvider::class,
         Chencha\Share\ShareServiceProvider::class,
         NickSynev\MakeObserverCommand\MakeObserverCommandServiceProvider::class,
-
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],
 
@@ -243,7 +243,8 @@ return [
         'Rekognition' => Larareko\Rekognition\RekognitionFacade::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'UrlShortener' => Waavi\UrlShortener\Facades\UrlShortener::class,
-        'Share' => Chencha\Share\ShareFacade::class
+        'Share' => Chencha\Share\ShareFacade::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 

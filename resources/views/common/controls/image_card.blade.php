@@ -36,7 +36,8 @@
                 <div><strong>{{trans('labels.derechos')}}: </strong>{{trans('labels.derechos_text')}}</div>
             </div>
 
-            <div class="card-body" id="back{{$imagen->id}}" style="display: none;margin: 0px;height:40vh;overflow-y: scroll;overflow-x: hidden">
+            <div class="card-body" id="back{{$imagen->id}}" style="display: none;margin: 0px;height:4forge
+            tec_002!@append0vh;overflow-y: scroll;overflow-x: hidden">
                 <div class="row">
                     <div class="col-xs-12"><small><strong>{{$imagen->created}}</strong> - Creación de la imagen</small></div>
                 </div>

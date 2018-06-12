@@ -56,6 +56,9 @@ Route::group([
     Route::get('photos/share/{id}/{share}',['uses' => 'PhotosController@share']);
 
 
+    Route::get('excel/', 'ExcelController@index')->name('index');
+    Route::post('excel/import', 'ExcelController@import')->name('import');
+
 });
 
 

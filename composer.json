@@ -18,6 +18,7 @@
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4.0",
         "league/flysystem-aws-s3-v3": "~1.0",
+        "maatwebsite/excel": "~2.1.0",
         "nicksynev/make-observer-command": "^0.0.4",
         "waavi/url-shortener": "1.0.x"
     },
