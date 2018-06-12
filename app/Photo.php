@@ -13,7 +13,6 @@ class Photo extends General
 {
 
     protected $table = 'photos';
-    protected $path = 'photo';
     static $searchable = ['label'];
 
     //id,photo,location_id
@@ -63,19 +62,19 @@ class Photo extends General
 
     public function getPathAttribute()
     {
-        return $this->group->path.'/'.$this->table;
+        return $this->group->path.'/'.$this->table.'/photo'.$this->id;
     }
 
     public function getPhotopathAttribute()
     {
         $data = json_decode($this->data);
-        return $this->group->path.'/'.$this->table.'/'.basename(urldecode($data->remoteSrc));
+        return $this->path.'/'.basename(urldecode($data->remoteSrc));
     }
 
     public function getPhotoFinalpathAttribute()
     {
         $data = json_decode($this->data);
-        return $this->group->path.'/'.$this->table.'/'.basename(urldecode($data->src));
+        return $this->path.'/'.basename(urldecode($data->src));
     }
 
     public function getPeopleAttribute(){
@@ -102,13 +101,6 @@ class Photo extends General
         $face->photo_id = $this->id;
         $face->save();
         return ($face);
-    }
-
-    public function deleteFaces(){
-        Storage::disk('s3')->delete($this->path.'/'.Face::tablename);
-        foreach($this->faces as $face){
-            $face->delete();
-        }
     }
 
     public function getData($field){
@@ -288,20 +280,22 @@ class Photo extends General
     }
 
 
-
+    public function getExtensionAttribute(){
+        $data = json_decode($this->data);
+        $partes = pathinfo($data->src);
+        return $partes['extension'];
+    }
 
     public function updatePhotobyNetwork(){
         $sites = Publicationsite::where('group_id',$this->group_id)->get();
         foreach ($sites as $site){
-
-            $photonetwork = Photonetwork::firstOrCreate(['photo_id' => $this->id], ['publicationsite_id' => $site->id]);
+            $photonetwork = Photonetwork::firstOrNew(['photo_id' => $this->id, 'publicationsite_id' => $site->id]);
             $file = $photonetwork->pixelatePhoto($site->name);
-            if (isset($file)){
+            if (isset($file)) {
                 $photonetwork->url = $file;
                 $photonetwork->save();
             }
         }
-
     }
 
 

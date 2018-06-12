@@ -10,8 +10,6 @@ class Photonetwork extends Model
 {
     const tablename = 'photonetwork';
     protected $table = Photonetwork::tablename;
-    protected $path = 'network';
-
     protected $fillable = ['publicationsite_id','photo_id'];
 
     public function photo()
@@ -19,19 +17,23 @@ class Photonetwork extends Model
         return $this->belongsTo('App\Photo');
     }
 
-    public function network()
+    public function publicationsite()
     {
         return $this->belongsTo('App\Publicationsite');
     }
 
+    public function getSitenameAttribute(){
+        return $this->publicationsite->name;
+    }
+
     public function getPathAttribute()
     {
-        return $this->photo->path.'/'.$this->table;
+        return $this->photo->path;
     }
 
     public function getPhotopathAttribute()
     {
-        return $this->photo->path.'/'.$this->table.'/'.basename(urldecode($this->url));
+        return $this->photo->path.'/'.$this->networkname.'/'.basename(urldecode($this->url));
     }
 
 
@@ -132,8 +134,12 @@ class Photonetwork extends Model
             $img->insert($crop, 'top-left', $x, $y);
         }
 
-        if (Storage::disk('s3')->put($this->getPhotopathAttribute(), $img->stream()->__toString(),'public')) {
-            return ( Storage::disk('s3')->url($this->getPhotopathAttribute()));
+
+        $filename = $this->path . '/'. $this->sitename. '.' . $this->photo->extension;
+
+
+        if (Storage::disk('s3')->put($filename, $img->stream()->__toString(),'public')) {
+            return ( Storage::disk('s3')->url($filename));
         }
         return null;
     }

@@ -90,7 +90,16 @@ class LinkController extends Controller
             if (!isset($photo))
                 return view('pages.error');
 
-            return view('pages.shared',['photo'=>$photo,'network'=>$network]);
+
+
+            $site = Publicationsite::where([['group_id',$photo->group_id],['name',$network]])->first();
+
+            if (!isset($site))
+                return view('pages.error');
+
+            $photoNetwork = Photonetwork::where([['publicationsite_id',$site->id],['photo_id',$photo->id]])->first();
+
+            return view('pages.shared',['photo'=>$photoNetwork]);
         }
 
         return view('pages.error');
