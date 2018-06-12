@@ -41,11 +41,13 @@ class PhotoData {
     public function setRightholderSharing($documentid,$rhId,$sharing){
         foreach($this->people as $person){
             foreach($person->rightholders as $rh){
-                $rightholder = Rightholder::find($rh->id);
-                if (isset($rightholder) && $rightholder->documentId == $documentid){
-                    $rh->sharing = $sharing;
-                    $rh->status = Status::RH_PROCESED; //procesed
-                    return $rh;
+                if ($rh->id == $rhId) {
+                    $rightholder = Rightholder::find($rh->id);
+                    if (isset($rightholder) && $rightholder->documentId == $documentid) {
+                        $rh->sharing = $sharing;
+                        $rh->status = Status::RH_PROCESED; //procesed
+                        return $rh;
+                    }
                 }
 
             }
