@@ -56,10 +56,10 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <img class="img-responsive" src={{$photo->url}} alt="imagen">
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
 
                                 <strong>#Nombre :</strong> {{$photo->label}}<br>
                                 <strong>#Gestionada por :</strong> {{$photo->user->name}}<br>

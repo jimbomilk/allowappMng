@@ -290,6 +290,21 @@ class Photo extends General
 
 
 
+    public function updatePhotobyNetwork(){
+        $sites = Publicationsite::where('group_id',$this->group_id)->get();
+        foreach ($sites as $site){
+
+            $photonetwork = Photonetwork::firstOrCreate(['photo_id' => $this->id], ['publicationsite_id' => $site->id]);
+            $file = $photonetwork->pixelatePhoto($site->name);
+            if (isset($file)){
+                $photonetwork->url = $file;
+                $photonetwork->save();
+            }
+        }
+
+    }
+
+
 
 
 }

@@ -117,7 +117,13 @@ class MainSeeder extends Seeder {
             'user_id'       => $userId,
             'location_id'   => $idlocation,
             'name'          => $name ));
+
+        try{
+            \Larareko\Rekognition\RekognitionFacade::deleteCollection('locations'.$idlocation."_"."groups".$id);
+        }catch(Exception $e){}
+        try{
         \Larareko\Rekognition\RekognitionFacade::createCollection('locations'.$idlocation."_"."groups".$id);
+        }catch(Exception $e){}
         return $id;
     }
 

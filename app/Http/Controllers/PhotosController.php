@@ -342,7 +342,7 @@ class PhotosController extends Controller
         $count=0;
 
         // Borramos las faces del grupo para que se vuelvan a utilizar en la siguiente.
-        $this->deleteFaces($photo);
+        //$this->deleteFaces($photo);
 
         try {
             foreach ($photo->rightholderphotos as $rhp) {
@@ -363,6 +363,8 @@ class PhotosController extends Controller
         $photo->setData('status',Status::STATUS_PENDING);
         $photo->save();
 
+        // Cuando se envia la imagen se generan todas las mini imagenes para cada una de las redes.
+        $photo->updatePhotobyNetwork();
 
 
 

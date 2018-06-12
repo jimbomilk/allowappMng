@@ -110,34 +110,5 @@ class Request extends FormRequest
     }
 
 
-    public function pixelateSrc($photo,$faces2Pixelate){
-        // Extraemos la imagen original
-        $photoData = json_decode($photo->data);
-        $img = Image::make($photoData->src);
-        $pixelated = Image::make($photoData->src);
 
-        $pixelated->pixelate(12);
-        $streamPixelated = $pixelated->stream();
-
-        $img_width = $img->width();
-        $img_height = $img->height();
-
-
-        //Recorremos las caras a pixelar
-        foreach($faces2Pixelate as $index=>$face){
-
-            $x = round($face->Left * $img_width);
-            $y = round($face->Top * $img_height);
-            $width = ceil($face->Width * $img_width);
-            $height = ceil($face->Height * $img_height);
-            $crop = Image::make($streamPixelated);
-            $crop->crop($width, $height, $x, $y);
-            $img->insert($crop, 'top-left', $x, $y);
-        }
-
-        if (Storage::disk('s3')->put($photo->getPhotopathAttribute(), $img->stream()->__toString(),'public')) {
-            return ( Storage::disk('s3')->url($photo->getPhotopathAttribute()));
-        }
-        return null;
-    }
 }
