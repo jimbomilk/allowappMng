@@ -22623,6 +22623,14 @@ label,
     background-color: red;
 }
 
+.inputfile2 label {
+    color: white;
+}
+
+.inputfile2 label:hover {
+    color: grey;
+}
+
 /* FACES PAGE */
 #loader{
     margin: 0;

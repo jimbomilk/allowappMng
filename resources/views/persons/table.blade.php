@@ -2,6 +2,7 @@
     <tr>
         <th>Alumno</th>
         <th>{{Lang::get("label.$name.minor")}}</th>
+        <th>{{Lang::get("label.$name.phone")}}</th>
         <th>{{Lang::get("label.$name.email")}}</th>
         <th>{{Lang::get("label.$name.documentId")}}</th>
         <th>{{Lang::get("label.$name.group_id")}}</th>
@@ -18,6 +19,7 @@
                     {{$element->name}}</div>
                 </div> </td>
             <td>{{$element->minor?'Si':''}}</td>
+            <td>{{$element->phone}}</td>
             <td>{{$element->email}}</td>
             <td>{{$element->documentId}}</td>
             <td>{{$element->group->name}}</td>

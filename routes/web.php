@@ -23,6 +23,9 @@ Route::group([
     Route::resource('groups', 'GroupsController');
     Route::resource('persons', 'PersonsController');
     Route::resource('locations', 'LocationsController');
+    Route::post('locations/excel/import', 'ExcelController@import')->name('import');
+    Route::get('locations/excel/create', 'ExcelController@create')->name('create');
+    Route::get('locations/excel/show/{id}', 'ExcelController@index')->name('excel');
     Route::get('locations/{location}/{collection}', 'LocationsController@show');
     Route::get('locations/{location}/delete/{collection}', 'LocationsController@deleteCollection');
 
@@ -56,8 +59,8 @@ Route::group([
     Route::get('photos/share/{id}/{share}',['uses' => 'PhotosController@share']);
 
 
-    Route::get('excel/', 'ExcelController@index')->name('index');
-    Route::post('excel/import', 'ExcelController@import')->name('import');
+
+
 
 });
 
@@ -66,14 +69,12 @@ Route::group([
 
 Route::group(['middleware' => ['web']], function () {
 
-Route::get('photo/{id}/{user}/{person}/{rightholder}/{token}','LinkController@link')->name('photo.link')/*->middleware('throttle:5,5')*/;
-Route::post('photo/response','LinkController@response')->name('photo.link.response')/*->middleware('throttle:5,5')*/;
+    Route::get('photo/{id}/{user}/{person}/{rightholder}/{token}','LinkController@link')->name('photo.link')/*->middleware('throttle:5,5')*/;
+    Route::post('photo/response','LinkController@response')->name('photo.link.response')/*->middleware('throttle:5,5')*/;
+    Route::get('photo/shared/{id}/network/{network}/token/{token}','LinkController@shared')->name('photo.link.shared');
 
-Route::get('photo/shared/{id}/network/{network}/token/{token}','LinkController@shared')->name('photo.link.shared');
+    Route::get('rightholder/shared/{id}/token/{token}','LinkController@rightholder')->name('rightholder.link.shared')/*->middleware('throttle:5,5')*/;
+    Route::post('rightholder/response','LinkController@rightholderResponse')->name('rightholder.link.response')/*->middleware('throttle:5,5')*/;
 
-Route::get('rightholder/shared/{id}/token/{token}','LinkController@rightholder')->name('rightholder.link.shared')/*->middleware('throttle:5,5')*/;
-Route::post('rightholder/response','LinkController@rightholderResponse')->name('rightholder.link.response')/*->middleware('throttle:5,5')*/;
-
-// your routes here
 });
 

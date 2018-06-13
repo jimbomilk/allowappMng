@@ -15,6 +15,10 @@
         </div>
 
         <div class="col-sm-4">
+            @include("common.controls.input_text",array('var'=>'phone'))
+        </div>
+
+        <div class="col-sm-4">
             @include("common.controls.input_text",array('var'=>'email'))
         </div>
         <div class="col-sm-5">

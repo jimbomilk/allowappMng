@@ -17,6 +17,7 @@ class Persons extends Migration
             $table->increments('id');
             $table->string('name');
             $table->smallInteger('minor');
+            $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('documentId')->nullable();
             $table->string('photo')->nullable();

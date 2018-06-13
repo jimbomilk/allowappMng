@@ -19,7 +19,9 @@
             <td>
                 @include("common.controls.btn_edit",array('var'=>$element))
                 @include("common.controls.btn_show",array('var'=>$element))
+                @include("common.controls.btn_other",array('route'=> 'excel/show','onlyicon'=>true,'icon'=>'fa fa-file-excel-o','small'=>'true','var'=>$element,'label'=>$name.'excel','style'=>'btn-info'))
                 @include("common.controls.btn_delete",array('var'=>$element))
+
             </td>
 
 
