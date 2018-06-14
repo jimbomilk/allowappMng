@@ -109,22 +109,17 @@ class Photonetwork extends Model
     }
 
     private function pixelate($faces2Pixelate){
-
         // Extraemos la imagen original
         $photoData = json_decode($this->photo->data);
         $img = Image::make($photoData->src);
         $pixelated = Image::make($photoData->src);
-
         $pixelated->pixelate(12);
         $streamPixelated = $pixelated->stream();
-
         $img_width = $img->width();
         $img_height = $img->height();
 
-
         //Recorremos las caras a pixelar
         foreach($faces2Pixelate as $index=>$face){
-
             $x = round($face->Left * $img_width);
             $y = round($face->Top * $img_height);
             $width = ceil($face->Width * $img_width);
@@ -134,10 +129,7 @@ class Photonetwork extends Model
             $img->insert($crop, 'top-left', $x, $y);
         }
 
-
         $filename = $this->path . '/'. $this->sitename. '.' . $this->photo->extension;
-
-
         if (Storage::disk('s3')->put($filename, $img->stream()->__toString(),'public')) {
             return ( Storage::disk('s3')->url($filename));
         }

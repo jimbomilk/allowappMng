@@ -8,19 +8,14 @@ use Illuminate\Support\Facades\Config;
 class IntermediateExcel3 extends Model
 {
     protected $table = 'intermediate_excel_3';// SITES
-    //
     protected $services;
-
-
 
     public function __construct (){
         $this->services = Config::get('social-share.services');
     }
 
     public function check($key,$value,&$title){
-
         switch ($key) {
-
             case "site_code" :
                 if (!isset($value)||$value=""||!ctype_digit($value)){
                     $title = "Es un campo obligatorio";

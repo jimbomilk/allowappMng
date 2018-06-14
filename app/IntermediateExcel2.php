@@ -11,28 +11,21 @@ class IntermediateExcel2 extends Model
     protected $table = 'intermediate_excel_2'; // RIGHTHOLDERS
     protected $persons =null;
 
-
-
-
     public function checkPerson($value){
         if(!isset($this->persons))
             $this->persons =array_unique(IntermediateExcel1::where('location_id',$this->location_id)->pluck('person_code')->toArray());
         return in_array($value,$this->persons);
     }
 
-
     public function check($key,$value,&$title){
         switch ($key) {
-
             case "rightholder_code" :
                 if (!isset($value) || $value == "" || !ctype_digit($value)) {
                     $title = "Es un campo obligatorio";
                     return false;
                 }
                 break;
-
             case "rightholder_person_code" :
-
                 if (!isset($value)||$value==""||!ctype_digit($value)){
                     $title = "Es un campo obligatorio";
                     return false;
@@ -79,7 +72,7 @@ class IntermediateExcel2 extends Model
                     return false;
                 }
                 break;
-            case "status" :
+            case "status":
                 if ($value=='ko'){
                     $title = "No se ha podido importar. Se han de solucionar los errores previos";
                     return false;

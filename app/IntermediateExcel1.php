@@ -17,9 +17,7 @@ class IntermediateExcel1 extends Model
     }
 
     public function check($key,$value,&$title){
-
         switch ($key) {
-
             case "person_code" :
                 if (!isset($value)||$value==""||!ctype_digit($value)){
                     $title = "Es un campo obligatorio";
@@ -61,7 +59,6 @@ class IntermediateExcel1 extends Model
                     $title = 'Valor incorrecto porque es un valor obligatorio para mayores de 16 años';
                     return false;
                 }
-
                 if (isset($value) && !filter_var($value, FILTER_VALIDATE_EMAIL)){
                     $title = "No es un email válido";
                     return false;
@@ -73,7 +70,6 @@ class IntermediateExcel1 extends Model
                     return false;
                 }
                 break;
-
             case "status" :
                 if ($value=='ko'){
                     $title = "No se ha podido importar. Se han de solucionar los errores previos";
@@ -86,4 +82,11 @@ class IntermediateExcel1 extends Model
         return true;
     }
 
+
+    public function getPhotopathAttribute()
+    {
+        $path = 'locations/location'.$this->location_id.'/imports/import'. $this->import_id. '/' ;
+
+        return $path.'/'.basename(urldecode($this->person_photo_path));
+    }
 }

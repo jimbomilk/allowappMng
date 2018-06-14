@@ -2,6 +2,9 @@
     <tr>
         <th>#</th>
         <th>{{Lang::get("label.$name.name")}}</th>
+        <th>{{Lang::get("label.$name.email")}}</th>
+        <th>{{Lang::get("label.$name.phone")}}</th>
+        <th>{{Lang::get("label.$name.documentId")}}</th>
         <th>{{Lang::get("label.$name.relation")}}</th>
         <th>{{Lang::get("label.$name.consents")}}</th>
         <th></th>
@@ -12,6 +15,9 @@
         <tr data-id="{{$element->id}}">
             <td>{{$element->id}}</td>
             <td>{{$element->name}}</td>
+            <td>{{$element->email}}</td>
+            <td>{{$element->phone}}</td>
+            <td>{{$element->documentId}}</td>
             <td>{{$element->relation}} de {{$element->person->name}}</td>
             <td> @if($element->status==\App\Status::RH_PROCESED && isset($element->consent) )
                     @foreach(json_decode($element->consent) as $key=>$value)

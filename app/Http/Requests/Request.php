@@ -19,77 +19,37 @@ class Request extends FormRequest
             return null;
         //dd($folder);
         $file = $this->file($field);
-
         $filename = null;
         if (isset($file)) {
             $filename = $folder . '/' . $field .Carbon::now(). '.' . $file->getClientOriginalExtension();
             if (Storage::disk('s3')->put($filename, File::get($file),'public')) {
                 return Storage::disk('s3')->url($filename);
             }
-
         }
-
         if ($this->input($field) == "")
             return "";
         return null;
     }
 
     /**** Watermak values : working, final */
-    public function savePixelateImagen($photoId){
-
-        $photo = Photo::find($photoId);
-        if (!isset($photo))
-            return null;
-        $photoData = json_decode($photo->data);
-        // Creamos la imagen de trabajo
-        $img = Image::make($photoData->src);
-
-
-        // Recorremos las caras de la imagen
-        $photoFaces = json_decode($photo->faces);
-        foreach($photoFaces as $face){
-            // Tenemos que comprobar si esa cara está identificada en personFaces y si tienen todos los permisos de
-            // los rightholders
-            $person = $photo->findFacePerson();
-
-            // si hemos encontrado una persona comprobamos sus rightholders
-            $person->checkRighholdersConsents($network);
-            if (isset($person)){
-
-            }
-
-        }
-
-        return null;
-    }
-
-
-    /**** Watermak values : working, final */
     public function saveWatermarkFile(&$box,$field,$folder, $watermark_type = 'working',$height='full'){
-
         if (!isset($field) || $field == '')
             return null;
         //dd($folder);
         $file = $this->file($field);
-
         $filename = null;
         if (isset($file)) {
-
             // Creamos la imagen de trabajo
             $img = Image::make(File::get($file));
-
             if ($height != 'full') {
                 $img->resize(null, $height, function ($constraint) {
                     $constraint->aspectRatio();
                 });
             }
-
             $watermark = Image::make(public_path() . '/img/watermark_' . $watermark_type.'.png');
             $watermark->resize(100, 40);
             if ($watermark_type == 'final' ) {
                 $img->insert($watermark, 'top-right');
-                //$img->brightness(35);
-
             }else {
                 $img->insert($watermark, 'top-left');
                 $img->insert($watermark, 'center');
@@ -101,9 +61,7 @@ class Request extends FormRequest
             if (Storage::disk('s3')->put($filename, $img->stream()->__toString(),'public')) {
                 return Storage::disk('s3')->url($filename);
             }
-
         }
-
         if ($this->input($field) == "")
             return "";
         return null;

@@ -124,35 +124,28 @@ class ExcelController extends Controller
         $loc = Location::byName($location);
         //Vamos a recorrer cada entry y ejecutamos un insert o un update
         $sites2import = IntermediateExcel3::where('location_id',$loc->id)->get();
-
         $groups =array_unique(IntermediateExcel3::where('location_id',$loc->id)->pluck('site_group')->toArray());
-
         //1º insertamos los grupos
         foreach($groups as $group){
             Group::firstOrCreate(
                 ['user_id'=>$request->user()->id,'location_id'=>$loc->id,'name'=>$group]);
         }
-
         //2º insertamos los sites
         foreach($sites2import as $site){
             $site->status='ko';
-
-            $check_status='ok';
+            $check_status=true;
             $title="uuu";
             foreach($site->getAttributes() as $key=>$value){
-                $keys[] = $key;
-                $check_status = $check_status && $site->check($key,$value,$title);
-
+                if ($key!="status")
+                    $check_status = $check_status && $site->check($key,$value,$title);
             }
 
             $group = Group::where('name',$site->site_group)->first();
             if (isset($group)&&$check_status) {
                 Publicationsite::firstOrCreate([
                 'name' => $site->site_name,'url' => $site->site_url,'group_id' => $group->id]);
-
                 $site->status='ok';
             }
-
             $site->save();
         }
 
@@ -166,12 +159,11 @@ class ExcelController extends Controller
 
         foreach($persons2import as $person) {
             $person->status = 'ko';
-
-            $check_status = 'ok';
+            $check_status = true;
             $title = "uuu";
             foreach ($person->getAttributes() as $key => $value) {
-                $keys[] = $key;
-                $check_status = $check_status && $person->check($key, $value, $title);
+                if ($key!="status")
+                    $check_status = $check_status && $person->check($key, $value, $title);
             }
 
             $group = Group::where('name',$person->person_group)->first();
@@ -182,7 +174,13 @@ class ExcelController extends Controller
                     'group_id' => $group->id]);
                 $insertPerson->code = $person->person_code;
                 $insertPerson->minor = ($person->person_minor == "SI"||$person->person_minor=="")?1:0;
-                $insertPerson->photo = $person->person_photo_path;
+                $filename = $insertPerson->path."/".$person->person_photo_name;
+                if(Storage::disk('s3')->exists($insertPerson->photopath)){
+                    Storage::disk('s3')->delete($insertPerson->photopath);
+                }
+                if (Storage::disk('s3')->copy($person->photopath,$filename,'public')){
+                    $insertPerson->photo = Storage::disk('s3')->url($filename);
+                }
                 $insertPerson->documentId = $person->person_dni;
                 $insertPerson->email = $person->person_email;
                 $insertPerson->phone = $person->person_phone;
@@ -203,12 +201,11 @@ class ExcelController extends Controller
 
         foreach($rh2import as $rh) {
             $rh->status = 'ko';
-
-            $check_status = 'ok';
+            $check_status = true;
             $title = "uuu";
             foreach ($rh->getAttributes() as $key => $value) {
-                $keys[] = $key;
-                $check_status = $check_status && $rh->check($key, $value, $title);
+                if ($key!="status")
+                    $check_status = $check_status && $rh->check($key, $value, $title);
             }
 
             $person = Person::where('code',$rh->rightholder_person_code)->first();

@@ -38,18 +38,7 @@ class GroupsController extends Controller
         return $this->sendView($request);
     }
 
-    protected function groupAWSUp($group){
-        try {
-            //dd($group->collection);
 
-
-            \Rekognition::deleteCollection($group->collection);
-        }catch(Exception  $t){}
-        try{
-            \Rekognition::createCollection($group->collection);
-            //dd(\Rekognition::listCollections(100));
-        }catch(Exception  $t){}
-    }
 
     protected function groupAWSDown($group){
         try {
@@ -66,7 +55,7 @@ class GroupsController extends Controller
         $group->location_id = $request->get('location');
         $group->save();
 
-        $this->groupAWSUp($group);
+
 
         return redirect('groups');
     }

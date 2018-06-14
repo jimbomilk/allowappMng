@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Group;
+use Exception;
 use Larareko\Rekognition\RekognitionFacade;
 
 class GroupObserver
@@ -24,7 +25,8 @@ class GroupObserver
 
     public function updated(Group $group)
     {
-        //
+        // dd('hola');
+        $this->groupAWSUp($group);
     }
 
     public function saving(Group $group)
@@ -34,7 +36,7 @@ class GroupObserver
 
     public function saved(Group $group)
     {
-        //
+        $this->groupAWSUp($group);
     }
 
     public function deleting(Group $group)
@@ -62,5 +64,14 @@ class GroupObserver
         //
     }
 
+    protected function groupAWSUp($group){
+        try {
+            \Rekognition::deleteCollection($group->collection);
+        }catch(\Exception  $t){}
+        try{
+            \Rekognition::createCollection($group->collection);
+            //dd(\Rekognition::listCollections(100));
+        }catch(\Exception  $t){}
+    }
 
 }
