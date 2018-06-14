@@ -2,12 +2,17 @@
     <div class="panel panel-default" >
         <div class="panel-heading" style="background-color: rgb(246,216,88);color: #000000">
             {{$title}}
-
-            @if(isset($buttons))
-                <span style="float:right">
-                @include("$name.partials.$buttons",['var'=>'images'])
+            @if(isset($btnImport))
+                <span style="margin-left:20px;float:right">
+                @include("$name.partials.btn_import",['var'=>'toddbb','idTable'=>$idTable,'text'=>'Importar tabla','icon'=>'fa fa-download'])
                 </span>
             @endif
+            @if(isset($btnImages))
+                <span style="margin-left:20px;float:right">
+                @include("$name.partials.btn_images",['var'=>'images','text'=>'Asignar fotos','icon'=>'fa fa-photo'])
+                </span>
+            @endif
+
         </div>
         <div class="panel-body">
 
@@ -19,21 +24,26 @@
                         <tr>
 
                             @foreach($element->getAttributes() as $key=>$value)
-                                @if($key!='id'&&$key!='created_at'&&$key!='updated_at'&&$key!='location_id')
-                                <th style="border:1px solid grey;">{{$key}}</th>
+                                @if($key!='id'&&$key!='created_at'&&$key!='updated_at'&&$key!='location_id'&&$key!='import_id')
+                                <th style="border:1px solid grey;">{{trans("label.".$name.".".$key)}}</th>
                                 @endif
                             @endforeach
                         </tr>
                     @endif
                     <tr data-id="{{$element->id}}">
                         @foreach($element->getAttributes() as $key=>$value)
-                            @if($key!='id'&&$key!='created_at'&&$key!='updated_at'&&$key!='location_id')
+                            @if($key!='id'&&$key!='created_at'&&$key!='updated_at'&&$key!='location_id'&&$key!='import_id')
                             <td style="border:1px solid grey;background-color:{{$element->check($key,$value,$title)?"rgba(180,255,180,0.2)":"rgba(255,90,90,0.5)"}}" title="{{$title}}">
-                                {{$value}}
+
                                 @if (strpos($key,"path")==true)
-                                    <span style="text-align: center">
-                                        @include("$name.partials.$button",['var'=>$element->id])
-                                    </span>
+                                    @if (isset($value))
+                                        <div class="person" style="margin-left: auto;margin-right: auto;width: 30%">
+                                            <img class="img-responsive" src={{$value}} alt="imagen">
+                                        </div>
+                                    @endif
+
+                                @else
+                                    {{$value}}
                                 @endif
                             </td>
                             @endif

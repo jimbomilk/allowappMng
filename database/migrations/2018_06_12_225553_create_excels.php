@@ -17,10 +17,6 @@ class CreateExcels extends Migration
         Schema::create('excels', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->longText('log_sites')->nullable();
-            $table->longText('log_persons')->nullable();
-            $table->longText('log_rightholders')->nullable();
-
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')
                 ->references('id')

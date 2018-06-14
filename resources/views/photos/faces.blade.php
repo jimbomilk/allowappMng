@@ -209,14 +209,14 @@
             'boxTop': boxFaceBlinkingTop,
             'boxLeft': boxFaceBlinkingLeft
         })
-                .done(function () {
+        .done(function () {
 
-                    location.reload();
+            location.reload();
 
-                })
-                .always( function() {
-                    $("#loader").hide();
-                });
+        })
+        .always( function() {
+            $("#loader").hide();
+        });
 
 
 

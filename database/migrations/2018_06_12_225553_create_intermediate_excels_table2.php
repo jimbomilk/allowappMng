@@ -25,10 +25,18 @@ class CreateIntermediateExcelsTable2 extends Migration
             $table->string('rightholder_phone', 50)->nullable();
             $table->string('rightholder_documentId', 50)->nullable();
 
+            $table->string('status', 1000)->nullable();
+
             $table->integer('location_id')->unsigned();
             $table->foreign('location_id')
                 ->references('id')
                 ->on('locations')
+                ->onDelete('cascade');
+
+            $table->integer('import_id')->unsigned();
+            $table->foreign('import_id')
+                ->references('id')
+                ->on('excels')
                 ->onDelete('cascade');
 
             $table->timestamps();

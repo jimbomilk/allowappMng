@@ -26,6 +26,12 @@ Route::group([
     Route::post('locations/excel/import', 'ExcelController@import')->name('import');
     Route::get('locations/excel/create', 'ExcelController@create')->name('create');
     Route::get('locations/excel/show/{id}', 'ExcelController@index')->name('excel');
+    Route::post('locations/excel/show/importPhoto', 'ExcelController@importPhoto')->name('importPhoto');
+
+    Route::post('locations/excel/show/importsites', 'ExcelController@importsites')->name('importsites');
+    Route::post('locations/excel/show/importpersons', 'ExcelController@importpersons')->name('importpersons');
+    Route::post('locations/excel/show/importrightholders', 'ExcelController@importrightholders')->name('importrightholders');
+
     Route::get('locations/{location}/{collection}', 'LocationsController@show');
     Route::get('locations/{location}/delete/{collection}', 'LocationsController@deleteCollection');
 

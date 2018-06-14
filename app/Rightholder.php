@@ -9,7 +9,7 @@ use Waavi\UrlShortener\Facades\UrlShortener;
 
 class Rightholder extends Model
 {
-    protected $fillable = ['name','relation','email','phone','person_id','documentId'];
+    protected $fillable = ['name','relation','email','phone','person_id','documentId','location_id'];
     static $searchable = ['name','email','phone'];
 
     public function person(){

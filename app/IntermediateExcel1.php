@@ -7,14 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class IntermediateExcel1 extends Model
 {
     protected $table = 'intermediate_excel_1'; // PERSONS
-    protected $groups = [];
+    protected $groups = null;
 
-    public function __construct (){
-        $this->groups =array_unique(IntermediateExcel3::where('location_id',1)->pluck('site_group')->toArray());
-
-    }
 
     public function checkGroup($value){
+        if(!isset($this->groups))
+            $this->groups =array_unique(IntermediateExcel3::where('location_id',$this->location_id)->pluck('site_group')->toArray());
         return in_array($value,$this->groups);
     }
 
@@ -41,8 +39,8 @@ class IntermediateExcel1 extends Model
                 }
                 break;
             case "person_minor" :
-                if(!isset($value)||$value==""||strpos($value,"SI")===false && strpos($value,"NO")===false && $value!=""){
-                    $title = 'Valor incorrecto';
+                if(!isset($value)||$value=="" || ($value!="SI"&&$value!="NO")){
+                    $title = 'Valor incorrecto. Los valores válidos son SI y NO';
                     return false;
                 }
                 break;
@@ -69,9 +67,16 @@ class IntermediateExcel1 extends Model
                     return false;
                 };
                 break;
-            case "person_photo_name" :
+            case "person_photo_path" :
                 if (!$this->person_photo_path || !isset($value)||$value=="") {
-                    $title = "Es un campo obligatorio y debe asociarse a una ruta valida";
+                    $title = "Es un campo obligatorio. Debe asignarse una foto";
+                    return false;
+                }
+                break;
+
+            case "status" :
+                if ($value=='ko'){
+                    $title = "No se ha podido importar. Se han de solucionar los errores previos";
                     return false;
                 }
                 break;

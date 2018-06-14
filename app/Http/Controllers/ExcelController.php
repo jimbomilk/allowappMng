@@ -3,14 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\ExcelImport;
+use App\Group;
 use App\IntermediateExcel1;
 use App\IntermediateExcel2;
 use App\IntermediateExcel3;
 use App\Location;
+use App\Person;
+use App\Publicationsite;
+use App\Rightholder;
+use Carbon\Carbon;
 use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -23,7 +30,10 @@ class ExcelController extends Controller
         $persons = IntermediateExcel1::where('location_id',$locationId)->get();
         $rightholders = IntermediateExcel2::where('location_id',$locationId)->get();
         $sites = IntermediateExcel3::where('location_id',$locationId)->get();
-        return view('excel.show',['name'=>'excel','excels'=>$excels,'persons'=>$persons,'rightholders'=>$rightholders,'sites'=>$sites]);
+
+        $current_import = isset($excels->last()->id)?$excels->last()->id:0;
+
+        return view('excel.show',['name'=>'excel','excels'=>$excels,'persons'=>$persons,'rightholders'=>$rightholders,'sites'=>$sites,'current_import'=>$current_import]);
     }
 
     public function create(Request $request){
@@ -50,17 +60,23 @@ class ExcelController extends Controller
                     $insertPersonsRes = false;
                     $insertRightholdersRes = false;
 
+                    // Creamos una entrada en la tabla de importaciones
+                    $import = new ExcelImport();
+                    $import->user_id = $request->user()->id;
+                    $import->location_id = $loc->id;
+                    $import->save();
+
                     foreach ($data as $page) {
 
                         if (strpos(strtolower($page->getTitle()),"publicar")!==false){
-                            $insertSitesRes = $this->processSites($page,$loc);
+                            $insertSitesRes = $this->processSites($import->id,$page,$loc);
                         }
 
                         else if (strpos(strtolower($page->getTitle()),"personas")!==false){
-                            $insertPersonsRes = $this->processPersons($page,$loc);
+                            $insertPersonsRes = $this->processPersons($import->id,$page,$loc);
                         }
                         else if (strpos(strtolower($page->getTitle()),"responsables")!==false){
-                            $insertRightholdersRes = $this->processRightholders($page,$loc);
+                            $insertRightholdersRes = $this->processRightholders($import->id,$page,$loc);
                         }
                     }
                 }
@@ -81,11 +97,143 @@ class ExcelController extends Controller
         }
     }
 
+    public function importPhoto(Request $request,$location){
+        $photo = $request->get('file');
+        $name = $request->get('name');
+        $importId = $request->get('importId');
+        $loc = Location::where('name',$location)->first();
 
-    private function processSites($page,$location){
+        $img = Image::make($photo);
+
+        $filename = 'locations/location'.$loc->id.'/imports/import'. $importId. '/' . $name;
+        if (Storage::disk('s3')->put($filename, $img->stream()->__toString(),'public')) {
+            $fileUrl= ( Storage::disk('s3')->url($filename));
+
+            // busco la imagen en las personas
+            $importPerson = IntermediateExcel1::where('person_photo_name',$name)->first();
+            if (isset($importPerson)) {
+                $importPerson->person_photo_path = $fileUrl;
+                $importPerson->save();
+            }
+        }
+
+    }
+
+    public function importsites(Request $request,$location)
+    {
+        $loc = Location::byName($location);
+        //Vamos a recorrer cada entry y ejecutamos un insert o un update
+        $sites2import = IntermediateExcel3::where('location_id',$loc->id)->get();
+
+        $groups =array_unique(IntermediateExcel3::where('location_id',$loc->id)->pluck('site_group')->toArray());
+
+        //1º insertamos los grupos
+        foreach($groups as $group){
+            Group::firstOrCreate(
+                ['user_id'=>$request->user()->id,'location_id'=>$loc->id,'name'=>$group]);
+        }
+
+        //2º insertamos los sites
+        foreach($sites2import as $site){
+            $site->status='ko';
+
+            $check_status='ok';
+            $title="uuu";
+            foreach($site->getAttributes() as $key=>$value){
+                $keys[] = $key;
+                $check_status = $check_status && $site->check($key,$value,$title);
+
+            }
+
+            $group = Group::where('name',$site->site_group)->first();
+            if (isset($group)&&$check_status) {
+                Publicationsite::firstOrCreate([
+                'name' => $site->site_name,'url' => $site->site_url,'group_id' => $group->id]);
+
+                $site->status='ok';
+            }
+
+            $site->save();
+        }
+
+    }
+
+    public function importpersons(Request $request,$location)
+    {
+        $loc = Location::byName($location);
+        //Vamos a recorrer cada entry y ejecutamos un insert o un update
+        $persons2import = IntermediateExcel1::where('location_id',$loc->id)->get();
+
+        foreach($persons2import as $person) {
+            $person->status = 'ko';
+
+            $check_status = 'ok';
+            $title = "uuu";
+            foreach ($person->getAttributes() as $key => $value) {
+                $keys[] = $key;
+                $check_status = $check_status && $person->check($key, $value, $title);
+            }
+
+            $group = Group::where('name',$person->person_group)->first();
+            if (isset($group)&&$check_status) {
+                $insertPerson = Person::firstOrNew([
+                    'name' => $person->person_name,
+                    'location_id' => $loc->id,
+                    'group_id' => $group->id]);
+                $insertPerson->code = $person->person_code;
+                $insertPerson->minor = ($person->person_minor == "SI"||$person->person_minor=="")?1:0;
+                $insertPerson->photo = $person->person_photo_path;
+                $insertPerson->documentId = $person->person_dni;
+                $insertPerson->email = $person->person_email;
+                $insertPerson->phone = $person->person_phone;
+                $insertPerson->save();
+                $person->status='ok';
+            }
+            $person->save();
+        }
+
+
+    }
+
+    public function importrightholders(Request $request,$location)
+    {
+        $loc = Location::byName($location);
+        //Vamos a recorrer cada entry y ejecutamos un insert o un update
+        $rh2import = IntermediateExcel2::where('location_id',$loc->id)->get();
+
+        foreach($rh2import as $rh) {
+            $rh->status = 'ko';
+
+            $check_status = 'ok';
+            $title = "uuu";
+            foreach ($rh->getAttributes() as $key => $value) {
+                $keys[] = $key;
+                $check_status = $check_status && $rh->check($key, $value, $title);
+            }
+
+            $person = Person::where('code',$rh->rightholder_person_code)->first();
+            if (isset($person)&&$check_status) {
+                $insertRh = Rightholder::firstOrNew([
+                    'name' => $rh->rightholder_name,
+                    'location_id'=>$loc->id,
+                    'person_id' => $person->id,
+                    'email' => $rh->rightholder_email]);
+                $insertRh->relation = $rh->rightholder_relation;
+                $insertRh->documentId = $rh->rightholder_documentId;
+                $insertRh->phone = $rh->rightholder_phone;
+
+                $insertRh->save();
+                $rh->status='ok';
+            }
+            $rh->save();
+        }
+    }
+
+    private function processSites($importId,$page,$location){
         foreach($page as $index=>$row) {
             if ($row->nombre != "") {
                 $insertSites[] = [
+                    'import_id' => $importId,
                     'site_code' => $index + 1,
                     'site_name' => $row->nombre,
                     'site_url' => $row->web,
@@ -103,11 +251,12 @@ class ExcelController extends Controller
     }
 
 
-    private function processPersons($page,$location){
+    private function processPersons($importId,$page,$location){
 
         foreach($page as $index=>$row) {
             if ($row->nombre != "") {
                 $insertPersons[] = [
+                    'import_id' => $importId,
                     'person_code' => strtoupper($row->codigo),
                     'person_group' => strtoupper($row->grupo),
                     'person_name' => $row->nombre,
@@ -128,12 +277,12 @@ class ExcelController extends Controller
         return false;
     }
 
-    private function processRightholders($page,$location){
+    private function processRightholders($importId,$page,$location){
 
         foreach($page as $index=>$row) {
             if ($row->nombre != "") {
                 $insertRightholders[] = [
-
+                    'import_id' => $importId,
                     'rightholder_code' => strtoupper($row->codigo),
                     'rightholder_person_code' => strtoupper($row->codigo_de_persona),
                     'rightholder_name' => $row->nombre,

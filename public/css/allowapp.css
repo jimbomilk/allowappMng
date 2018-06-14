@@ -118,6 +118,14 @@
     color: grey;
 }
 
+.inputfile3 label {
+    color: blue;
+}
+
+.inputfile3 label:hover {
+    color: black;
+}
+
 /* FACES PAGE */
 #loader{
     margin: 0;

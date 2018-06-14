@@ -22,10 +22,18 @@ class CreateIntermediateExcelsTable3 extends Migration
             $table->string('site_name', 200)->nullable();
             $table->string('site_url', 200)->nullable();
 
+            $table->string('status', 1000)->nullable();
+
             $table->integer('location_id')->unsigned();
             $table->foreign('location_id')
                 ->references('id')
                 ->on('locations')
+                ->onDelete('cascade');
+
+            $table->integer('import_id')->unsigned();
+            $table->foreign('import_id')
+                ->references('id')
+                ->on('excels')
                 ->onDelete('cascade');
 
             $table->timestamps();

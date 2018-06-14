@@ -55,4 +55,8 @@ class Location extends Model
         return $this->table.$this->id;
     }
 
+    public static function byName($location){
+        return Location::where('name',$location)->first();
+    }
+
 }

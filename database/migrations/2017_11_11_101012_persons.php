@@ -16,6 +16,7 @@ class Persons extends Migration
         Schema::create('persons', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('code'); //código interno de la persona en la organizacion
             $table->smallInteger('minor');
             $table->string('phone')->nullable();
             $table->string('email')->nullable();

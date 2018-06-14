@@ -44,7 +44,7 @@
     @endif
     <br>
     <div class="row">
-        <div class="col-md-12" >
+        <div class="col-md-offset-2 col-md-8" >
             <div class="panel panel-default" >
                 <div class="panel-heading" style="background-color: rgb(246,216,88);color: #000000">
                     <h4> Elige el fichero que desees importar (xls/csv) : </h4>

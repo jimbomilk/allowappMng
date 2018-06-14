@@ -13,7 +13,7 @@ class Person extends General
     protected $path = 'person';
     static $searchable = ['name'];
 
-    protected $fillable = ['name','photo','group_id','email','minor','documentId'];
+    protected $fillable = ['name','location_id','photo','group_id','email','minor','documentId'];
 
     public function location(){
         return $this->belongsTo('App\Location');

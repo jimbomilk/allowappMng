@@ -4,6 +4,7 @@ return [
 
     "create_new" => "Añadir",
     'name' => 'nombre',
+    'excel'=> 'fichero de importación',
 
     //PROFILES
     'profiles.super'=> 'Super usuario',
@@ -148,4 +149,32 @@ return [
     'historic.rightholders.show.to'=>'Enviar a',
     'historic.rightholders.show.title'=>'Titulo',
     'historic.rightholders.show.request'=>'Enviar informe',
+
+    //EXCEL
+    'excel.id'=>'#',
+    'excel.user_id'=>'Usuario',
+    'excel.created_at'=>'Fecha de creación',
+    'excel.site_code' => '#',
+    'excel.site_group' => 'Código de grupo',
+    'excel.site_name' => 'Nombre',
+    'excel.site_url' => 'Dirección web',
+    'excel.status'=> 'Estado',
+    'excel.person_code'=> 'Código de persona',
+    'excel.person_group'=> 'Código de grupo',
+    'excel.person_name'=>'Nombre',
+    'excel.person_minor'=>'Menor de 16 años',
+    'excel.person_dni'=>'Documento',
+    'excel.person_phone'=>'Teléfono',
+    'excel.person_email'=>'Email',
+    'excel.person_photo_name'=>'Nombre de la foto',
+    'excel.person_photo_path'=>'Foto',
+
+    'excel.rightholder_code'=>'#',
+    'excel.rightholder_person_code'=>'Código de persona',
+    'excel.rightholder_name'=>'Nombre',
+    'excel.rightholder_relation'=>'Relación',
+    'excel.rightholder_email'=>'Email',
+    'excel.rightholder_phone'=>'Teléfono',
+    'excel.rightholder_documentId'=>'Documento'
+
 ];

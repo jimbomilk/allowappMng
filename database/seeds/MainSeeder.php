@@ -65,7 +65,7 @@ class MainSeeder extends Seeder {
 
         // ** GROUPS **
         DB::table('groups')->delete();
-        $group1 = $this->createGroup($idlocation,$id1,'2B');
+        /*$group1 = $this->createGroup($idlocation,$id1,'2B');
         $g1_twitter = $this->addPublicationSite($group1,'twitter');
         $g1_facebook = $this->addPublicationSite($group1,'facebook');
         //$g1_instagram = $this->addPublicationSite($group1,'instagram');
@@ -73,7 +73,7 @@ class MainSeeder extends Seeder {
         $g2_twitter = $this->addPublicationSite($group2,'twitter');
         $g2_facebook = $this->addPublicationSite($group2,'facebook');
         //$g2_instagram = $this->addPublicationSite($group2,'instagram');
-
+*/
 
         // ** PERSONS **
         //$this->addPersons($idlocation,$group1);

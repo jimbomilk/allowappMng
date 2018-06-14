@@ -45,6 +45,12 @@ class IntermediateExcel3 extends Model
                     return false;
                 };
                 break;
+            case "status" :
+                if ($value=='ko'){
+                    $title = "No se ha podido importar. Se han de solucionar los errores previos";
+                    return false;
+                }
+                break;
         };
 
         $title = "correcto";

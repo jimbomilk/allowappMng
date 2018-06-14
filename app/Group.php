@@ -10,7 +10,7 @@ class Group extends Model
     protected $path = 'group';
     //id,name,location_id,user_id
 
-    protected $fillable = ['name','user_id'];
+    protected $fillable = ['name','user_id','location_id'];
 
     public function location(){
         return $this->belongsTo('App\Location');
