@@ -188,6 +188,7 @@ return [
         Chencha\Share\ShareServiceProvider::class,
         NickSynev\MakeObserverCommand\MakeObserverCommandServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Khill\Lavacharts\Laravel\LavachartsServiceProvider::class
 
     ],
 
@@ -245,6 +246,7 @@ return [
         'UrlShortener' => Waavi\UrlShortener\Facades\UrlShortener::class,
         'Share' => Chencha\Share\ShareFacade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Lava' => Khill\Lavacharts\Laravel\LavachartsFacade::class,
 
     ],
 

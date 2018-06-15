@@ -9,7 +9,10 @@ class RightholderPhoto extends Model
 {
     protected $fillable = ['link','status'];
 
-
+    public function user()
+    {
+        return $this->belongsTo('App\User','user_id','id');
+    }
 
     public function photo()
     {

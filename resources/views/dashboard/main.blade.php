@@ -18,10 +18,16 @@
     <!-- Small boxes (Stat box) -->
     <div class="row">
         @include ('dashboard.partials.boxes')
-
-
     </div><!-- /.row -->
+
     <div class="row">
+        <div class="col-sm-12">
+        @include ('dashboard.partials.graphs')
+        </div>
+
+    </div>
+
+    <div class="row" style="margin-top: 40px">
         @include ('dashboard.partials.links')
     </div>
 

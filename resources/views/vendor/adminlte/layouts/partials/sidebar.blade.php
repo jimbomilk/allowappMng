@@ -70,7 +70,7 @@
                     <li><a href="{{ url('historic/photos')}}"><i class='fa fa-camera-retro'></i> <span>{{ trans('labels.byphoto') }}</span></a></li>
                 </ul>
             </li>
-
+<!--
 
             <li class="active treeview">
                 <a href="#"><i class='fa fa-edit'></i> <span>{{ trans('labels.templates') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
@@ -79,6 +79,7 @@
                     <li><a href="#"><i class='fa fa-balance-scale'></i> <span>{{ trans('labels.legal') }}</span></a></li>
                 </ul>
             </li>
+            -->
 
         </ul><!-- /.sidebar-menu -->
     </section>
