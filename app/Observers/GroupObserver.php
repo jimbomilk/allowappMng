@@ -26,7 +26,7 @@ class GroupObserver
     public function updated(Group $group)
     {
         // dd('hola');
-        $this->groupAWSUp($group);
+        //$this->groupAWSUp($group);
     }
 
     public function saving(Group $group)
