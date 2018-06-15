@@ -6,6 +6,7 @@ return [
     'users.phone'=> 'Introducir teléfono',
 
     'persons.name' => 'Introducir nombre',
+    'persons.phone' => 'Introducir teléfono (sólo para mayores de 16 años)',
     'persons.email' => 'Introducir email (sólo para mayores de 16 años)',
     'persons.documentId' => 'Para poder identificarlo (sólo para mayores de 16 años)',
 

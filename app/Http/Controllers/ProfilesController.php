@@ -45,7 +45,8 @@ class ProfilesController extends Controller
         if (isset($profile)) {
             $profile->fill($request->all());
             $profile->location_id= $request->get('location');
-            $filename = $request->saveFile('avatar',$profile->path);
+            $file = $request->file('avatar');
+            $filename = $profile->saveFile($file);
             if (isset($filename))
                 $profile->avatar = $filename;
             $profile->save();

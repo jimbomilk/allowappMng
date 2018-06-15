@@ -26,7 +26,7 @@ class PersonObserver
     public function updated(Person $person)
     {
         //
-        $this->deleteExtraFaces($person->collection);
+        //$this->deleteExtraFaces($person->collection);
     }
 
     public function saving(Person $person)

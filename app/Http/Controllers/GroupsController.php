@@ -82,7 +82,6 @@ class GroupsController extends Controller
         $group = Group::find($id);
         if (isset($group)) {
             $group->fill($request->all());
-            $this->groupAWSUp($group);
             $group->save();
         }
 

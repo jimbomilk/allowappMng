@@ -10,6 +10,7 @@
         <div class="col-sm-7" style="padding-top: 30px;">
             @include("common.controls.input_check",array('var'=>'minor','default'=>1))
         </div>
+
         <div class="col-sm-9">
             @include("common.controls.input_text",array('var'=>'name'))
         </div>

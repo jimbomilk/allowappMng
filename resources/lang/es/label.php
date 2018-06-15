@@ -14,10 +14,12 @@ return [
 
     // LOCATIONS
     'locations' => "Colegio",
+    'locations.icon'=> "Escudo del colegio",
     "locations.name" => "Nombre del colegio",
     'locations.description' => 'Descripción',
     'locations.logo' => 'Logo',
     'locations.show' => 'Mostrar',
+    'locations.excel' => 'Importaciones',
     'locations.delete' => 'Borrar',
 
     // USERS
@@ -57,9 +59,11 @@ return [
     'persons.documentId' => 'Email',
     'persons.group_id' => 'Clase',
     'persons.photo' => 'Foto',
+    'persons.phone' => 'Teléfono',
     'persons.show' => 'Responsables',
     'persons.rightholders' => 'Responsables',
     'persons.FaceId'=> 'Face Id',
+
 
     // RIGHTHOLDERS
     'rightholders' => 'Responsables',

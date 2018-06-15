@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 
 class General extends Model{
@@ -83,6 +84,27 @@ class General extends Model{
         }
         return null;
     }
+
+    public function getPathAttribute()
+    {
+        return "";
+    }
+
+    public function saveFile($file)
+    {
+
+        if (isset($file)) {
+            $filename = $this->path . '/' . $this->table . $this->id. '.' . $file->getClientOriginalExtension();
+            if ($ret=Storage::disk('s3')->put($filename, File::get($file),'public')) {
+                //dd($filename);
+                return Storage::disk('s3')->url($filename);
+            }
+
+        }
+        return null;
+    }
+
+
 
 }
 

@@ -17,7 +17,7 @@
             <td><div class="person" >
                     <div style="margin-left: auto; margin-right: auto; width: 40%;text-align: center" >
                         <img class="img-responsive" src={{$element->photo}} alt="imagen">
-                    {{$element->name}}</div>
+                        {{$element->name}}</div>
                 </div> </td>
             <td>{{$element->minor?'Si':''}}</td>
             <td>{{$element->phone}}</td>

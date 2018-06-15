@@ -64,10 +64,11 @@ class LocationsController extends Controller
         $location = new Location($request->all());
         $location->save();
 
+        $this->photoUp($request,$location);
         return redirect('locations');
     }
 
-    public function update(EditLocationRequest $request, $loc , $id)
+    public function update(EditLocationRequest $request,$id)
     {
 
         $location = Location::find($id);
@@ -76,8 +77,10 @@ class LocationsController extends Controller
             $location->save();
         }
 
+        $this->photoUp($request,$location);
         return redirect('locations');
     }
+
 
     public function show($location,$collectionId=null)
     {
@@ -122,6 +125,18 @@ class LocationsController extends Controller
 
         Session::flash('message',$message);
         return redirect()->back();
+    }
+
+    protected function photoUp(Request $request,Location $location){
+        $file = $request->file('icon');
+        if(isset($file)) {
+            $filename = $location->saveFile($file);
+
+            if (isset($filename)) {
+                $location->icon = $filename;
+                $location->save();
+            }
+        }
     }
 
 }

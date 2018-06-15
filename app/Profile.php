@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Profile extends Model
+class Profile extends General
 {
     //id,phone,avatar,type,user_id,location_id
     protected $table='profiles';

@@ -162,7 +162,7 @@ class MainSeeder extends Seeder {
             'person_id'      => $idPerson,
             'documentId'     =>'28959436k',
             'name'           => $this->faker->name(),
-            'relation'       => $this->faker->randomElement(['Madre','Padre','Tutor']),
+            'relation'       => $this->faker->randomElement(['MADRE','PADRE','TUTOR']),
             'email'          => "jmgarciacarrasco@gmail.com",
             'phone'          => $this->faker->phoneNumber,
             'consent'       => json_encode($consents)

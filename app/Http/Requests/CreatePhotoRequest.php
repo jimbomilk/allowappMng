@@ -22,6 +22,7 @@ class CreatePhotoRequest extends Request {
     public function rules()
     {
         return [
+            'group_id'  => 'required',
             'label'      => 'required|bail|alpha_dash',
             'origen'      => 'required|bail|image',
         ];
@@ -30,6 +31,7 @@ class CreatePhotoRequest extends Request {
     public function attributes()
     {
         return [
+            'group_id' => 'grupo',
             'label' => 'etiqueta',
             'origen' => 'imágen'
         ];

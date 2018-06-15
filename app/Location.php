@@ -5,13 +5,12 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class Location extends Model
+class Location extends General
 {
     //id,name
     protected $table = 'locations';
-    protected $path = 'location';
 
-    protected $fillable = ['name'];
+    protected $fillable = ['description'];
 
     public function users(){
         return $this->hasMany('App\User');
@@ -48,7 +47,7 @@ class Location extends Model
 
     public function getPathAttribute()
     {
-        return $this->table.'/'.$this->path.$this->id;
+        return $this->table.'/location'.$this->id;
     }
 
     public function getCollectionAttribute(){
@@ -58,5 +57,7 @@ class Location extends Model
     public static function byName($location){
         return Location::where('name',$location)->first();
     }
+
+
 
 }

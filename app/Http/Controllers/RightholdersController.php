@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Session;
 class RightholdersController extends Controller
 {
     //
-    public $titles = ['Padre','Madre','Tutor'];
+    public $titles = ['PADRE','MADRE','TUTOR','PROPIO'];
     public function index(Request $request)
     {
         $location_id  = $request->get('location');

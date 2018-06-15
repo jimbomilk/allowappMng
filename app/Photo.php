@@ -62,6 +62,7 @@ class Photo extends General
 
     public function getPathAttribute()
     {
+
         return $this->group->path.'/'.$this->table.'/photo'.$this->id;
     }
 
@@ -82,6 +83,14 @@ class Photo extends General
         $data = json_decode($this->data);
 
         return $data->people;
+
+    }
+
+    public function getFacesCollectionAttribute(){
+        //return $this->hasmany('App\Face');
+        $data = json_decode($this->faces);
+
+        return $data;
 
     }
 
@@ -125,6 +134,9 @@ class Photo extends General
 
     public function getStatusAttribute()
     {
+        if (!isset($this->data))
+            return ['color'=>'','text' => ''];
+
         $data = json_decode($this->data);
         $label_color="";$label_text="";
         if ($data->status==10) {

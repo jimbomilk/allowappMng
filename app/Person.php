@@ -5,12 +5,12 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Larareko\Rekognition\RekognitionFacade;
 
 class Person extends General
 {
     //id,name,group_id,location_id,photo,photo_id
     protected $table = 'persons';
-    protected $path = 'person';
     static $searchable = ['name'];
 
     protected $fillable = ['name','location_id','photo','group_id','email','minor','documentId'];
@@ -89,6 +89,32 @@ class Person extends General
             if (isset($consents) && isset($consents->$network) && $consents->$network)
                 return true;
         }
+    }
+
+    public function createRightholderPropio(){
+        $rh = Rightholder::firstOrNew(['name'=>$this->name,
+            'documentId'=>$this->documentId,
+            'person_id'=>$this->id,
+            'location_id'=>$this->location_id]);
+        $rh->relation='PROPIO';
+        $rh->email=$this->email;
+        $rh->phone = $this->phone;
+        $rh->save();
+    }
+
+    public function faceUp(){
+
+        try{
+            $result= RekognitionFacade::indexFaces([ 'CollectionId'=>$this->collection,
+                'DetectionAttributes'=>['DEFAULT'],
+                'Image'=>['S3Object'=>[
+                    'Bucket'=>env('AWS_BUCKET'),
+                    'Name'=>$this->photopath]]]);
+            $this->faceId = $result['FaceRecords'][0]['Face']['FaceId'];
+
+        }catch (\Exception $t){
+            dd($t);
+        };
     }
 
 }

@@ -78,10 +78,12 @@
                 <div class="panel-heading">{{ trans('labels.face_detected')}} - Para eliminar una persona de la imagen, pulse sobre ella  </div>
                 <div id="panel-detected" class="detected panel-body" style="padding: 8px" >
                     @foreach($element->people as $person)
+                        @if(\App\Person::find($person->id))
                         <a href="#" class="faces-person" data-action="remove" data-personid="{{$person->id}}" data-imagenid="{{$element->id}}" data-photoface="{{isset($person->face)?$person->face->facePhotoId:""}}" style="margin: 2px;float: left">
                             <img width="60px" height="60px" src="{{\App\Person::find($person->id)->photo}}">
                             <div>{{\App\Person::find($person->id)->name}}</div>
                         </a>
+                        @endif
                     @endforeach
                 </div>
                 <div class="pull-right" style="margin: 12px">

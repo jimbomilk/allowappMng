@@ -7,6 +7,7 @@ use App\Http\Requests\CreatePersonRequest;
 use App\Http\Requests\EditPersonRequest;
 use App\Person;
 use App\Location;
+use App\Rightholder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -48,22 +49,21 @@ class PersonsController extends Controller
     }
 
     protected function photoUp(Request $request,Person $person){
-        $filename = $request->saveFile('photo',$person->path);
-        if (isset($filename)) {
-            $person->photo = $filename;
-            try{
-                $result= RekognitionFacade::indexFaces([ 'CollectionId'=>$person->collection,
-                'DetectionAttributes'=>['DEFAULT'],
-                'Image'=>['S3Object'=>[
-                    'Bucket'=>env('AWS_BUCKET'),
-                    'Name'=>$person->photopath]]]);
-                $person->faceId = $result['FaceRecords'][0]['Face']['FaceId'];
+        $file = $request->file('photo');
+        //dd($file);
+        if(isset($file)) {
+            $filename = $person->saveFile($file);
 
-            }catch (\Exception $t){
-                dd($t);
-            };
+            if (isset($filename)) {
+                $person->photo = $filename;
+                $person->save();
+                $person->faceUp();
+
+            }
         }
     }
+
+
 
     public function store(CreatePersonRequest $request,$location)
     {
@@ -74,7 +74,12 @@ class PersonsController extends Controller
 
 
         $this->photoUp($request,$person);
-        $person->save();
+
+        // Si no es menor damos de alta un rightholder
+        if (!$person->minor){
+            $person->createRightholderPropio();
+
+        }
         return redirect('persons');
     }
 
@@ -99,9 +104,29 @@ class PersonsController extends Controller
     {
         $person = Person::find($id);
         if (isset($person)) {
+            //2 casos : cambio de no minor a minor y al reves.
+
+            // Si cambia de no minor a minor hay que eliminar el rightholder propio
+            if (!$person->minor && $request->get('minor')==true)
+            {
+                foreach($person->rightholders as $rh)
+                    $rh->delete();
+            }
+            // Si cambio de minor a no minor hay que crear el righholder propio, pero despues de asignarlo
+            $create=false;
+            if($person->minor && $request->get('minor')==false){
+                $create = true;
+            }
             $person->fill($request->all());
-            $this->photoUp($request,$person);
             $person->save();
+
+            $this->photoUp($request,$person);
+
+
+            if($create){
+                $person->createRightholderPropio();
+            }
+
         }
         return redirect('persons');
     }

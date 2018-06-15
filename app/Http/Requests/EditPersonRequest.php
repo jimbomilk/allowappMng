@@ -24,7 +24,6 @@ class EditPersonRequest extends Request {
     {
         return [
             'name'          => 'required|bail|string',
-            'photo'         => 'required',
             'phone'         => 'required_if:minor,0',
             'email'         => 'required_if:minor,0',
             'documentId'    => 'required_if:minor,0'

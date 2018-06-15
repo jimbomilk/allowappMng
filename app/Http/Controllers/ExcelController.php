@@ -174,17 +174,19 @@ class ExcelController extends Controller
                     'group_id' => $group->id]);
                 $insertPerson->code = $person->person_code;
                 $insertPerson->minor = ($person->person_minor == "SI"||$person->person_minor=="")?1:0;
-                $filename = $insertPerson->path."/".$person->person_photo_name;
-                if(Storage::disk('s3')->exists($insertPerson->photopath)){
-                    Storage::disk('s3')->delete($insertPerson->photopath);
-                }
+                $filename = $insertPerson->path."/".$person->person_photo_name . Carbon::now();
                 if (Storage::disk('s3')->copy($person->photopath,$filename,'public')){
                     $insertPerson->photo = Storage::disk('s3')->url($filename);
                 }
                 $insertPerson->documentId = $person->person_dni;
                 $insertPerson->email = $person->person_email;
                 $insertPerson->phone = $person->person_phone;
+                $insertPerson->faceUp();
                 $insertPerson->save();
+
+                if (!$insertPerson->minor)
+                    $insertPerson->createRightholderPropio();
+
                 $person->status='ok';
             }
             $person->save();

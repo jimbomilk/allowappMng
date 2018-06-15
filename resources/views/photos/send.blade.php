@@ -11,7 +11,21 @@
             <div class="col-sm-12 panel panel-default">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-xs-6"><span style="padding-top: 15px">{{$element->label}}#{{$element->id}}</span></div>
+                         <div class="col-xs-6">  Errores detectados: {{count($errors)}}  </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class=" col-md-12 ">
+                        @foreach($errors as $index=>$error)
+                           <div class="@if($error['type']=='error') text-danger @else text-warning @endif">{{$index+1}}. {{strtoupper($error['type'])}}: {!!$error['text']!!}</div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-6"><span style="padding-top: 15px">Destinatarios: </span></div>
                         <div class="col-xs-6">  {{$element->statuslabel}} </div>
 
                     </div>
@@ -22,15 +36,13 @@
                     </div>
                     <div class=" col-md-8 ">
                         <div class="row">
-                            <div class="col-xs-3"><strong>{{trans("label.$name.name-person")}}</strong></div>
                             <div class="col-xs-4"><strong>{{trans("label.$name.name-rightholder")}}</strong></div>
                             <div class="col-xs-5"><strong>{{trans("label.$name.name-email")}}</strong></div>
                         </div>
                         @if(count($rhs)>0)
                             @foreach($rhs as $rh)
                                 <div class="row">
-                                    <div class="col-xs-3"><small>{{$rh->name}}</small></div>
-                                    <div class="col-xs-4"><small>{{$rh->rhname}}({{$rh->rhrelation}})</small></div>
+                                    <div class="col-xs-4"><small>{{$rh->rhname}} ({{$rh->rhrelation}} de {{$rh->name}})</small></div>
                                     <div class="col-xs-5"><small>{{$rh->rhemail}}</small></div>
                                 </div>
                             @endforeach

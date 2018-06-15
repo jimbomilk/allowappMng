@@ -117,21 +117,7 @@ class PhotosController extends Controller
 
     }
 
-    public function update(EditPhotoRequest $request, $location , $id)
-    {
-        $photo = Photo::find($id);
-        if (isset($photo)) {
-            $photo->fill($request->all());
-            $filename = $request->saveFile('origen',$photo->path);
-            if (isset($filename)) {
-                $photo->origen = $filename;
-                $photo->photo = $filename;
-            }
-            $photo->save();
-        }
 
-        return redirect($request->get('redirects_to'));
-    }
 
     public function destroy($location,$id,Request $request)
     {
@@ -182,32 +168,66 @@ class PhotosController extends Controller
 
         $rhs = array();
         //RightholderPhoto::where('photo_id', $photo->id)->delete();
+        $numFaces = count($photo->facesCollection);
+        $personKO=[];
+        $errors =[];
+        $warnings=[];
         foreach($people as $person){
-            $person_rhs=0;
-            $person_ok=false;
-            foreach($person->rightholders as $rh){
-                $rh_real = Rightholder::find($rh->id);
 
-                $rhphoto = RightholderPhoto::where([['user_id', $photo->user_id],['photo_id', $photo->id],['person_id',$person->id],['rightholder_id',$rh->id]])->first();
-                if (!isset($rhphoto)) {
-                    $rhphoto = new RightholderPhoto();
-                    $rhphoto->setValues($photo,$person,$rh_real);
-                    $rhphoto->save();
-                    $person_rhs++;
-                    if ($rh_real->relation=='tutor')
-                     $person_ok=true; // al menos tiene un rightholder
+            $realPerson = Person::find($person->id);
+            if (isset($realPerson)){
+                $person_ok=false;
+                $person_rhs=0;
+
+                foreach($person->rightholders as $rh){
+                    $rh_real = Rightholder::find($rh->id);
+
+                    if ($rh_real) {
+                        $rhphoto = RightholderPhoto::where([['user_id', $photo->user_id], ['photo_id', $photo->id], ['person_id', $person->id], ['rightholder_id', $rh->id]])->first();
+                        if (!isset($rhphoto)) {
+                            $rhphoto = new RightholderPhoto();
+                            $rhphoto->setValues($photo, $person, $rh_real);
+                            $rhphoto->save();
+                            $person_rhs++;
+                            if ($rh_real->relation == "TUTOR" || $rh_real->relation == "PROPIO")
+                                $person_ok = true; // al menos tiene un rightholder
+                        }else{
+                            $person_rhs++;
+                            if ($rh_real->relation == "TUTOR" || $rh_real->relation == "PROPIO")
+                                $person_ok = true; // al menos tiene un rightholder
+                        }
+                        array_push($rhs,$rhphoto);
+                    }else{
+                        $errors[] = ['type'=>'error', 'text'=>"Uno de los responsables de <strong>$realPerson->name</strong> ha sido eliminado del sistema y no se dispone de datos."];
+
+                    }
+
+
                 }
 
-                array_push($rhs,$rhphoto);
+                $person_ok = $person_ok?true:($person_rhs>=2);
+
+                if(!$person_ok){
+                    if($person_rhs==0)
+                        $errors[] = ['type'=>'error', 'text'=>"<strong>$realPerson->name</strong> no tiene asignado ningún responsable"];
+                    elseif ($person_rhs<2)
+                        $errors[] = ['type'=>'warning', 'text'=>"<strong>$realPerson->name</strong> sólo tiene asignado un responsable.En caso de menores deben ser padre y madre o un tutor."];
+                }
+
+            }else{
+                $errors[] = ['type'=>'error', 'text'=>"La persona<strong>($person->id)</strong> asignada a la fotografía ha sido eliminada del sistema y no se dispone de datos."];
             }
-            $person_ok = $person_ok?true:($person_rhs>=2);//
+
 
         }
         $template_email = trans('labels.template.consentimiento').$req->user()->name;
 
+        $numPeople = count($people);
+        if ($numFaces>$numPeople){
+            $errors[] = ['type'=>'warning', 'text'=>"El nº de caras de la fotografía <strong> ($numFaces) </strong> no se corresponde con el nº de personas detectadas <strong>($numPeople). </strong>"];
+        }
 
-
-        return view('photos.send', ['name' => 'photos', 'element' => $photo,'rhs'=>$rhs,'template'=>$template_email,'enabled'=>$enabled]);
+        return view('photos.send', ['name' => 'photos', 'element' => $photo,'rhs'=>$rhs,'template'=>$template_email,'enabled'=>$enabled,'errors'=>$errors]);
     }
 
     public  function recognition(Request $req,$location,$id)
