@@ -4,7 +4,17 @@ return [
 
     "create_new" => "Añadir",
     'name' => 'nombre',
-    'excel'=> 'fichero de importación',
+    'excel' => 'fichero de importación',
+
+    'locations.fa_icon' => 'fa fa-home',
+    'users.fa_icon' => 'fa fa-key',
+    'groups.fa_icon' => 'fa fa-address-book',
+    'rightholders.fa_icon' => 'fa fa-id-card-o',
+    'photos.fa_icon' => 'fa fa-image',
+    'persons.fa_icon' => 'fa fa-users',
+    'historic.persons.fa_icon' => 'fa fa-users',
+    'historic.rightholders.fa_icon' => 'fa fa-id-card-o',
+    'historic.photos.fa_icon' => 'fa fa-camera-retro',
 
     //PROFILES
     'profiles.super'=> 'Super usuario',

@@ -15,11 +15,13 @@
             <td>{{$element->person->name}}</td>
             <td>{{$element->person->group->name}}</td>
             <td>
+                <div class="col-sm-12">
                 @include("common.controls.btn_edit",array('var'=>$element))
 
                 @include("common.controls.btn_show",array('var'=>$element))
 
                 @include("common.controls.btn_delete",array('var'=>$element))
+                </div>
             </td>
 
 

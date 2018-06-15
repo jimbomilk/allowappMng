@@ -14,7 +14,11 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <div class="row">
-                        <div class="col-md-6"><h4>{{trans("labels.$name")}}</h4></div>
+                        <div class="col-md-6">
+                            <h4>
+                                <i class="{{trans("label.$name.fa_icon")}}"></i> {{trans("labels.$name")}}
+                            </h4>
+                        </div>
                             <div class="col-md-6" style="text-align:right">
                             @if (isset($searchable))
                                 {!! Form::model(Request::all(), array('url' => str_replace(".","/",$name), 'method' => 'GET', 'enctype' => 'multipart/form-data')) !!}

@@ -20,7 +20,7 @@
             <p>{{trans('labels.images-pending')}}</p>
         </div>
         <div class="icon">
-            <i class="ion ion-stats-bars"></i>
+            <i class="ion ion-ios-clock"></i>
         </div>
         <a href="#" class="small-box-footer"></a>
     </div>
@@ -33,7 +33,7 @@
             <p>{{trans('labels.images-approved')}}</p>
         </div>
         <div class="icon">
-            <i class="ion ion-person-add"></i>
+            <i class="ion ion-ios-checkbox"></i>
         </div>
         <a href="#" class="small-box-footer"></a>
     </div>
@@ -46,7 +46,7 @@
             <p>{{trans('labels.images-rejected')}}</p>
         </div>
         <div class="icon">
-            <i class="ion ion-monitor"></i>
+            <i class="ion ion-ios-bug"></i>
         </div>
         <a href="#" class="small-box-footer"></a>
     </div>

@@ -1,1 +1,5 @@
-<a href="{{ url("$name/$var->id/edit") }}" class="btn-sm" style="margin-left: 5px" title="{{trans('labels.edit')}}"><span class="glyphicon glyphicon-pencil"></span> </a>
+<a href="{{ url("$name/$var->id/edit") }}" class="btn-sm"  title="{{trans('labels.edit')}}">
+    <span >
+        <i style="font-size: 20px"  class="glyphicon glyphicon-pencil"></i>
+    </span>
+</a>

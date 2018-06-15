@@ -7,10 +7,7 @@
             {{trans('labels.dashboard')}}
 
         </h1>
-        <ol class="breadcrumb">
-            <li><a href="admin"><i class="fa fa-dashboard"></i> {{trans('labels.home')}}</a></li>
-            <li class="active">{{trans('labels.main')}}</li>
-        </ol>
+
     </section>
 @endsection
 
@@ -27,7 +24,7 @@
 
     </div>
 
-    <div class="row" style="margin-top: 40px">
+    <div class="row" >
         @include ('dashboard.partials.links')
     </div>
 

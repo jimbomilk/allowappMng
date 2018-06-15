@@ -2,11 +2,11 @@
 <div class="col-sm-12">
     <div class="box box-primary">
         <div class="box-header">
-            <i class="ion ion-clipboard"></i>
+            <i class="fa fa-image"></i>
             <h3 class="box-title">{{trans('labels.images-pending')}}</h3>
 
         </div><!-- /.box-header -->
-        <div class="box-body">
+        <div class="box-body" style="height: 190px">
 
                 @if(count($links)<=0)
                     <p> {{trans('labels.no-data')}} </p>

@@ -28,15 +28,13 @@
             <th>@include("common.controls.emphasis_label",array('var'=>$element->numRightholders,'color'=>($element->numRightholders>0)?'primary':'danger'))</th>
             @if($user->checkRole('admin')) <td>{{$element->faceId}}</td> @endif
             <td>
-                <div style="float: right">
+
                 @include("common.controls.btn_edit",array('var'=>$element))
-                </div>
-                <div style="float: right;padding: 0px">
+
                 @include("common.controls.btn_show",array('var'=>$element))
-                </div>
-                <div style="float: right">
+
                 @include("common.controls.btn_delete",array('var'=>$element))
-                </div>
+
             </td>
 
 
