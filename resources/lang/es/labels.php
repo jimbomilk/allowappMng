@@ -3,6 +3,7 @@
 return [
     'allowapp' => 'Primero pregunta. Tú decides',
     'header' => 'MENU',
+    'profiles' =>'perfil',
     'dashboard' => 'Panel de control',
     'users' => 'Usuarios',
     'groups' => 'Clases',

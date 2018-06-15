@@ -40,7 +40,7 @@ class User extends Authenticatable
 
     public function checkRole($reference)
     {
-        if ($this->roleVal($this->profile->type) > $this->roleVal($reference)) {
+        if ($this->roleVal($this->profile->type) >= $this->roleVal($reference)) {
             return true;
         }
         return false;
