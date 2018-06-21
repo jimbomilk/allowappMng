@@ -127,8 +127,9 @@ class ExcelController extends Controller
         $groups =array_unique(IntermediateExcel3::where('location_id',$loc->id)->pluck('site_group')->toArray());
         //1º insertamos los grupos
         foreach($groups as $group){
-            Group::firstOrCreate(
+            $group = Group::firstOrCreate(
                 ['user_id'=>$request->user()->id,'location_id'=>$loc->id,'name'=>$group]);
+
         }
         //2º insertamos los sites
         foreach($sites2import as $site){
@@ -153,7 +154,9 @@ class ExcelController extends Controller
 
     public function importpersons(Request $request,$location)
     {
+
         $loc = Location::byName($location);
+
         //Vamos a recorrer cada entry y ejecutamos un insert o un update
         $persons2import = IntermediateExcel1::where('location_id',$loc->id)->get();
 
@@ -175,13 +178,16 @@ class ExcelController extends Controller
                 $insertPerson->code = $person->person_code;
                 $insertPerson->minor = ($person->person_minor == "SI"||$person->person_minor=="")?1:0;
                 $filename = $insertPerson->path."/".$person->person_photo_name . Carbon::now();
+
                 if (Storage::disk('s3')->copy($person->photopath,$filename,'public')){
                     $insertPerson->photo = Storage::disk('s3')->url($filename);
                 }
                 $insertPerson->documentId = $person->person_dni;
                 $insertPerson->email = $person->person_email;
                 $insertPerson->phone = $person->person_phone;
+
                 $insertPerson->faceUp();
+                //dd($insertPerson);
                 $insertPerson->save();
 
                 if (!$insertPerson->minor)

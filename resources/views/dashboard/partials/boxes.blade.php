@@ -29,7 +29,7 @@
     <!-- small box -->
     <div class="small-box bg-green">
         <div class="inner">
-            <h3>{{$user->countPhotosByStatus(200)}}</h3>
+            <h3>{{$user->countPhotosByStatus(\App\Status::STATUS_SHARED)}}</h3>
             <p>{{trans('labels.images-approved')}}</p>
         </div>
         <div class="icon">

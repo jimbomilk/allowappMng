@@ -51,7 +51,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://colegio1.allowapp.eu'),
+    'url' => env('APP_URL', '*.allowapp.eu'),
 
     /*
     |--------------------------------------------------------------------------

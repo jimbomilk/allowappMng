@@ -2,45 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Ack;
-use App\Contract;
-use App\Face;
-use App\General;
+
 use App\Group;
 use App\Historic;
 use App\Http\Requests\CreatePhotoRequest;
-use App\Http\Requests\EditPhotoRequest;
 use App\Http\Requests\SendPhotoRequest;
-use App\Location;
 use App\Mail\RequestSignature;
 use App\Person;
 use App\PersonPhoto;
 use App\Photo;
+use App\Relations;
 use App\Rightholder;
 use App\RightholderPhoto;
 use App\Status;
-use App\Token;
-use App\User;
 use Larareko\Rekognition\RekognitionFacade;
 use Share;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
-use Larareko\Rekognition\Rekognition;
+
 
 class PhotosController extends Controller
 {
-    //
-
     public function index(Request $request)
     {
-        //dd($request->user()->getPhotos());
         return view('common.index', [ 'name' => 'photos', 'set' => $request->user()->getPhotos()]);
-
     }
 
     public function sendView(Request $request,$element=null)
@@ -68,7 +56,7 @@ class PhotosController extends Controller
         $photo->save();
         $box_original=null;
         $box_working=null;
-        $filename = $request->saveWatermarkFile($box_original,'origen',$photo->path,'final',400);
+        $filename = $request->saveWatermarkFile($box_original,'origen',$photo->path,'final',800);
         $workingfile = $request->saveWatermarkFile($box_working,'origen',$photo->path,'working',300);
 
         $group = Group::find($request->get('group_id'));
@@ -91,11 +79,6 @@ class PhotosController extends Controller
             'log'=>[]];
         $photo->data = json_encode($data);
         $photo->box = json_encode($box_original);
-        /*
-        if (isset($filename)) {
-            $photo->origen = $filename;
-            $photo->photo = $filename;
-        }*/
         $photo->save();
 
         return redirect($request->get('redirects_to'));
@@ -108,26 +91,23 @@ class PhotosController extends Controller
         {
             return $this->sendView($request,$photo);
         }
-
     }
 
     public function show($location,$id)
     {
         return redirect()->action('ContractsController@index',['location'=>$location,'photo'=>$id]);
-
     }
-
-
 
     public function destroy($location,$id,Request $request)
     {
         $photo = Photo::findOrFail($id);
-
-
         Storage::disk('s3')->delete($photo->photopath);
 
+        $h = new Historic();
+        $h->register($request->user()->id,"Imagen borrada" ,$id);
+
         $photo->delete();
-        $message = $photo->name. ' deleted';
+        $message = "Imagen ". $photo->name. " borrada";
         if ($request->ajax())
         {
             return response()->json([
@@ -136,7 +116,6 @@ class PhotosController extends Controller
                 'total' => Photo::All()->count()
             ]);
         }
-
         Session::flash('message',$message);
         return redirect()->back();
     }
@@ -147,8 +126,6 @@ class PhotosController extends Controller
             $faces=json_decode($photo->faces);
             foreach($faces as $face)
                 $toDelete[] = $face->Face->FaceId;
-
-            //dd($toDelete);
             try {
 
                 RekognitionFacade::deleteFaces($photo->group->collection, $toDelete); // se borran las imagenes de la foto q se habían añadido para la búsqueda.
@@ -169,19 +146,15 @@ class PhotosController extends Controller
         $rhs = array();
         //RightholderPhoto::where('photo_id', $photo->id)->delete();
         $numFaces = count($photo->facesCollection);
-        $personKO=[];
         $errors =[];
-        $warnings=[];
         foreach($people as $person){
 
             $realPerson = Person::find($person->id);
             if (isset($realPerson)){
                 $person_ok=false;
                 $person_rhs=0;
-
                 foreach($person->rightholders as $rh){
                     $rh_real = Rightholder::find($rh->id);
-
                     if ($rh_real) {
                         $rhphoto = RightholderPhoto::where([['user_id', $photo->user_id], ['photo_id', $photo->id], ['person_id', $person->id], ['rightholder_id', $rh->id]])->first();
                         if (!isset($rhphoto)) {
@@ -189,11 +162,11 @@ class PhotosController extends Controller
                             $rhphoto->setValues($photo, $person, $rh_real);
                             $rhphoto->save();
                             $person_rhs++;
-                            if ($rh_real->relation == "TUTOR" || $rh_real->relation == "PROPIO")
+                            if ($rh_real->relation == Relations::TUTOR || $rh_real->relation == Relations::PROPIO)
                                 $person_ok = true; // al menos tiene un rightholder
                         }else{
                             $person_rhs++;
-                            if ($rh_real->relation == "TUTOR" || $rh_real->relation == "PROPIO")
+                            if ($rh_real->relation == Relations::TUTOR || $rh_real->relation == Relations::PROPIO)
                                 $person_ok = true; // al menos tiene un rightholder
                         }
                         array_push($rhs,$rhphoto);
@@ -201,12 +174,8 @@ class PhotosController extends Controller
                         $errors[] = ['type'=>'error', 'text'=>"Uno de los responsables de <strong>$realPerson->name</strong> ha sido eliminado del sistema y no se dispone de datos."];
 
                     }
-
-
                 }
-
                 $person_ok = $person_ok?true:($person_rhs>=2);
-
                 if(!$person_ok){
                     if($person_rhs==0)
                         $errors[] = ['type'=>'error', 'text'=>"<strong>$realPerson->name</strong> no tiene asignado ningún responsable"];
@@ -233,30 +202,34 @@ class PhotosController extends Controller
     public  function recognition(Request $req,$location,$id)
     {
         $photo = Photo::find($id);
+        $faces = [];
         if (isset ($photo)) {
 
             // borrar todas las faces de la imagen
             //dd($photo->group->collection);
-            $result = RekognitionFacade::indexFaces(['CollectionId' => $photo->group->collection,
-                'DetectionAttributes' => ['DEFAULT'],
-                'Image' => ['S3Object' => [
-                    'Bucket' => env('AWS_BUCKET'),
-                    'Name' => $photo->photoFinalpath]]]);
-
-            //dd($result);
-            $faces = $result['FaceRecords'];
-            $photo->faces = json_encode($faces);
-            $photo->save();
+            try {
+                $result = RekognitionFacade::indexFaces(['CollectionId' => $photo->group->collection,
+                    'DetectionAttributes' => ['DEFAULT'],
+                    'Image' => ['S3Object' => [
+                        'Bucket' => env('AWS_BUCKET'),
+                        'Name' => $photo->photoFinalpath]]]);
+                //dd($result);
+                $faces = $result['FaceRecords'];
+                $photo->faces = json_encode($faces);
+                $photo->save();
+            }catch (Exception $e){
+                dd($e);
+            }
+            return view('photos.faces', ['name' => 'photos', 'element' => $photo, 'faces'=>$faces]);
 
         }
-        return view('photos.faces', ['name' => 'photos', 'element' => $photo, 'faces'=>$faces]);
+        Session::flash('message',"¡Error!, no se puede mostrar la fotografía, inténtelo más tarde.");
+        return redirect('photos');
 
     }
 
     public function makeRecognition(Request $req,$location,$photo_id){
-
         $photo = Photo::find($photo_id);
-
         if (isset ($photo))
         {
             $faces =  json_decode($photo->faces);
@@ -288,7 +261,6 @@ class PhotosController extends Controller
         $photo = Photo::find($photoId);
         $person = Person::find($personId);
         if (isset($photo)&&isset($person) &&!$photo->findPerson($personId)) {
-
             $data = json_decode($photo->data);
             // ahora vamos a la people
             $rightholders = array();
@@ -304,43 +276,26 @@ class PhotosController extends Controller
             }
             $photo->data = json_encode($data);
             $photo->save();
-            return $photo->data;
+            return true;
         }
     }
 
     public function deleteContract(Request $req,$location){
-
         $photoId= $req->get('imagenId');
         $personId= $req->get('personId');
-
         $photo = Photo::find($photoId);
         $person = Person::find($personId);
         if (isset($photo)&&isset($person)) {
-            $data = json_decode($photo->data);
-            $this->array_remove_object($data->people,$personId,'id');
-            $data->people = array_values($data->people);
-            $photo->data = json_encode($data);
+            $photo->removePerson($personId);
             $photo->save();
-            return $data->people;
-
+            return true;
         }
-
-
         return back();
     }
 
-    function array_remove_object(&$array, $value, $prop)
-    {
-        foreach($array as $index=>$elem){
-            if($elem->$prop == $value) {
-                unset($array[$index]);
-                return;
-            }
-        }
-    }
+
 
     public function addContract(Request $req,$location){
-
         $photoId= $req->get('imagenId');
         $personId= $req->get('personId');
         $faceId = $req->get('faceId');
@@ -349,7 +304,6 @@ class PhotosController extends Controller
         $boxWidth= $req->get('boxWidth');
         $boxTop= $req->get('boxTop');
         $boxLeft= $req->get('boxLeft');
-
         $this->newContract($req,$photoId,$personId,['faceID'=>$faceId,'box'=>['Width'=>$boxWidth, 'Height'=>$boxHeight, 'Top' => $boxTop, 'Left'=> $boxLeft],'facePhotoId'=>$photoFaceId]);
         return back();
     }
@@ -360,9 +314,6 @@ class PhotosController extends Controller
         $photo = Photo::find($req->get('photoId'));
         $email_text = $req->get('email');
         $count=0;
-
-        // Borramos las faces del grupo para que se vuelvan a utilizar en la siguiente.
-        //$this->deleteFaces($photo);
 
         try {
             foreach ($photo->rightholderphotos as $rhp) {
@@ -386,24 +337,28 @@ class PhotosController extends Controller
         // Cuando se envia la imagen se generan todas las mini imagenes para cada una de las redes.
         $photo->updatePhotobyNetwork();
 
-
-
         if ($count >0)
             Session::flash('message',"¡Felicidades!, se han enviado correctamente ".$count." emails solicitando el consentimiento.");
         else {
             Session::flash('message',"¡Error!, se ha producido un error en el envio, inténtelo más tarde.");
             return redirect()->back();
         }
-
-
         return redirect('photos');
-
     }
 
     public function share(Request $req,$location,$photoId,$share){
         $photo = Photo::find($photoId);
 
-        return  Share::load($photo->getSharedLink(),'Example')->$share();
+        if (isset($photo)) {
+            $photo->setStatus (Status::STATUS_SHARED);
+            $photo->save();
+            $h = new Historic();
+            $h->register($req->user()->id, "Imagen compartida en " . $share, $photoId);
+            return Share::load($photo->getSharedLink(), 'Example')->$share();
+        }
+
+        Session::flash('message',"¡Error!, se ha producido un error, inténtelo más tarde.");
+        return redirect('photos');
     }
 
 }

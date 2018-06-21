@@ -1,4 +1,4 @@
-<div class="modal fade" id="modal">
+<div class="modal id{{$var->id}} fade" id="modal{{$var->id}}">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

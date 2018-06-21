@@ -3,7 +3,7 @@
         <th>#</th>
         <th>{{trans('label.locations.name')}}</th>
         <th>{{trans('label.locations.description')}}</th>
-        <th>{{trans('label.locations.logo')}}</th>
+        <th class="text-center">{{trans('label.locations.logo')}}</th>
         <th></th>
 
     </tr>
@@ -13,8 +13,11 @@
             <td>{{$element->id}}</td>
             <td>{{$element->name}}</td>
             <td>{{$element->description}}</td>
-            <td>
-                <div class="col-sm-offset-1 col-sm-10"><img style="width: 20%" class="img-responsive" src={{$element->icon}} alt="logo"></div>
+            <td class="block-center">
+
+                    @include("common.controls.img",["src"=>$element->icon])
+
+
             </td>
             <td>
                 <div class="col-sm-12">

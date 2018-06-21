@@ -36,7 +36,7 @@ class GroupObserver
 
     public function saved(Group $group)
     {
-        //$this->groupAWSUp($group);
+        $this->groupAWSUp($group);
     }
 
     public function deleting(Group $group)

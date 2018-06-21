@@ -42,6 +42,28 @@ class Photo extends General
 
     }
 
+    public function setStatus($status){
+        $data = json_decode($this->data);
+        $data->status == $status;
+        $this->data = json_encode($data);
+    }
+
+    public function removePerson($id){
+        $data = json_decode($this->data);
+        $this->array_remove_object($data->people,$id,'id');
+        $data->people = array_values($data->people);
+        $this->data = json_encode($data);
+    }
+
+    function array_remove_object(&$array, $value, $prop)
+    {
+        foreach($array as $index=>$elem){
+            if($elem->$prop == $value) {
+                unset($array[$index]);
+                return;
+            }
+        }
+    }
 
     public function getSharingAsText(){
         $text = ": ";

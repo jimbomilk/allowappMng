@@ -20,7 +20,13 @@ class MainSeeder extends Seeder {
      */
     public function run()
     {
-        //Empty the countries table
+        //Delete collections
+        $collections = RekognitionFacade::ListCollections();
+        foreach($collections['CollectionIds'] as $collection){
+            RekognitionFacade::DeleteCollection($collection);
+        }
+
+        //Empty the tables
         DB::table('users')->delete();
         DB::table('locations')->delete();
         $this->faker = Faker::create();
@@ -106,7 +112,6 @@ class MainSeeder extends Seeder {
         DB::table('profiles')->insertGetId( array (
             'user_id'   => $userId,
             'phone'     => $this->faker->phoneNumber,
-            'avatar'    => str_replace('http','https',$this->faker->imageUrl(64, 48)),
             'location_id' => $locationid,
             'type'          => $type
         ));

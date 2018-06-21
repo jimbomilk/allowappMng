@@ -139,6 +139,10 @@ class User extends Authenticatable
         return $count;
     }
 
+    public function getRoleAttribute(){
+        return $this->profile->type;
+    }
+
     public function getPathAttribute()
     {
         return $this->location->path.'/'.$this->table;

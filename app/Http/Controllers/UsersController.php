@@ -24,10 +24,9 @@ class UsersController extends Controller
 
     public function index(Request $request)
     {
-
         $location_id  = $request->get('location');
         $location = Location::find($location_id);
-
+        //dd($location_id);
         if (isset($location)) {
             $users = User::whereIn('id',$location->profiles->pluck('user_id'))->paginate();
             //dd($location->profiles);

@@ -10,7 +10,7 @@ class Location extends General
     //id,name
     protected $table = 'locations';
 
-    protected $fillable = ['description'];
+    protected $fillable = ['name','description'];
 
     public function users(){
         return $this->hasMany('App\User');

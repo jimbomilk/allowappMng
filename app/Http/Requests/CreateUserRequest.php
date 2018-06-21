@@ -26,6 +26,7 @@ class CreateUserRequest extends Request {
             'email'     => 'required|bail|email|unique:users,email', //busca en la tabla users el campo email
             'phone'     => 'required|bail|numeric',
             'password'  => 'required',
+            'location_id' => 'required'
 		];
 	}
 

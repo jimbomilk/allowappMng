@@ -1,6 +1,6 @@
-@include('adminlte::layouts.partials.modal_delete',['text'=>"¿Confirma el borrado del elemento?"])
+@include('adminlte::layouts.partials.modal_delete',['text'=>"¿Confirma el borrado del elemento?",'var'=>$var])
 
-<a href="#" class="btn-sm" data-toggle="modal" data-target="#modal" title="{{trans("labels.delete")}}">
+<a href="#" class="btn-sm" data-toggle="modal" data-target="#modal{{$var->id}}" title="{{trans("labels.delete")}}">
     <span>
         <i  style="font-size: 20px" class="glyphicon glyphicon-trash"></i>
     </span>

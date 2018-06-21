@@ -113,7 +113,7 @@ class Person extends General
             $this->faceId = $result['FaceRecords'][0]['Face']['FaceId'];
 
         }catch (\Exception $t){
-            dd($t);
+            //dd($t);
         };
     }
 

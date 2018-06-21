@@ -22,5 +22,7 @@ return [
     'publicationsites.url'=>'Introducir unicamente cuando se trata de email',
 
     'groups.name'=>'Introducir el nombre del grupo',
-    'rightholder.dni'=>'Introduzca su DNI como identificación'
+    'rightholder.dni'=>'Introduzca su DNI como identificación',
+    'locations.name' =>'Introduzca el nombre del colegio todo junto, sin espacios.',
+    'locations.description' =>'Introduzca el nombre del colegio normal.',
 ];
