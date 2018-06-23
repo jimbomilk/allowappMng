@@ -1,17 +1,31 @@
 @extends('adminlte::layouts.app')
 
-@section('htmlheader_title')
-    {{ trans('labels.$name') }}
-@endsection
-
 
 @section('main-content')
 <div class="container-fluid spark-screen">
-    @include("$name.partials.logs")
-    @include("$name.partials.table",['title'=>'Excel de Lugares de publicación','idTable'=>'sites', 'set'=>$sites,'btnImport'=>true])
-    @include("$name.partials.table",['title'=>'Excel de Personas/Alumnos','idTable'=>'persons','set'=>$persons,'btnImages'=>true,'btnImport'=>true])
-    @include("$name.partials.table",['title'=>'Excel de Responsables','idTable'=>'rightholders','set'=>$rightholders,'btnImport'=>true])
 
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Default box -->
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4>
+                        <i class="{{trans("label.$name.fa_icon")}}"></i> {{trans("labels.$name")}}
+                    </h4>
+                </div>
+
+                <div class="panel-body">
+                    <div class="col-md-12">
+                    @include("$name.partials.logs")
+                    @include("$name.partials.table",['title'=>'Excel de Lugares de publicación','idTable'=>'sites', 'set'=>$sites,'btnImport'=>true])
+                    @include("$name.partials.table",['title'=>'Excel de Personas/Alumnos','idTable'=>'persons','set'=>$persons,'btnImages'=>true,'btnImport'=>true])
+                    @include("$name.partials.table",['title'=>'Excel de Responsables','idTable'=>'rightholders','set'=>$rightholders,'btnImport'=>true])
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @endsection

@@ -26,6 +26,12 @@ class CreatePhotosTable extends Migration
                 ->on('users')
                 ->onDelete('cascade');
 
+            $table->unsignedInteger('consent_id')->nullable();
+            $table->foreign('consent_id')
+                ->references('id')
+                ->on('consents')
+                ->onDelete('cascade');
+
             $table->unsignedInteger('location_id')->nullable();
             $table->foreign('location_id')
                 ->references('id')

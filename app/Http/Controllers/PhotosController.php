@@ -7,6 +7,7 @@ use App\Group;
 use App\Historic;
 use App\Http\Requests\CreatePhotoRequest;
 use App\Http\Requests\SendPhotoRequest;
+use App\Location;
 use App\Mail\RequestSignature;
 use App\Person;
 use App\PersonPhoto;
@@ -34,11 +35,17 @@ class PhotosController extends Controller
     public function sendView(Request $request,$element=null)
     {
         $groups = $request->user()->getGroups()->pluck('name','id');
+        $loc = Location::find($request->get('location'));
+        $tiposConsentimientos = [];
+        if(isset($loc))
+            $tiposConsentimientos = $loc->consents->pluck('description','id');
+
         if (isset($element)) {
-            return view('common.edit', ['name' => 'photos', 'element' => $element, 'groups'=>$groups]);
+            return view('common.edit', ['name' => 'photos', 'element' => $element, 'groups'=>$groups,'consents'=>$tiposConsentimientos]);
         }
-        else
-            return view('common.create',['name'=>'photos', 'groups'=>$groups]);
+        else {
+            return view('common.create', ['name' => 'photos', 'groups' => $groups, 'consents'=>$tiposConsentimientos]);
+        }
     }
 
     public function create(Request $request)

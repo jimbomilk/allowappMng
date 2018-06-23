@@ -25,4 +25,9 @@ return [
     'rightholder.dni'=>'Introduzca su DNI como identificación',
     'locations.name' =>'Introduzca el nombre del colegio todo junto, sin espacios.',
     'locations.description' =>'Introduzca el nombre del colegio normal.',
+
+    'consents.description' =>'Introduzca la descripción del consentimiento general',
+    'consents.legitimacion'=>'Introduzca las razones de legitimación',
+    'consents.destinatarios'=>'Introduzca los destinatarios finales de las actuaciones',
+    'consents.derechos'=> 'Introduzca una breve descripción de los derechos de los usuarios',
 ];

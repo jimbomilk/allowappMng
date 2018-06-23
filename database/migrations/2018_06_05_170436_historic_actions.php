@@ -16,12 +16,7 @@ class HistoricActions extends Migration
         Schema::create('historic_actions', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->unsignedInteger('user_id');
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
-
+            $table->unsignedInteger('user_id')->nullable();
             $table->unsignedInteger('photo_id')->nullable();
             $table->unsignedInteger('person_id')->nullable();
             $table->unsignedInteger('rightholder_id')->nullable();

@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'home'=>'Inicio',
     'allowapp' => 'Primero pregunta. Tú decides',
     'header' => 'MENU',
     'profiles' =>'perfil',
@@ -51,6 +52,10 @@ return [
     'templates'=> 'Plantillas',
     'emails'=> 'Emails',
     'legal'=> ' Textos legales',
+    'consents' => 'Consentimientos Generales',
+    'config' => 'Configuración global',
+
+    'excel' => 'Importación de datos',
 
     'historic.photos' => 'Historial de fotografías',
     'historic.persons' => 'Historial por persona',

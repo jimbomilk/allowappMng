@@ -10,6 +10,7 @@ use App\Multi;
 use App\Person;
 use App\Rightholder;
 use App\Mail\RequestSignatureRightholder;
+use App\RightholderConsent;
 use App\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -91,6 +92,11 @@ class RightholdersController extends Controller
     public function consentimientos(Request $request,$location,$id=null)
     {
         $person_id = $request->session()->get('person_id');
+        $loc = Location::find($request->get('location'));
+        $tiposConsentimientos = [];
+        if(isset($loc))
+            $tiposConsentimientos = $loc->consents->pluck('description','id');
+
         $set = null;
         if(isset($id)) {
             $set [] = Rightholder::find($id);
@@ -104,7 +110,7 @@ class RightholdersController extends Controller
 
 
         $template = trans('label.rightholders.template');
-        return view('rightholders.consentimiento',['name' => 'rightholders','template'=>$template,'set'=>$set]);
+        return view('rightholders.consentimiento',['name' => 'rightholders','template'=>$template,'set'=>$set,'consents'=>$tiposConsentimientos]);
     }
 
     public function update(EditRightholderRequest $request, $location , $id)
@@ -143,10 +149,15 @@ class RightholdersController extends Controller
         return redirect()->back();
     }
 
-    private function sendEmail($rh,$email_text,$from){
-        Mail::to($rh->email)->queue(new RequestSignatureRightholder($rh, $email_text,$from));
-        $rh->status=Status::RH_PENDING;
-        $rh->save();
+    private function sendEmail($rh,$consent_id,$email_text,$from){
+        //Antes de enviar el email guardamos un registro del tipo de solicitud
+        $rhConsent = RightholderConsent::firstOrNew(['rightholder_id'=>$rh->id,'consent_id'=>$consent_id]);
+        //dd($rhConsent);
+        $rhConsent->status=Status::RH_PENDING;
+        $rhConsent->save();
+        //dd($rhConsent);
+
+        Mail::to($rh->email)->queue(new RequestSignatureRightholder($rhConsent, $email_text,$from));
     }
 
     public function emails(Request $req)
@@ -154,16 +165,18 @@ class RightholdersController extends Controller
         //return json_encode($req->all());
         $element = $req->get('rightholderId');
         $email_text = $req->get('email');
+        $consent_id = $req->get('consent_id');
+        //dd($consent_id);
         $count=0;
         try {
             if ($element == 'all'){
                 foreach ($req->user()->getRightholders() as $rh){
-                    $this->sendEmail($rh,$email_text,$req->user()->email);
+                    $this->sendEmail($rh,$consent_id,$email_text,$req->user()->email);
                     $count++;
                 }
             }else{
                 $rh = Rightholder::find('element');
-                $this->sendEmail($rh,$email_text,$req->user()->email);
+                $this->sendEmail($rh,$consent_id,$email_text,$req->user()->email);
                 $count++;
             }
         }catch (Exception $e){

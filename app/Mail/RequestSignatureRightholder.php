@@ -19,15 +19,15 @@ class RequestSignatureRightholder extends Mailable
      *
      * @return void
      */
-    Public $rightholder;
+    Public $rhConsent;
     Public $email_text;
     Public $email_from;
     Public $email_photo;
 
 
-    public function __construct($rh,$text,$from)
+    public function __construct($rhConsent,$text,$from)
     {
-        $this->rightholder = $rh;
+        $this->rhConsent = $rhConsent;
         $this->email_text = $text;
         $this->email_from = $from;
     }

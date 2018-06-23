@@ -20,12 +20,11 @@ class Rightholder extends Model
         return $this->belongsTo('App\Location');
     }
 
-    public function getLinkAttribute(){
-        $token = Token::generateShared($this->id);
-        $route = route('rightholder.link.shared', ['id' => $this->id,'token' => $token],true);
-
-        return $route;
+    public function rightholderconsents(){
+        return $this->hasMany('App\Consent');
     }
+
+
 
     public function getPublicationsitesAttribute(){
         return Publicationsite::where('group_id',$this->person->group_id)->get();

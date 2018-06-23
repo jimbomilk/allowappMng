@@ -25,13 +25,16 @@
             <li class="header">{{ trans('labels.header') }}</li>
             <!-- Optionally, you can add icons to the links -->
 
-            @if(Auth::user()->profile->type == 'super')
-            <li class="active">
-                <a href="{{ url('locations') }}">
-                    <i class='fa fa-home'></i> <span>{{ trans('labels.locations') }}</span></a></li>
+            @if(Auth::user()->checkRole('admin'))
+                <li class="active ">
+                    <a href="{{ url('locations') }}"><i class='fa fa-home'></i> <span>{{ trans('labels.locations') }}</span></a>
+                    <ul class="active">
+                        <li><a href="{{ url('consents') }}"><i class='fa fa-legal'></i> <span>{{ trans('labels.consents') }}</span></a></li>
+                    </ul>
+                </li>
             @endif
 
-            @if(Auth::user()->profile->type == 'admin'||Auth::user()->profile->type == 'super')
+            @if(Auth::user()->checkRole('admin'))
             <li class="active">
                 <a href="{{ url('users') }}">
                     <i class='fa fa-key'></i> <span>{{ trans('labels.users') }}</span></a></li>
@@ -43,16 +46,18 @@
 
             </li>
 
-            <li class="active">
-                <a href="{{ url('persons') }}">
-                    <i class='fa fa-users'></i> <span>{{ trans('labels.persons') }}</span></a>
+
+
+
+            <li class="active ">
+                <a href="{{ url('persons') }}"><i class='fa fa-users'></i> <span>{{ trans('labels.persons') }}</span>
+                    </a>
+                <ul class="active">
+                    <li><a href="{{ url('rightholders') }}"><i class='fa fa-id-card-o'></i> <span>{{ trans('labels.rightholders') }}</span></a></li>
+                </ul>
             </li>
 
 
-            <li class="active">
-                <a href="{{ url('rightholders') }}">
-                    <i class='fa fa-id-card-o'></i> <span>{{ trans('labels.rightholders') }}</span></a>
-            </li>
 
             <li class="active">
                 <a href="{{ url('photos') }}">

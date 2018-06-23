@@ -5,5 +5,5 @@
         <a href="https://allowapp.dev"></a><b>AllowApp</b></a>.
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2017 <a href="http://acacha.org">www.allowapp.dev</a></strong>
+    <strong>Copyright &copy; 2017 <a href="https://www.allowapp.com">www.allowapp.com</a></strong>
 </footer>

@@ -10,6 +10,7 @@ use App\PhotoData;
 use App\Photonetwork;
 use App\Publicationsite;
 use App\Rightholder;
+use App\RightholderConsent;
 use App\Status;
 use App\Token;
 use Carbon\Carbon;
@@ -108,14 +109,20 @@ class LinkController extends Controller
 
 
 
-    public function rightholder($rightholderId,$token)
+    public function rightholder($rightholderConsentId,$token)
     {
-        $resToken = Token::generateShared($rightholderId);
+
+        $resToken = Token::generateShared($rightholderConsentId);
 
         if (hash_equals($resToken,$token)) {
-            $rightholder = Rightholder::find($rightholderId);
-            $sites = $rightholder->publicationsites->pluck('name');
-            return view('pages.rightholder',['name' => 'rightholder','rightholder'=>$rightholder,'publicationsites'=>$sites,'token'=>$token]);
+            $rhConsent = RightholderConsent::find($rightholderConsentId);
+            //dd($rhConsent->rightholder);
+            if (isset($rhConsent) && isset($rhConsent->rightholder)) {
+                $rh = $rhConsent->rightholder;
+                $sites = $rh->publicationsites->pluck('name');
+                return view('pages.rightholder', ['name' => 'rightholder', 'rhConsent' => $rhConsent, 'publicationsites' => $sites, 'token' => $token]);
+
+            }
         }
 
         return view('pages.error');
@@ -125,27 +132,29 @@ class LinkController extends Controller
     public function rightholderResponse(Request $req)
     {
         $token= $req->get('token');
-        $rightholderId= $req->get('rightholderId');
+        $rhConsentId= $req->get('consentId');
         $dni = $req->get('dni');
-        $resToken = Token::generateShared($rightholderId);
+        $resToken = Token::generateShared($rhConsentId);
         if (hash_equals($resToken,$token)){
-            $rightholder  = Rightholder::find($rightholderId);
-            if (isset($rightholder)){
-                $sites = $rightholder->publicationsites->pluck('name');
+            $rhConsent  = RightholderConsent::find($rhConsentId);
+
+            if (isset($rhConsent)){
+                $sites = $rhConsent->rightholder->publicationsites->pluck('name');
                 $sharing = [];
                 foreach ($sites as $site){
                     $sharing[$site]=(int)$req->get($site,'0');
                 }
-                if ($rightholder->documentId == $dni){
-                    $rightholder->status = Status::RH_PROCESED;
-                    $rightholder->consent = json_encode($sharing);
-                    $rightholder->consent_date = Carbon::now();
-                    $rightholder->save();
+                if ($rhConsent->rightholder->documentId == $dni){
+
+                    $rhConsent->status = Status::RH_PROCESED;
+                    $rhConsent->consents = json_encode($sharing);
+                    $rhConsent->save();
+                    $userId = $req->user()?$req->user()->id:null;
 
                     $h = new Historic();
-                    $h->register($req->user()->id,"Solicitud recibida con DNI :".$dni." y contiene los siguientes permisos de valided anual: ".json_encode($sharing),null,$rightholder->person->id, $rightholderId);
+                    $h->register($userId,"Solicitud del consentimiento" .$rhConsent->description . " verificada con DNI :".$dni." y con los siguientes permisos: ".json_encode($sharing),null,$rhConsent->rightholder->person->id, $rhConsent->rightholder->id);
 
-                    return view('pages.photook',['link'=>$rightholder->link]);
+                    return view('pages.photook',['link'=>$rhConsent->link]);
                 }else{
                     return view('pages.errordni',['link'=>URL::previous()]);
                 }

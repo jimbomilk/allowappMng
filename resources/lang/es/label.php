@@ -32,6 +32,13 @@ return [
     'locations.excel' => 'Importaciones',
     'locations.delete' => 'Borrar',
 
+    //CONSENTS
+    'consents' => 'Consentimiento',
+    'consents.description' => 'Titulo',
+    'consents.legitimacion' => 'Legitimación',
+    'consents.destinatarios' => 'Destinatarios',
+    'consents.derechos' => 'Derechos',
+
     // USERS
     'users' => 'usuario',
     'users.name'=>'Nombre',
@@ -114,6 +121,7 @@ return [
     'photos.label' => 'Etiqueta identificativa',
     'photos.origen' => 'Imagen',
     'photos.name-email'=>'Email',
+    'photos.consent_id'=>'Consentimiento asociado:',
 
 
     //CONTRACTS s

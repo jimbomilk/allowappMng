@@ -1,5 +1,8 @@
 <div class="form-group">
-{!! Form::textarea($var, $value, array('id'=>'mytextarea','class'=>'form-control','placeholder'=>$value)) !!}
+@if (isset($label)&&$label)
+{!! Form::label($var, Lang::get('label.'.$name.'.'.$var)) !!}
+@endif
+{!! Form::textarea($var, $value, array('class'=>'mytextarea','placeholder'=>$value)) !!}
 
 </div>
 

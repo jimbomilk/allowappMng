@@ -52,7 +52,7 @@
             "Nastaliq=irannastaliqregular, sans-serif;"+
             "Samman=sammanregular;";
     tinymce.init({
-        selector: '#mytextarea',
+        selector: '.mytextarea',
         menubar: '',
         language: 'es',
         branding: false,
@@ -61,10 +61,10 @@
         relative_urls: true,
         remove_script_host: true,
         protocol: 'https',
-        toolbar: 'fontselect fontsizeselect | forecolor backcolor | italic bold underline | link image | alignleft aligncenter alignright alignjustify | bullist numlist | youtube',
+        toolbar: 'fontselect fontsizeselect | forecolor backcolor | italic bold underline | link | alignleft aligncenter alignright alignjustify | bullist numlist',
         font_formats: tm_fonts,
         media_live_embeds: true,
-        fontsize_formats: "36pt 46pt 56pt 66pt 76pt 86pt 96pt 106pt",
+        fontsize_formats: "8pt 9pt 10pt 11pt 12pt 13pt 14pt 16pt 18pt 20pt 22pt",
         height:200
 
     });

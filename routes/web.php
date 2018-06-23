@@ -23,6 +23,7 @@ Route::group([
     Route::resource('groups', 'GroupsController');
     Route::resource('persons', 'PersonsController');
     Route::resource('locations', 'LocationsController');
+    Route::resource('consents', 'ConsentController');
     Route::post('locations/excel/import', 'ExcelController@import')->name('import');
     Route::get('locations/excel/create', 'ExcelController@create')->name('create');
     Route::get('locations/excel/show/{id}', 'ExcelController@index')->name('excel');

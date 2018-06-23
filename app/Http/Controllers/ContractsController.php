@@ -46,7 +46,7 @@ class ContractsController extends Controller
         return $this->sendView();
     }
 
-    public function store(CreatePersonRequest $request,$location)
+    public function store(CreateContractRequest $request,$location)
     {
         $contract = new Contract($request->all());
         $contract->save();

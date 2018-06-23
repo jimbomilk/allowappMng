@@ -37,6 +37,10 @@ class Location extends General
         return $this->hasMany('App\Contract');
     }
 
+    public function consents(){
+        return $this->hasMany('App\Consent');
+    }
+
     public function rightholders(){
         return $this->hasMany('App\Rightholder');
     }

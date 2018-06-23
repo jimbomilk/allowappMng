@@ -5,6 +5,8 @@
 @endsection
 
 @section('main-content')
+    {!! Form::open(array('url' => "$name/emails", 'method' => 'POST', 'enctype' => 'multipart/form-data')) !!}
+    {!! Form::hidden('rightholderId', isset($element)?$element->id:'all') !!}
 <div class="container-fluid spark-screen">
     <div class="panel panel-primary">
         <div class="panel-heading">
@@ -16,7 +18,15 @@
                 <div class="col-sm-6">
                     <div class="row">
                         <div class="col-sm-12">
-                            <h4>A:</h4>
+                            <h4>Tipo de consentimiento a solicitar:</h4>
+                        </div>
+                        <div class="col-sm-12">
+                            @include("common.controls.input_select",array('var'=>'consent_id','nolabel'=>true,'col'=>$consents))
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h4>Enviar a:</h4>
                         </div>
                     </div>
                     @if(isset($element))
@@ -47,15 +57,14 @@
                     <div class="row">
                         <div class="col-sm-12">
 
-                                {!! Form::open(array('url' => "$name/emails", 'method' => 'POST', 'enctype' => 'multipart/form-data')) !!}
-                                {!! Form::hidden('rightholderId', isset($element)?$element->id:'all') !!}
+
 
                                 @include("common.controls.input_textarea",array('var'=>'email','value'=>$template))
 
                                 <p style="text-align: center;margin: 12px">
                                     <button type="submit" class="btn btn-primary">{{ trans("label.$name.request")}} </button>
                                 </p>
-                                {!! Form::close() !!}
+
 
                         </div>
                     </div>
@@ -64,6 +73,7 @@
         </div>
     </div>
 </div>
+    {!! Form::close() !!}
 @endsection
 
 

@@ -10,11 +10,11 @@
                 <strong>Marco regulatorio</strong>
             </div>
             <div class="panel-body">
-            <p>Ha recibido este enlaces como responsable de los derechos de imagen de {{$rightholder->person->name}}.</p>
-            <p>Se solicita su consentimiento para compartir imágenes en las
-                bla bla bla</p>
-            <p>Recuerde que tiene derecho a revocar este permiso accediendo a este <a href="{{$rightholder->link}}">enlace</a> en cualquier momento. Por favor, guárdelo o descargue la aplicación móvil Allowapp para gestionar sus derechos de imagen.
-            </p>
+            Ha recibido este enlace como responsable de los derechos de imagen de <strong>{!!$rhConsent->rightholder->person->name!!}.</strong><br><br>
+            <strong>Legitimación:</strong> {!!$rhConsent->consent->legitimacion!!}<br>
+            <strong>Destinatarios:</strong> {!!$rhConsent->consent->destinatarios!!}<br>
+            <strong>Derechos:</strong> {!!$rhConsent->consent->derechos!!}<br>
+
             </div>
         </div>
     </div>
@@ -23,7 +23,7 @@
 
 
         @include("common.controls.input_hidden",['var'=>'token','val'=>$token])
-        @include("common.controls.input_hidden",['var'=>'rightholderId','val'=>$rightholder->id])
+        @include("common.controls.input_hidden",['var'=>'consentId','val'=>$rhConsent->id])
         @foreach( $publicationsites as $site)
 
         <div class="row" style="margin-top:20px;color: white">
