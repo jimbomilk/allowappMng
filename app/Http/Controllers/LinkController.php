@@ -65,8 +65,10 @@ class LinkController extends Controller
                     $photo->data = json_encode($photoData);
                     $photo->save();
                     $photo->updatePhotobyNetwork();
+
+                    $userId = $req->user()?$req->user()->id:null;
                     $h = new Historic();
-                    $h->register($req->user()->id,"Solicitud recibida con DNI :".$dni." y contine los siguientes permisos: ".json_encode($sharing),$photo->id,$personId, $rightholderId);
+                    $h->register($userId,"Solicitud recibida con DNI :".$dni." y contine los siguientes permisos: ".json_encode($sharing),$photo->id,$personId, $rightholderId);
 
                     return view('pages.photook',['link'=>$photo->link]);
                 }else{

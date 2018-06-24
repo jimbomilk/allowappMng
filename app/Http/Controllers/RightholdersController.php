@@ -26,6 +26,11 @@ class RightholdersController extends Controller
         $person_id = $request->get('person');
         $request->session()->put('person_id',$person_id);
 
+        $location = Location::find($location_id);
+        if(isset($location)){
+            $consents = $location->consents;
+        }
+
         $set = null;
 
         if(isset($person_id)) {
@@ -38,7 +43,7 @@ class RightholdersController extends Controller
         }
 
 
-        return view('common.index', ['name' => 'rightholders', 'set' => $set,'person_id'=>$person_id]);
+        return view('common.index', ['name' => 'rightholders', 'set' => $set,'person_id'=>$person_id,'consents'=>$consents]);
 
     }
 
@@ -49,6 +54,7 @@ class RightholdersController extends Controller
             $persons = Person::where('id',$person_id)->pluck('name','id');
         else
             $persons = Person::pluck('name','id');
+
 
         if (isset($element)) {
             return view('common.edit', ['name' => 'rightholders', 'element' => $element,'titles'=>$this->titles,'persons'=>$persons]);

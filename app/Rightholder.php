@@ -21,10 +21,12 @@ class Rightholder extends Model
     }
 
     public function rightholderconsents(){
-        return $this->hasMany('App\Consent');
+        return $this->hasMany('App\RightholderConsent');
     }
 
-
+    public function getRhConsent($consentId){
+        return  RightholderConsent::where([['rightholder_id',$this->id],['consent_id',$consentId]])->first();
+    }
 
     public function getPublicationsitesAttribute(){
         return Publicationsite::where('group_id',$this->person->group_id)->get();

@@ -16,8 +16,9 @@ use App\Relations;
 use App\Rightholder;
 use App\RightholderPhoto;
 use App\Status;
+use Chencha\Share\Share;
 use Larareko\Rekognition\RekognitionFacade;
-use Share;
+use Chencha\Share\ShareFacade;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -361,7 +362,7 @@ class PhotosController extends Controller
             $photo->save();
             $h = new Historic();
             $h->register($req->user()->id, "Imagen compartida en " . $share, $photoId);
-            return Share::load($photo->getSharedLink(), 'Example')->$share();
+            return ShareFacade::load($photo->getSharedLink(), 'Example')->$share();
         }
 
         Session::flash('message',"¡Error!, se ha producido un error, inténtelo más tarde.");
