@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Location;
 use App\Mail\PersonEmail;
 use App\Mail\PhotoEmail;
 use App\Mail\RightholderEmail;
@@ -37,13 +38,19 @@ class HistoricController extends Controller
     public function showRightholder($location,$id)
     {
         $element = Rightholder::find($id);
+        $location = Location::where('name',$location)->first();
+        if(isset($location)){
+            $consents = $location->consents;
+        }
 
-        return view('historic.rightholders.show', ['name' => 'historic.rightholders.show', 'element' => $element]);
+        return view('historic.rightholders.show', ['name' => 'historic.rightholders.show', 'element' => $element,'consents'=>$consents]);
     }
 
     public function showPhoto($location,$id)
     {
+
         $element = Photo::find($id);
+
         $destinatarios = implode(",",$element->rightholderphotos->pluck('rhemail')->toArray());
 
 
@@ -59,7 +66,11 @@ class HistoricController extends Controller
             $destinatarios .=$element->email;
         }
 
-        return view('historic.persons.show', ['name' => 'historic.person.show', 'element' => $element,'destinatarios'=>$destinatarios]);
+        $location = Location::where('name',$location)->first();
+        if(isset($location)){
+            $consents = $location->consents;
+        }
+        return view('historic.persons.show', ['name' => 'historic.person.show', 'element' => $element,'destinatarios'=>$destinatarios,'consents'=>$consents]);
     }
 
     public function emailsPerson(Request $req,$location)

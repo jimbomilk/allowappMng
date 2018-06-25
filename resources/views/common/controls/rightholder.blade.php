@@ -19,29 +19,8 @@
                <p> <i class="fa fa-phone text-primary"></i> {{$element->phone}} </p>
 
             <div class="socials tex-center" style="margin-bottom: 120px">
-                <strong>CONSENTIMIENTOS</strong><br>
-                @foreach($consents as $consent)
-                    <div class="col-sm-6">
-                    <h5>{{$consent->description}}</h5>
+                @include("common.controls.consents",['consents'=>$consents,'element'=>$element])
 
-                        @if (($rhConsent = $element->getRhConsent($consent->id)))
-
-                            @if($rhConsent->status==\App\Status::RH_PROCESED && isset($rhConsent->consents) )
-                                @foreach(json_decode($rhConsent->consents) as $key=>$value)
-                                    <a href="" class="btn btn-circle btn-{{$value?'success':'default'}} "><i class="fa fa-{{$key}}"></i></a>
-                                @endforeach
-
-                            @elseif($rhConsent->status==\App\Status::RH_NOTREQUESTED)
-                                <p style="color: blue " aria-hidden="true">no solicitado</p>
-                            @else
-                                <p style="color: red " aria-hidden="true">a la espera</p>
-                            @endif
-                        @else
-                            <p style="color: blue " aria-hidden="true">no solicitado</p>
-                        @endif
-
-                    </div>
-                @endforeach
 
                 </div>
             </div>

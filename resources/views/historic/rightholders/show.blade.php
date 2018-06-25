@@ -23,19 +23,12 @@
                         <strong>#Email : </strong>{{$element->email}}<br>
                         <strong>#Phone :</strong> {{$element->phone}}<br>
                         <strong>#ID :</strong> {{$element->documentId}}<br>
+                        <strong>#{{$element->relation}} de</strong> {{$element->person->name}}
 
+                        <div class="col-sm-12 text-center">
+                            @include("common.controls.consents",['consents'=>$consents,'element'=>$element])
+                        </div>
 
-                        <strong>#{{$element->relation}} de</strong> {{$element->person->name}} <br>
-
-
-                        <strong>#Consentimiento anual: </strong>
-                        @if($element->status == \App\Status::RH_NOTREQUESTED)
-                            No solicitado.
-                        @elseif($element->status == \App\Status::RH_PENDING)
-                            Enviado, pendiente de respuesta.
-                        @elseif($element->status == \App\Status::RH_PROCESED)
-                            Activo desde :{{$element->consentDate}}<br>{{json_encode($element->consent)}}
-                        @endif
 
 
                     </div>

@@ -16,33 +16,20 @@
                     {{trans("label.$name.data")}} <div style="float: right;color: darkgrey"> {{$element->created}}</div>
                 </div>
                 <div class="panel-body">
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <img class="img-responsive" src={{$element->url}} alt="imagen">
                     </div>
-                    <div class="col-sm-6">
-                        <h5><strong>#Id:</strong> {{$element->id}}</h5>
-                        <h5><strong>#Gestionada por :</strong> {{$element->user->name}}</h5>
-                        <h5><strong>#Etiqueta :</strong> {{$element->label}}</h5>
-                        <h5><strong>#Curso :</strong> {{$element->group->name}}</h5>
-                        <h5><strong>#Personas identificadas en la imagen:</strong></h5>
+                    <div class="col-sm-8">
+                        <strong>#Id:</strong> {{$element->id}}<br>
+                        <strong>#Gestionada por :</strong> {{$element->user->name}}<br>
+                        <strong>#Etiqueta :</strong> {{$element->label}}<br>
+                        <strong>#Curso :</strong> {{$element->group->name}}<br>
+                        <strong>#Personas identificadas en la imagen:</strong><br>
 
                         @foreach($element->people as $index=>$person)
-                                    <h6><strong>{{$index+1}}. {{\App\Person::find($person->id)->name}}</strong></h6>
-                            @foreach(\App\Person::find($person->id)->rightholders as $rh)
-                                <h7 style="text-align: justify;padding-left: 12px">
-                                <strong> {{$rh->relation}}:</strong> {{$rh->name}} . Constentimiento anual
-
-
-                                @if($rh->status == \App\Status::RH_NOTREQUESTED)
-                                    no solicitado.
-                                @elseif($rh->status == \App\Status::RH_PENDING)
-                                    enviado, pendiente de respuesta.
-                                @elseif($rh->status == \App\Status::RH_PROCESED)
-                                    activo:{{$rh->consentDate}}<br>{{json_encode($rh->consent)}}
-                                @endif
-                                </h7>
-                            @endforeach
-
+                            <div class="col-sm-6">
+                                {{$index+1}}. {{\App\Person::find($person->id)->name}}
+                            </div>
                         @endforeach
 
                     </div>

@@ -16,25 +16,20 @@
                     {{trans("label.$name.data")}} <div style="float: right;color: darkgrey"> {{$element->created}}</div>
                 </div>
                 <div class="panel-body">
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <img class="img-responsive" src={{$element->photo}} alt="imagen">
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-8">
                         <strong>#Id: {{$element->id}}<br></strong>
                         <strong>#Nombre : {{$element->name}}<br></strong>
                         <strong>#Curso : {{$element->group->name}}<br></strong>
                         <strong>#Padres y tutores: <br></strong>
 
                         @foreach($element->rightholders as $rh)
-                            &emsp;{{$rh->relation}}:{{$rh->name}}<br>
-                            <strong>#Consentimiento anual: <br></strong>
-                            @if($rh->status == \App\Status::RH_NOTREQUESTED)
-                                No solicitado.
-                            @elseif($rh->status == \App\Status::RH_PENDING)
-                                Enviado, pendiente de respuesta.
-                            @elseif($rh->status == \App\Status::RH_PROCESED)
-                                Activo:{{$rh->consentDate}}<br>{{json_encode($rh->consent)}}
-                            @endif
+                            <div class="col-sm-12 text-center">{{$rh->name}}({{$rh->relation}})</div>
+                            <div class="col-sm-12 text-center">
+                                @include("common.controls.consents",['consents'=>$consents,'element'=>$rh])
+                            </div>
                         @endforeach
 
                     </div>
@@ -51,18 +46,16 @@
                     @foreach($element->photos as $photo)
                     <div class="col-sm-6">
                         <div class="row">
-                            <div class="col-sm-12">
-                            <strong>#Id:</strong> {{$photo->id}} / <strong>#Fecha :</strong> {{$photo->created}}<br>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-6">
                                 <img class="img-responsive" src={{$photo->url}} alt="imagen">
                             </div>
-                            <div class="col-sm-12">
-
+                            <div class="col-sm-6">
+                                <strong>#Id:</strong> {{$photo->id}} <br>
+                                <strong>#Fecha :</strong> {{$photo->created}}<br>
                                 <strong>#Nombre :</strong> {{$photo->label}}<br>
                                 <strong>#Gestionada por :</strong> {{$photo->user->name}}<br>
+                            </div>
+                            <div class="col-sm-12">
                                 <strong>#Acciones:</strong><br>
                                 @foreach($element->getHistoric($photo->id) as $index=>$h)
                                     {{$index+1}}. <small>{{$h->created}} : {{$h->log}}</small><br>
