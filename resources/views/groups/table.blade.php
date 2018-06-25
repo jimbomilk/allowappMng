@@ -17,7 +17,7 @@
 
                 @include("common.controls.btn_show",array('var'=>$element))
 
-                @include("common.controls.btn_other",array('route'=> 'publicationsites','onlyicon'=>true,'icon'=>'glyphicon-thumbs-up','small'=>'true','var'=>$element,'label'=>'sites','style'=>'btn-info'))
+                @include("common.controls.btn_other",array('route'=> 'publicationsites','onlyicon'=>true,'icon'=>'glyphicon-globe','var'=>$element,'label'=>'sites','style'=>'btn-info'))
 
                 @include("common.controls.btn_delete",array('var'=>$element))
             </td>

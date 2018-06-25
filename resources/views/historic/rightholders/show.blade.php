@@ -13,7 +13,7 @@
         <div class="col-md-6 legal" >
             <div class="panel panel-default" >
                 <div class="panel-heading" style="background-color: rgb(246,216,88);color: #000000">
-                    Datos de registro <div style="float: right;color: darkgrey"> {{$element->created}}</div>
+                    {{trans("label.$name.data")}} <div style="float: right;color: darkgrey"> {{$element->created}}</div>
                 </div>
                 <div class="panel-body">
 

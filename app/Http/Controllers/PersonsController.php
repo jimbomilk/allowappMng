@@ -29,7 +29,9 @@ class PersonsController extends Controller
         }else{
             $set = $request->user()->getPersons();
         }
-        return view('common.index', ['name' => 'persons', 'set' => $set]);
+        $groups = $request->user()->getGroups()->pluck('name','id')->toArray();
+        array_unshift($groups,"Todos los grupos");
+        return view('common.index', ['name' => 'persons', 'set' => $set,'groups'=>$groups]);
 
     }
 

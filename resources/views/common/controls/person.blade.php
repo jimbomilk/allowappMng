@@ -1,16 +1,23 @@
-<div class="col-lg-4 col-md-4 col-sm-6">
+<div class="col-lg-4 col-md-4 col-sm-6 person group{{$element->group->id}}">
     <div class="panel panel-default userlist">
-
+        <div style="margin-top: 12px">
+            <div class="col-sm-4 text-left " >
+                <span class="label label-primary" >{{$element->group->name}}&nbsp;</span>
+            </div>
+            <div class="small col-sm-offset-4 col-sm-4 text-right">
+                @if (!$element->minor)
+                <span> <i class="fa fa-vcard-o text-primary"></i> {{$element->documentId}} </span>
+                @endif
+            </div>
+        </div>
         <div class="panel-body text-center">
-            <div class="userprofile">
+            <div class="userprofile ">
                 <div class="userpic"> <img src="{{$element->photo}}" alt="" class="userpicimg"> </div>
                 <h3 class="username">{{$element->name}}</h3>
-                <p>Grupo: {{$element->group->name}}</p>
-
-                <div style="height: 70px">
+                <div style="margin-bottom: 10px">
                 @if ($element->minor)
-                    <p class="page-subtitle small">Menor de edad</p>
-                    <a href="" class="availablity btn btn-circle btn-success"><i class="fa fa-check"></i></a>
+                    <p class="page-subtitle small"><i class="fa fa-check"></i> Menor de edad </p>
+
                 @endif
                 </div>
 
@@ -26,7 +33,8 @@
                         @endif
                     @endif
                     @if (!$element->minor)
-                    <p>{{$element->email}} | {{$element->phone}} </p>
+                    <p><i class="fa fa-envelope text-primary"></i> {{$element->email}} <br>
+                        <i class="fa fa-phone text-primary"></i> {{$element->phone}} </p>
                     @endif
                 </div>
             </div>

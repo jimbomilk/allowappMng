@@ -8,7 +8,7 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h4>
-                            <i class="{{trans("label.$name.icon")}}"></i> {{ trans('labels.edit')}} {{trans("labels.$name")}}
+                            <i class="{{trans("label.$name.fa_icon")}}"></i> {{ trans('labels.edit')}} {{trans("labels.$name")}}
                         </h4>
                     </div>
 

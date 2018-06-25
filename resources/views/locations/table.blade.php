@@ -23,7 +23,7 @@
                 <div class="col-sm-12">
                     @include("common.controls.btn_edit",array('var'=>$element))
                     @include("common.controls.btn_show",array('var'=>$element))
-                    @include("common.controls.btn_other",array('route'=> 'excel/show','onlyicon'=>true,'icon'=>'glyphicon-save','small'=>'true','var'=>$element,'label'=>'excel','style'=>'btn-info'))
+                    @include("common.controls.btn_other",array('route'=> 'excel/show','onlyicon'=>true,'icon'=>'glyphicon-save','var'=>$element,'label'=>'excel','style'=>'btn-info'))
                     @include("common.controls.btn_delete",array('var'=>$element))
                 </div>
             </td>

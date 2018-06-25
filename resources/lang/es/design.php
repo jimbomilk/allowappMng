@@ -14,7 +14,18 @@ return [
     */
 
     'main' => 'fa fa-dashboard',
-    'users' => 'fa fa-users',
-    'locations' => 'fa fa-building-o'
+    'users' => 'fa fa-key',
+    'locations' => 'fa fa-building-o',
+    'consents' => 'fa fa-legal',
+    'groups' => 'fa fa-address-book',
+    'rightholders' => 'fa fa-id-card-o',
+    'persons' => 'fa fa-users',
+    'photos' => 'fa fa-image',
+    'historic.photos' => 'fa fa-history',
+    'historic.photo.show' => 'fa fa-history',
+    'historic.persons' => 'fa fa-history',
+    'historic.person.show' => 'fa fa-history',
+    'historic.rightholders' => 'fa fa-history',
+    'historic.rightholders.show' => 'fa fa-history',
 
 ];

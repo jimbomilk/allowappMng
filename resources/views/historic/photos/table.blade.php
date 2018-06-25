@@ -1,9 +1,9 @@
 <table class="table table-responsive table-striped">
     <tr>
-        <th>#</th>
-        <th>{{Lang::get("label.$name.name")}}</th>
-        <th>{{Lang::get("label.$name.date")}}</th>
-        <th>{{Lang::get("label.$name.people")}}</th>
+        <th>{{trans("label.$name.photo")}}</th>
+        <th>{{trans("label.$name.name")}}</th>
+        <th>{{trans("label.$name.date")}}</th>
+        <th>{{trans("label.$name.people")}}</th>
 
         <th></th>
 
@@ -11,7 +11,7 @@
 
     @foreach($set as $element)
         <tr data-id="{{$element->id}}">
-            <td><div style="width: 10vw">
+            <td><div style="width: 8vw">
                     <img class="img-responsive" src={{$element->url}} alt="imagen">
 
                 </div> </td>
@@ -28,8 +28,8 @@
             </td>
 
             <td>
-                <div class="col-sm-4">
-                <a href="{{ url(str_replace(".","/",$name)."/show/$element->id") }}" class="btn-sm btn-warning" title="{{trans("label.$name")}}"><span class="glyphicon glyphicon-download-alt"></span> </a>
+                <div class="col-sm-12">
+                <a href="{{ url(str_replace(".","/",$name)."/show/$element->id") }}" class="btn-sm btn-warning" title="{{trans("label.$name")}}"><span class="glyphicon glyphicon-download-alt"></span> {{trans("label.$name.download")}} </a>
                 </div>
 
             </td>

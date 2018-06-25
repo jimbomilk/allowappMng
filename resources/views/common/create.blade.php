@@ -10,7 +10,11 @@
         <div class="row">
             <div class="col-md-11">
                 <div class="panel panel-primary">
-                    <div class="panel-heading">{{ trans('label.create_new')}} {{ trans('label.'.$name)}} </div>
+                    <div class="panel-heading">
+                        <h4>
+                            <i class="{{trans("label.$name.fa_icon")}}"></i> {{ trans('label.create_new')}} {{ trans('label.'.$name)}}
+                        </h4>
+                    </div>
 
                     <div class="panel-body">
 

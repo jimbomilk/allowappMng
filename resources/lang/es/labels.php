@@ -57,6 +57,7 @@ return [
 
     'excel' => 'Importación de datos',
 
+    'historic' => 'Historial',
     'historic.photos' => 'Historial de fotografías',
     'historic.persons' => 'Historial por persona',
     'historic.rightholders' => 'Historial de Responsables',
@@ -65,4 +66,8 @@ return [
     'search.historic.rightholders' => 'Búsqueda por nombre,email,teléfono',
     'search' => ' Buscar',
     'no-rightholders' => 'No se han definido destinatarios',
+
+    'historic.photo.show' => 'Historial de la imagen',
+    'historic.person.show' => 'Historial personal',
+    'historic.rightholders.show' => 'Historial del responsable',
 ];

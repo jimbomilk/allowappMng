@@ -42,8 +42,11 @@ class RightholdersController extends Controller
             //return json_encode($set);
         }
 
+        $groups = $request->user()->getGroups()->pluck('name','id')->toArray();
+        array_unshift($groups,"Todos los grupos");
 
-        return view('common.index', ['name' => 'rightholders', 'set' => $set,'person_id'=>$person_id,'consents'=>$consents]);
+
+        return view('common.index', ['name' => 'rightholders', 'set' => $set,'person_id'=>$person_id,'consents'=>$consents,'groups'=>$groups]);
 
     }
 
@@ -97,6 +100,7 @@ class RightholdersController extends Controller
 
     public function consentimientos(Request $request,$location,$id=null)
     {
+        //dd($request->session()->get('person_id'));
         $person_id = $request->session()->get('person_id');
         $loc = Location::find($request->get('location'));
         $tiposConsentimientos = [];
@@ -106,7 +110,6 @@ class RightholdersController extends Controller
         $set = null;
         if(isset($id)) {
             $set [] = Rightholder::find($id);
-
         }
         else if(isset($person_id))
             $set =  Rightholder::where('person_id',$person_id)->get();

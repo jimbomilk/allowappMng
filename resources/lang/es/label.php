@@ -12,9 +12,11 @@ return [
     'rightholders.fa_icon' => 'fa fa-id-card-o',
     'photos.fa_icon' => 'fa fa-image',
     'persons.fa_icon' => 'fa fa-users',
+    'historic.fa_icon' => 'fa fa-history',
     'historic.persons.fa_icon' => 'fa fa-users',
     'historic.rightholders.fa_icon' => 'fa fa-id-card-o',
     'historic.photos.fa_icon' => 'fa fa-camera-retro',
+    'consents.fa_icon' => 'fa fa-legal',
 
     //PROFILES
     'profiles.super'=> 'Super usuario',
@@ -24,6 +26,7 @@ return [
 
     // LOCATIONS
     'locations' => "Colegio",
+    'title.locations' => "Lista de Colegios",
     'locations.icon'=> "Escudo del colegio",
     "locations.name" => "Nombre del colegio",
     'locations.description' => 'Descripción',
@@ -34,6 +37,7 @@ return [
 
     //CONSENTS
     'consents' => 'Consentimiento',
+    'title.consents' => "Lista de Consentimientos",
     'consents.description' => 'Titulo',
     'consents.legitimacion' => 'Legitimación',
     'consents.destinatarios' => 'Destinatarios',
@@ -41,6 +45,7 @@ return [
 
     // USERS
     'users' => 'usuario',
+    'title.users' => "Lista de Usuarios",
     'users.name'=>'Nombre',
     'users.email'=>'Email',
     'users.show' => 'Perfil',
@@ -57,6 +62,7 @@ return [
 
     // GROUPS
     'groups' => 'Grupo',
+    'title.groups' => "Lista de Grupos",
     'groups.name' => 'Curso',
     'groups.count' => 'Nº de alumnos',
     'groups.show' => 'Alumnos',
@@ -65,11 +71,13 @@ return [
 
     // PUBLICATIONSITES
     'publicationsites' => 'nueva',
+    'title.publicationsites' => "Areas de Difusión",
     'publicationsites.name' => 'Nombre',
     'publicationsites.url' => 'Dirección web',
 
     // PERSONS
     'persons' => 'Alumno',
+    'title.persons' => "Lista de alumnos",
     'persons.name' => 'Nombre',
     'persons.minor' => 'Menor de 16 años',
     'persons.email' => 'DNI/NIE/Pasaporte',
@@ -84,6 +92,7 @@ return [
 
     // RIGHTHOLDERS
     'rightholders' => 'Responsables',
+    'title.rightholders' => "Lista de responsables",
     'rightholders.name' => 'Nombre del responsable',
     'rightholders.person' => 'Nombre del alumno',
     'rightholders.title' => 'Relación',
@@ -102,6 +111,7 @@ return [
 
     // PHOTOS
     'photos' => 'Foto',
+    'title.photos' => "Lista de imagenes",
     'photos.group_id' => 'Curso',
     'photos.name' => 'Etiqueta',
     'photos.photo' => 'Foto',
@@ -122,6 +132,7 @@ return [
     'photos.origen' => 'Imagen',
     'photos.name-email'=>'Email',
     'photos.consent_id'=>'Consentimiento asociado:',
+    'photos.send'=> 'Solicitar consentimientos para la imagen ',
 
 
     //CONTRACTS s
@@ -146,9 +157,12 @@ return [
     'response.dni'=>'Introduzca su DNI',
 
     //HISTORIC
-
+    'title.historic.photos' => "Historial de imagenes",
+    'title.historic.persons' => "Historial de personas",
+    'title.historic.rightholders' => "Historial de responsables",
+    'historic.photos.photo' => 'Imagen',
     'historic.photos.name' => 'Etiqueta',
-    'historic.photos.date' => 'Fecha',
+    'historic.photos.date' => 'Fecha de captura',
     'historic.photos.people' => 'Personas identificadas',
     'historic.persons.group_id' => 'Clase',
     'historic.persons.name' => 'Nombre',
@@ -156,11 +170,18 @@ return [
     'historic.rightholders' => 'Mostrar historial de este responsable',
     'historic.photos' => 'Mostrar historial de esta fotografía',
     'historic.persons' => 'Mostrar historial de esta persona',
+    'historic.persons.download' => 'Descargar informe',
+    'historic.photos.download' => 'Descargar informe',
+    'historic.rightholders.download' => 'Descargar informe',
     'historic.rightholders.name' => 'Nombre',
     'historic.rightholders.email' => 'Email',
     'historic.rightholders.phone' => 'Teléfono',
     'historic.rightholders.relation' => 'Relación',
     'historic.rightholders.consents' => 'Consentimientos',
+    'historic.person.show.data' => "Historial del alumno",
+    'historic.rightholders.show.data' => "Historial del responsable",
+    'historic.photo.show.data' => "Historial de la imagen",
+
 
     'historic.photo.show.to'=>'Enviar a',
     'historic.photo.show.title'=>'Titulo',
