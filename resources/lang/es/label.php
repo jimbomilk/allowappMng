@@ -133,6 +133,8 @@ return [
     'photos.name-email'=>'Email',
     'photos.consent_id'=>'Consentimiento asociado:',
     'photos.send'=> 'Solicitar consentimientos para la imagen ',
+    'photos.warning' => "AVISO",
+    'photos.error' => "ERROR",
 
 
     //CONTRACTS s

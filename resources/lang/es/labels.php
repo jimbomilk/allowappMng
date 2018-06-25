@@ -10,7 +10,7 @@ return [
     'groups' => 'Clases',
     'persons' => 'Alumnos',
     'photos' => 'Fotos',
-    'rightholders' => 'Responsables',
+    'rightholders' => 'Responsables legales',
     'contracts'=> 'Contratos',
     'edit'=>'Editar',
     'delete'=>'Borrar',

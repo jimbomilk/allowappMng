@@ -23,7 +23,7 @@
                         <div class="panel-body">
                             <div class=" col-md-12 ">
                                 @foreach($errors as $index=>$error)
-                                    <div class="@if($error['type']=='error') text-danger @else text-warning @endif">{{$index+1}}. {{strtoupper($error['type'])}}: {!!$error['text']!!}</div>
+                                    <div class="@if($error['type']=='error') text-danger @else text-warning @endif">{{$index+1}}. {{trans("label.$name.".$error['type'])}}: {!!$error['text']!!}</div>
                                 @endforeach
                             </div>
                         </div>
