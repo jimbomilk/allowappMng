@@ -1,9 +1,12 @@
 
-<div class="col-sm-4">
+<div class="col-sm-4 photo group{{$imagen->group->id}} consent{{$imagen->consent->id}}">
     <div class="panel panel-{{$imagen->status['color']}}">
         <div class="panel-heading">
             <div class="row">
-                <div class="col-xs-4">{{$imagen->label}}#{{$imagen->id}}</div>
+                <div class="col-xs-4">
+                    {{$imagen->group->name}} - {{$imagen->label}}#{{$imagen->id}}<br>
+                    {{$imagen->consent->description}}
+                </div>
                 <div class="col-xs-8">
                     <span style="float: right">@include("common.controls.btn_delete",array('var'=>$element))</span>
 

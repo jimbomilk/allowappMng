@@ -16,7 +16,7 @@ class Photo extends General
     static $searchable = ['label'];
 
     //id,photo,location_id
-    protected $fillable = ['label','data','group_id'];
+    protected $fillable = ['label','data','group_id','consent_id'];
 
 
     public function location(){
@@ -26,6 +26,11 @@ class Photo extends General
     public function group()
     {
         return $this->belongsTo('App\Group');
+    }
+
+    public function consent()
+    {
+        return $this->belongsTo('App\Consent');
     }
 
     public function user()

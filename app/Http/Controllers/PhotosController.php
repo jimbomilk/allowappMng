@@ -30,7 +30,16 @@ class PhotosController extends Controller
 {
     public function index(Request $request)
     {
-        return view('common.index', [ 'name' => 'photos', 'set' => $request->user()->getPhotos()]);
+        $groups = $request->user()->getGroups()->pluck('name','id')->toArray();
+        array_unshift($groups,"Todos los grupos");
+
+        $locId = $request->get('location');
+        $location = Location::find($locId);
+        if (isset($location)){
+            $consents = $location->consents->pluck('description','id')->toArray();
+        }
+        array_unshift($consents,"Todos los consentimientos");
+        return view('common.index', [ 'name' => 'photos', 'set' => $request->user()->getPhotos(),'groups'=>$groups,'consents'=>$consents]);
     }
 
     public function sendView(Request $request,$element=null)
@@ -61,6 +70,7 @@ class PhotosController extends Controller
         $photo->location_id = $request->get('location');
         $photo->user_id = $request->user()->id;
         $photo->group_id = $request->get('group_id');
+        $photo->consent_id = $request->get('consent_id');
         $photo->save();
         $box_original=null;
         $box_working=null;

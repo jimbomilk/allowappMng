@@ -5,10 +5,10 @@
     @parent
     <script>
         $('#filter-grupos').change(function() {
-            sessionStorage.setItem("selected_group", this.value);
-            $('.person').show();
+            $('#filter-consents').prop('selectedIndex', 0);
+            $(".person,.photo").show();
             if (this.value!=0) {
-                $('.person').hide();
+                $(".person,.photo").hide();
                 $('.group' + this.value).show();
             }
         });
