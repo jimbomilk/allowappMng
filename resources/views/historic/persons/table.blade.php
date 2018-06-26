@@ -2,7 +2,7 @@
     <tr>
         <th>{{Lang::get("label.$name.photo")}}</th>
         <th>{{Lang::get("label.$name.name")}}</th>
-        <th>{{Lang::get("label.$name.group_id")}}</th>
+        <th class="text-center">{{Lang::get("label.$name.group_id")}}</th>
         <th></th>
 
     </tr>
@@ -16,7 +16,7 @@
                 </div>
             </td>
             <td>{{$element->name}}</td>
-            <th>{{$element->group->name}}</th>
+            <th class="text-center">{{$element->group->name}}</th>
 
 
             <td>

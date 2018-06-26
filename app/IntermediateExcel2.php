@@ -17,6 +17,15 @@ class IntermediateExcel2 extends Model
         return in_array($value,$this->persons);
     }
 
+    public function editable($key){
+        switch ($key) {
+            case "rightholder_code" :
+            case "status" :
+                return false;
+        };
+        return true;
+    }
+
     public function check($key,$value,&$title){
         switch ($key) {
             case "rightholder_code" :

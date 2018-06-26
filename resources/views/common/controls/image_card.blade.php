@@ -3,25 +3,23 @@
     <div class="panel panel-{{$imagen->status['color']}}">
         <div class="panel-heading">
             <div class="row">
-                <div class="col-xs-4">
-                    {{$imagen->group->name}} - {{$imagen->label}}#{{$imagen->id}}<br>
-                    {{$imagen->consent->description}}
-                </div>
-                <div class="col-xs-8">
-                    <span style="float: right">@include("common.controls.btn_delete",array('var'=>$element))</span>
-
-                    <a class="btn-card" ><span data-toggle="tooltip" title="{{trans('labels.explanation.badgepending')}}" class="badge badge-secondary">{{$imagen->pendingRightholders()}}</span></a>
-
+                <div class="col-xs-6">
+                    <span class="label label-primary" >{{$element->group->name}}&nbsp;</span><br>
+                    {{$imagen->label}}#{{$imagen->id}}<br>
+                    {{$imagen->consent->description}} : <span>{{$imagen->pendingRightholders()}}</span>
 
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-4" style="font-size: 0.7vw;">{{$imagen->created}}</div>
+                <div class="col-xs-6 text-right">
+                    <div >{{$imagen->created}}</div>
+                    <div style="margin-right: -14px">
+                        @include("common.controls.btn_edit",array('var'=>$element))
+                        @include("common.controls.btn_delete",array('var'=>$element,'small'=>true))
+                    </div>
 
-                <div class="col-xs-offset-3 col-xs-5 ">
-                    @include("common.controls.status",['status'=>$imagen->status])
+
                 </div>
             </div>
+
 
 
         </div>
@@ -66,7 +64,7 @@
                 @if($imagen->getData('status')>10)
                     @foreach($imagen->getData('sharing') as $share)
 
-                        <a  target="_blank" href="{{$imagen->getSharedLink($share->name) }}" class="btn btn-block btn-social btn-{{$share->name}}  btn-reddit">
+                        <a  target="_blank" href="{{url("$name/share/$imagen->id/$share->name") }}" class="btn btn-block btn-social btn-{{$share->name}}  btn-reddit">
                             <span class="fa glyphicon-globe fa-envelope-o fa-{{$share->name}}"></span> Compartir en {{$share->name}}
                        </a>
 

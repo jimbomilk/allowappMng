@@ -27,6 +27,7 @@ Route::group([
     Route::post('locations/excel/import', 'ExcelController@import')->name('import');
     Route::get('locations/excel/create', 'ExcelController@create')->name('create');
     Route::get('locations/excel/show/{id}', 'ExcelController@index')->name('excel');
+    Route::post('locations/excel/show/updateImport', 'ExcelController@updateImport')->name('updateImport');
     Route::post('locations/excel/show/importPhoto', 'ExcelController@importPhoto')->name('importPhoto');
 
     Route::post('locations/excel/show/importsites', 'ExcelController@importsites')->name('importsites');

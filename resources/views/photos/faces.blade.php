@@ -156,13 +156,13 @@
         var photoid = $(".facial_recognition").data('photoid');
         var action = $(".facial_recognition").data('action');
         var update = action=='run'?'#panel-detected':'#panel-group';
-        $("#loader").show();
+        $(".loader").show();
         $.ajax({
             type: "GET",
             url: action+'/'+photoid,
             data: "",
             success: function (res) {
-                $("#loader").hide();
+                $(".loader").hide();
                 location.reload();
                 $('#modal').hide();
                 $('#modal').modal('hide');
@@ -170,10 +170,11 @@
                 //console.log("exito:"+res);
             },
             error: function (e) {
-                $("#loader").hide();
+
                 console.log("error:"+e);
                 $('#modal').hide();
                 $('#modal').modal('hide');
+                $(".loader").hide();
             }
         })
     });
@@ -196,7 +197,7 @@
 
         var update = action == 'add' ? '#panel-detected' : '#panel-group';
         verb = ( action == 'add') ? 'addContract' : 'deleteContract';
-        $("#loader").show();
+        $(".loader").show();
         $.post(verb, {
             "_token": "{{ csrf_token() }}",
             'imagenId': imagenId,
@@ -209,15 +210,10 @@
             'boxLeft': boxFaceBlinkingLeft
         })
         .done(function () {
-
+            $(".loader").hide();
             location.reload();
 
         })
-        .always( function() {
-            $("#loader").hide();
-        });
-
-
 
     });
 

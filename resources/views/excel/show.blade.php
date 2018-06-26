@@ -17,9 +17,9 @@
                 <div class="panel-body">
                     <div class="col-md-12">
                     @include("$name.partials.logs")
-                    @include("$name.partials.table",['title'=>'Excel de Lugares de publicación','idTable'=>'sites', 'set'=>$sites,'btnImport'=>true])
-                    @include("$name.partials.table",['title'=>'Excel de Personas/Alumnos','idTable'=>'persons','set'=>$persons,'btnImages'=>true,'btnImport'=>true])
-                    @include("$name.partials.table",['title'=>'Excel de Responsables','idTable'=>'rightholders','set'=>$rightholders,'btnImport'=>true])
+                    @include("$name.partials.table",['title'=>'Excel de Lugares de publicación','sourceTable'=> 'intermediate_excel_3', 'idTable'=>'sites', 'set'=>$sites,'btnImport'=>true])
+                    @include("$name.partials.table",['title'=>'Excel de Personas/Alumnos','sourceTable'=> 'intermediate_excel_1','idTable'=>'persons','set'=>$persons,'btnImages'=>true,'btnImport'=>true])
+                    @include("$name.partials.table",['title'=>'Excel de Responsables','sourceTable'=> 'intermediate_excel_2','idTable'=>'rightholders','set'=>$rightholders,'btnImport'=>true])
 
                     </div>
                 </div>
@@ -35,8 +35,35 @@
     @parent
 
     <script>
+
+        $('.editable').on('change', function(e){
+
+            var key = $(this).attr('name');
+            var value = $(this).val();
+            var sourceTable = $(this).data('source');
+            var table = $(this).data('table');
+            var id = $(this).data('id');
+            $(".loader").show();
+
+            $.ajax({
+                method: "POST",
+                url:'updateImport',
+                data: {_token: "{{ csrf_token() }}",key:key,value:value,table:sourceTable,id:id}
+            }).done(function (e) {
+                $(".loader").hide();
+                location.reload();
+            }).fail(function (e) {
+                $(".loader").hide();
+                alert("Error, no se ha podido completar la operación. Detalles:"+ e.statusText);
+            }).always( function() {
+
+            });
+
+        });
+
         function readmultifiles(e) {
             const files = e.currentTarget.files;
+            $(".loader").show();
             Object.keys(files).forEach(i => {
                 const file = files[i];
                 const reader = new FileReader();
@@ -53,10 +80,10 @@
                         file: e.target.result,
                         importId:"{{$current_import}}"}
                     }).done(function () {
+                        $(".loader").hide();
                         location.reload();
-
                     }).always( function() {
-                        //$("#loader").hide();
+                        location.reload();
                     });
                 }
                 reader.readAsDataURL(file);
@@ -65,15 +92,16 @@
 
         function importdata(_this){
             var action = $(_this).data('table');
-
+            $(".loader").show();
             $.ajax({
                 method: "POST",
                 url:'import'+action,
                 data: {_token: "{{ csrf_token() }}"}
             }).done(function () {
+                $(".loader").hide();
                 location.reload();
             }).always( function() {
-                //$("#loader").hide();
+                location.reload();
             });
         }
 

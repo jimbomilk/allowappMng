@@ -1,10 +1,10 @@
-<div class="col-lg-4 col-md-4 col-sm-6 person group{{$element->person->group->id}}">
+<div class="col-lg-3 col-md-3 col-sm-6 person group{{$element->person->group->id}}">
     <div class="panel panel-default userlist">
         <div style="margin-top: 12px">
             <div class="col-sm-4 text-left" >
                 <span class="label label-primary" >{{$element->person->group->name}}&nbsp;</span>
             </div>
-            <div class="small col-sm-offset-4 col-sm-4 text-right">
+            <div class="small col-sm-offset-2 col-sm-6 text-right">
                 <span> <i class="fa fa-vcard-o text-primary"></i> {{$element->documentId}} </span>
             </div>
         </div>

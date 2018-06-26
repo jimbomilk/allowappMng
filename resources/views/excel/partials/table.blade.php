@@ -1,4 +1,8 @@
 <div class="col-md-12" >
+    <div class='loader' style='display: none;'>
+        <img src="{{asset('img/loading.gif')}}" width='100px' height='100px'>
+    </div>
+
     <div class="panel panel-default" >
         <div class="panel-heading" style="background-color: rgb(246,216,88);color: #000000">
             {{$title}}
@@ -43,7 +47,13 @@
                                     @endif
 
                                 @else
-                                    {{$value}}
+
+                                    @if($element->editable($key))
+                                        <input class="editable" style="height:100%;width: 100%" data-id="{{$element->id}}" data-source = "{{$sourceTable}}" data-table="{{$idTable}}" type="text" name="{{$key}}" value="{{$value}}" >
+                                    @else
+                                        {{$value}}
+                                    @endif
+
                                 @endif
                             </td>
                             @endif

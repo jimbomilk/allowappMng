@@ -16,6 +16,16 @@ class IntermediateExcel1 extends Model
         return in_array($value,$this->groups);
     }
 
+    public function editable($key){
+        switch ($key) {
+            case "person_code" :
+            case "person_photo_path" :
+            case "status" :
+                return false;
+        };
+        return true;
+    }
+
     public function check($key,$value,&$title){
         switch ($key) {
             case "person_code" :

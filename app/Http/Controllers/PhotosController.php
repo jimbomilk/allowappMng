@@ -6,12 +6,14 @@ namespace App\Http\Controllers;
 use App\Group;
 use App\Historic;
 use App\Http\Requests\CreatePhotoRequest;
+use App\Http\Requests\EditPhotoRequest;
 use App\Http\Requests\SendPhotoRequest;
 use App\Location;
 use App\Mail\RequestSignature;
 use App\Person;
 use App\PersonPhoto;
 use App\Photo;
+use App\Publicationsite;
 use App\Relations;
 use App\Rightholder;
 use App\RightholderPhoto;
@@ -38,8 +40,11 @@ class PhotosController extends Controller
         if (isset($location)){
             $consents = $location->consents->pluck('description','id')->toArray();
         }
+
+        $set = $request->user()->getPhotos($request->get('search'));
+
         array_unshift($consents,"Todos los consentimientos");
-        return view('common.index', [ 'name' => 'photos', 'set' => $request->user()->getPhotos(),'groups'=>$groups,'consents'=>$consents]);
+        return view('common.index', [ 'name' => 'photos','searchable'=>1, 'set' => $set,'groups'=>$groups,'consents'=>$consents]);
     }
 
     public function sendView(Request $request,$element=null)
@@ -61,6 +66,17 @@ class PhotosController extends Controller
     public function create(Request $request)
     {
         return $this->sendView($request);
+    }
+
+    public function update(EditPhotoRequest $request,$location,$id)
+    {
+        $photo = Photo::find($id);
+        if (isset($photo)) {
+            $photo->label = $request->get('label');
+            $photo->save();
+        }
+
+        return redirect('photos');
     }
 
     public function store(CreatePhotoRequest $request,$location)
@@ -370,9 +386,15 @@ class PhotosController extends Controller
         if (isset($photo)) {
             $photo->setStatus (Status::STATUS_SHARED);
             $photo->save();
-            $h = new Historic();
-            $h->register($req->user()->id, "Imagen compartida en " . $share, $photoId);
-            return ShareFacade::load($photo->getSharedLink(), 'Example')->$share();
+            $group = $photo->group;
+            $sites = $group->publicationsites;
+            $site = $sites->where('name',$share)->first();
+            if (isset($share)) {
+                $h = new Historic();
+                $h->register($req->user()->id, "Imagen compartida en " . $site->name . ": ".$site->url, $photoId);
+                //dd($h);
+                return redirect($photo->getSharedLink($site->name));
+            }
         }
 
         Session::flash('message',"¡Error!, se ha producido un error, inténtelo más tarde.");

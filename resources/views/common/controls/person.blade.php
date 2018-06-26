@@ -1,4 +1,4 @@
-<div class="col-lg-4 col-md-4 col-sm-6 person group{{$element->group->id}}">
+<div class="col-lg-3 col-md-3 col-sm-4 person group{{$element->group->id}}">
     <div class="panel panel-default userlist">
         <div style="margin-top: 12px">
             <div class="col-sm-4 text-left " >

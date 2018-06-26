@@ -45,4 +45,15 @@ class Group extends Model
         return $this->location->path.'/'.$this->table.'/'.$this->path.$this->id;
     }
 
+    public function getPersons($search = null){
+        if (isset($search) and $search != "") {
+
+            $where = General::getRawWhere(Person::$searchable,$search);
+            $set = $this->persons()->whereRaw($where);
+            return $set;
+        }
+        return $this->persons()->paginate(15);
+
+    }
+
 }

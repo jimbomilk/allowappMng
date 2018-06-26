@@ -34,7 +34,13 @@ class MainSeeder extends Seeder {
         // ** LOCATIONS **
         $idlocation = DB::table('locations')->insertGetId( array(
             'name' => 'colegio1',
-            'description'=> 'Colegio Virgen de la Montaña'
+            'description'=> 'Colegio Virgen de la Montaña',
+            'accountable'=> 'Director Jesús Latrecci Mardin',
+            'CIF'=> '31389238F',
+            'email'=> 'jmgarciacarrasco@gmail.com',
+            'address' => 'Calle de Martillo nº 45',
+            'city'=> 'Cáceres',
+            'CP'=> '10001'
 
         ) );
 

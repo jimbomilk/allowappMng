@@ -46,6 +46,7 @@ class LinkController extends Controller
         $rightholderId = $req->get('rightholder_id');
         $dni = $req->get('dni');
 
+
         $resToken = Token::generate($photoId,$userId,$personId,$rightholderId);
         if (hash_equals($resToken,$token)){
             $photo = Photo::find($photoId);
@@ -67,8 +68,9 @@ class LinkController extends Controller
                     $photo->updatePhotobyNetwork();
 
                     $userId = $req->user()?$req->user()->id:null;
+                    $rightholder = Rightholder::find($rightholderId);
                     $h = new Historic();
-                    $h->register($userId,"Solicitud recibida con DNI :".$dni." y contine los siguientes permisos: ".json_encode($sharing),$photo->id,$personId, $rightholderId);
+                    $h->register($userId,"Solicitud recibida de $rightholder->name con DNI : $dni y contiene los siguientes permisos: ".$this->sharingText($sharing),$photo->id,$personId, $rightholderId);
 
                     return view('pages.photook',['link'=>$photo->link]);
                 }else{
@@ -78,9 +80,16 @@ class LinkController extends Controller
 
             }
         }
-
         return view('pages.error');
+    }
 
+
+    private function sharingText($sharing){
+        $text = "";
+        foreach ($sharing as $key=>$value){
+            $text .= $key.":".($value?"consiente":"no consiente")."; ";
+        }
+        return $text;
     }
 
     public function shared(LinkPhotoRequest $req,$photoId,$network,$token)

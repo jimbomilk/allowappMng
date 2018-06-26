@@ -34,6 +34,12 @@ return [
     'locations.show' => 'Mostrar',
     'locations.excel' => 'Importaciones',
     'locations.delete' => 'Borrar',
+    'locations.accountable' => 'Responsable',
+    'locations.CIF' => 'CIF',
+    'locations.email' => 'Email',
+    'locations.address' => 'Dirección',
+    'locations.city' => 'Ciudad',
+    'locations.CP' => 'Código Postal',
 
     //CONSENTS
     'consents' => 'Consentimiento',

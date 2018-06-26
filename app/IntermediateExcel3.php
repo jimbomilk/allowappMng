@@ -14,6 +14,15 @@ class IntermediateExcel3 extends Model
         $this->services = Config::get('social-share.services');
     }
 
+    public function editable($key){
+        switch ($key) {
+            case "site_code" :
+            case "status" :
+                return false;
+        };
+        return true;
+    }
+
     public function check($key,$value,&$title){
         switch ($key) {
             case "site_code" :

@@ -18,9 +18,13 @@
 
                         {!! Form::model($element, array('url' => "$name/$element->id", 'method' => 'PUT', 'enctype' => 'multipart/form-data')) !!}
                             {!! Form::hidden('redirects_to', URL::previous()) !!}
-                            @include("$name.fields")
-                            <div style="float: right">
-                            <button type="submit" class="btn btn-primary">{{ trans('labels.update')}}</button>
+                            @if(View::exists("$name.edit"))
+                                @include("$name.edit")
+                            @else
+                                @include("$name.fields")
+                            @endif
+                            <div class="col-sm-offset-5 col-sm-2 text-center">
+                            <button type="submit" class="btn btn-primary ">{{ trans('labels.update')}}</button>
                             </div>
                         {!! Form::close() !!}
 

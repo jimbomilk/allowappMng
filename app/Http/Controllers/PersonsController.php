@@ -25,13 +25,13 @@ class PersonsController extends Controller
         $set=null;
         $group = Group::find($group_id);
         if (isset($group)){
-            $set = $group->persons;
+            $set = $group->getPersons($request->get('search'));
         }else{
-            $set = $request->user()->getPersons();
+            $set = $request->user()->getPersons($request->get('search'));
         }
         $groups = $request->user()->getGroups()->pluck('name','id')->toArray();
         array_unshift($groups,"Todos los grupos");
-        return view('common.index', ['name' => 'persons', 'set' => $set,'groups'=>$groups]);
+        return view('common.index', ['searchable' => '1','name' => 'persons', 'set' => $set,'groups'=>$groups]);
 
     }
 

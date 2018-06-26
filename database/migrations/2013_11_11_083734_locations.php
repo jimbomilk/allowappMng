@@ -18,6 +18,12 @@ class Locations extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->string('icon')->nullable();
+            $table->string('accountable');
+            $table->string('CIF');
+            $table->string('email');
+            $table->string('address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('CP')->nullable();
             $table->timestamps();
         });
     }

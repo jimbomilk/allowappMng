@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Maatwebsite\Excel\Facades\Excel;
+use Mockery\CountValidator\Exception;
 
 
 class ExcelController extends Controller
@@ -307,6 +308,18 @@ class ExcelController extends Controller
             return DB::table('intermediate_excel_2')->insert($insertRightholders);
         }
         return false;
+    }
+
+    public function updateImport($location,Request $request){
+        $table = $request->get('table');
+        $id = $request->get('id');
+        $key = $request->get('key');
+        $value= $request->get('value');
+        try {
+            return DB::table($table)->where('id', $id)->update([$key => $value]);
+        }catch (Exception $e){
+           return false;
+        }
     }
 
 }

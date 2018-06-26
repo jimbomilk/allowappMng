@@ -1,17 +1,17 @@
 <table class="table table-responsive table-striped">
     <tr>
-        <th>{{Lang::get('label.groups.name')}}</th>
-        <th>{{Lang::get('label.groups.user_id')}}</th>
-        <th>{{Lang::get('label.groups.count')}}</th>
+        <th class="text-center">{{trans('label.groups.name')}}</th>
+        <th>{{trans('label.groups.user_id')}}</th>
+        <th class="text-center">{{trans('label.groups.count')}}</th>
         <th></th>
 
     </tr>
 
     @foreach($set as $element)
         <tr data-id="{{$element->id}}">
-            <td><strong>{{$element->name}}</strong></td>
+            <td class="text-center"><strong>{{$element->name}}</strong></td>
             <td>{{$element->user->name}}</td>
-            <td>{{count($element->persons)}}</td>
+            <td class="text-center">{{count($element->persons)}}</td>
             <td>
                 @include("common.controls.btn_edit",array('var'=>$element))
 
