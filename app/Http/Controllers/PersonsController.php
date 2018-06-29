@@ -16,22 +16,23 @@ use Larareko\Rekognition\RekognitionFacade;
 
 class PersonsController extends Controller
 {
-    //
+    public function __construct()
+    {
+        $this->middleware('role:owner');
+    }
 
     public function index(Request $request)
     {
         $location_id  = $request->get('location');
         $group_id  = $request->get('group');
-        $set=null;
-        $group = Group::find($group_id);
-        if (isset($group)){
-            $set = $group->getPersons($request->get('search'));
+        if (isset($group_id)){
+            $set = $request->user()->getPersons($request->get('search'),$group_id)->paginate(15);
         }else{
-            $set = $request->user()->getPersons($request->get('search'));
+            $set = $request->user()->getPersons($request->get('search'))->paginate(15);
         }
-        $groups = $request->user()->getGroups()->pluck('name','id')->toArray();
-        array_unshift($groups,"Todos los grupos");
-        return view('common.index', ['searchable' => '1','name' => 'persons', 'set' => $set,'groups'=>$groups]);
+        $groups = ["Todos los grupos"];
+        $groups += $request->user()->getGroups()->pluck('name','id')->toArray();
+        return view('common.index', ['searchable' => '1','name' => 'persons', 'set' => $set,'groups'=>$groups,'group'=>$group_id]);
 
     }
 

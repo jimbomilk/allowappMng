@@ -19,17 +19,16 @@
 
         </div>
         <div class="panel-body">
-
+            @include("common.controls.progress",['id'=>$sourceTable])
             <table class="table table-responsive table-striped">
 
 
                 @foreach($set as $index=>$element)
                     @if ($index == 0)
                         <tr>
-
                             @foreach($element->getAttributes() as $key=>$value)
                                 @if($key!='id'&&$key!='created_at'&&$key!='updated_at'&&$key!='location_id'&&$key!='import_id')
-                                <th style="border:1px solid grey;">{{trans("label.".$name.".".$key)}}</th>
+                                <th style="font-size: 10px;border:1px solid grey;">{{trans("label.".$name.".".$key)}}</th>
                                 @endif
                             @endforeach
                         </tr>
@@ -37,7 +36,7 @@
                     <tr data-id="{{$element->id}}">
                         @foreach($element->getAttributes() as $key=>$value)
                             @if($key!='id'&&$key!='created_at'&&$key!='updated_at'&&$key!='location_id'&&$key!='import_id')
-                            <td style="border:1px solid grey;background-color:{{$element->check($key,$value,$title)?"rgba(180,255,180,0.2)":"rgba(255,90,90,0.5)"}}" title="{{$title}}">
+                            <td style="font-size: 10px; border:1px solid grey;background-color:{{$element->check($key,$value,$title)?"rgba(180,255,180,0.2)":"rgba(255,90,90,0.5)"}}" title="{{$title}}">
 
                                 @if (strpos($key,"path")==true)
                                     @if (isset($value))

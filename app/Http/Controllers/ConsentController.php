@@ -8,6 +8,7 @@ use App\Http\Requests\EditConsentRequest;
 use App\Location;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Mockery\CountValidator\Exception;
 
 class ConsentController extends Controller
 {
@@ -41,10 +42,14 @@ class ConsentController extends Controller
 
     public function store(CreateConsentRequest $request,$location)
     {
-        $consent = new Consent($request->all());
-        $consent->location_id = $request->get('location');
-        $consent->save();
-
+        try {
+            $consent = new Consent($request->all());
+            $consent->location_id = $request->get('location');
+            $consent->save();
+        }catch (\Illuminate\Database\QueryException $e){
+            dd('hola');
+            return false;
+        }
         return redirect('consents');
     }
 

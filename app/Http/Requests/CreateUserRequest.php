@@ -22,18 +22,18 @@ class CreateUserRequest extends Request {
 	public function rules()
 	{
 		return [
-            'name'      => 'required|bail|string',
-            'email'     => 'required|bail|email|unique:users,email', //busca en la tabla users el campo email
-            'phone'     => 'required|bail|numeric',
-            'password'  => 'required',
-            'location_id' => 'required'
+            'name'          => 'required|bail|string',
+            'email'         => 'required|bail|email|unique:users,email', //busca en la tabla users el campo email
+            'phone'         => 'required|bail|numeric|unique:users,phone',
+            'password'      => 'required|confirmed|min:6',
+
 		];
 	}
 
     public function attributes()
     {
         return [
-            'name' => 'nombre',
+            'name'  => 'nombre',
             'phone' => 'teléfono',
         ];
     }

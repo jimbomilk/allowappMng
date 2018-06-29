@@ -10,7 +10,7 @@ return [
     'groups' => 'Clases',
     'persons' => 'Alumnos',
     'photos' => 'Fotos',
-    'rightholders' => 'Responsables legales',
+    'rightholders' => 'Responsables<br>legales',
     'contracts'=> 'Contratos',
     'edit'=>'Editar',
     'delete'=>'Borrar',
@@ -52,7 +52,7 @@ return [
     'templates'=> 'Plantillas',
     'emails'=> 'Emails',
     'legal'=> ' Textos legales',
-    'consents' => 'Consentimientos Generales',
+    'consents' => 'Ambitos legales',
     'config' => 'Configuración global',
 
     'excel' => 'Importación de datos',

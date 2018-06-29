@@ -76,8 +76,6 @@ class LinkController extends Controller
                 }else{
                     return view('pages.errordni',['link'=>URL::previous()]);
                 }
-
-
             }
         }
         return view('pages.error');

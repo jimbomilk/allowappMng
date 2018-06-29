@@ -16,6 +16,7 @@ use App\Rightholder;
 use App\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Larareko\Rekognition\RekognitionFacade;
@@ -24,13 +25,18 @@ class LocationsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('role:super');
+        //$this->middleware('role:admin');
     }
 
     public function index(Request $request)
     {
-        $set=Location::all();
-        return view('common.index', ['name' => 'locations', 'set' => $set]);
+        if ($request->user()->checkRole('super')){
+            $set = Location::all();
+        }else {
+            $loc = Location::find($request->get('location'));
+            $set = [$loc];
+        }
+        return view('common.index', ['name' => 'locations', 'set' => $set,'hide_new'=>!Auth::user()->checkRole('super')]);
     }
 
     public function sendView(Request $req,$element=null)
@@ -56,6 +62,7 @@ class LocationsController extends Controller
 
     public function create(Request $req)
     {
+        $this->middleware('role:super');
         return $this->sendView($req);
     }
 

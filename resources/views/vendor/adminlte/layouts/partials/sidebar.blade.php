@@ -29,7 +29,7 @@
                 <li class="active ">
                     <a href="{{ url('locations') }}"><i class='fa fa-home'></i> <span>{{ trans('labels.locations') }}</span></a>
                     <ul class="active">
-                        <li><a href="{{ url('consents') }}"><i class='fa fa-legal'></i> <span>{{ trans('labels.consents') }}</span></a></li>
+                        <li><a href="{{ url('consents') }}"><i class='fa fa-legal'></i> <span>{!! trans('labels.consents') !!}</span></a></li>
                     </ul>
                 </li>
             @endif
@@ -53,7 +53,7 @@
                 <a href="{{ url('persons') }}"><i class='fa fa-users'></i> <span>{{ trans('labels.persons') }}</span>
                     </a>
                 <ul class="active">
-                    <li><a href="{{ url('rightholders') }}"><i class='fa fa-id-card-o'></i> <span>{{ trans('labels.rightholders') }}</span></a></li>
+                    <li><a href="{{ url('rightholders') }}"><i class='fa fa-id-card-o'></i> <span>{!! trans('labels.rightholders') !!}</span></a></li>
                 </ul>
             </li>
 

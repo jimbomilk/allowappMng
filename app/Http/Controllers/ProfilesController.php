@@ -16,13 +16,17 @@ use Illuminate\Http\Request;
 
 class ProfilesController extends Controller
 {
-    //
+    public function __construct()
+    {
+        $this->middleware('role:admin');
+    }
 
 
     public function sendView(Request $req,$element=null)
     {
 
         $types = Multi::getEnumValues('profiles','type') ;
+        unset($types['super']);
         return view('common.edit', ['name' => 'profiles', 'element' => $element,'types'=>$types]);
 
     }

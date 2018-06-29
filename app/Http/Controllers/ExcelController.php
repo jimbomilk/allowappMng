@@ -24,6 +24,10 @@ use Mockery\CountValidator\Exception;
 
 class ExcelController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:admin');
+    }
 
     public function index(Request $request,$location,$locationId)
     {
@@ -107,16 +111,20 @@ class ExcelController extends Controller
         $img = Image::make($photo);
 
         $filename = 'locations/location'.$loc->id.'/imports/import'. $importId. '/' . $name;
+
         if (Storage::disk('s3')->put($filename, $img->stream()->__toString(),'public')) {
             $fileUrl= ( Storage::disk('s3')->url($filename));
 
             // busco la imagen en las personas
-            $importPerson = IntermediateExcel1::where('person_photo_name',$name)->first();
+            $importPerson = IntermediateExcel1::where('location_id',$loc->id)->where('person_photo_name',$name)->first();
             if (isset($importPerson)) {
                 $importPerson->person_photo_path = $fileUrl;
                 $importPerson->save();
+                return ['response'=>true];
             }
         }
+
+        return ['response'=>false];
 
     }
 
@@ -170,7 +178,7 @@ class ExcelController extends Controller
                     $check_status = $check_status && $person->check($key, $value, $title);
             }
 
-            $group = Group::where('name',$person->person_group)->first();
+            $group = Group::where([['location_id',$loc->id],['name',$person->person_group]])->first();
             if (isset($group)&&$check_status) {
                 $insertPerson = Person::firstOrNew([
                     'name' => $person->person_name,
@@ -187,7 +195,7 @@ class ExcelController extends Controller
                 $insertPerson->email = $person->person_email;
                 $insertPerson->phone = $person->person_phone;
 
-                $insertPerson->faceUp();
+                //$insertPerson->faceUp();
                 //dd($insertPerson);
                 $insertPerson->save();
 
@@ -217,7 +225,7 @@ class ExcelController extends Controller
                     $check_status = $check_status && $rh->check($key, $value, $title);
             }
 
-            $person = Person::where('code',$rh->rightholder_person_code)->first();
+            $person = Person::where('location_id',$loc->id)->where('code',$rh->rightholder_person_code)->first();
             if (isset($person)&&$check_status) {
                 $insertRh = Rightholder::firstOrNew([
                     'name' => $rh->rightholder_name,

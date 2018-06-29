@@ -22698,7 +22698,7 @@ label,
     width: 100%;
     float: left;
     clear: both;
-    margin: 30px auto;
+    margin: 20px auto;
 
 }
 .userprofile .userpic {
@@ -22721,10 +22721,10 @@ label,
 }
 .username {
     font-weight: 400;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 20px;
     color: #000000;
-    margin-top: 20px;
+    margin-top: 10px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

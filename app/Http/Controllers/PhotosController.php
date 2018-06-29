@@ -30,10 +30,24 @@ use Illuminate\Support\Facades\Storage;
 
 class PhotosController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('role:owner');
+    }
+
     public function index(Request $request)
     {
-        $groups = $request->user()->getGroups()->pluck('name','id')->toArray();
-        array_unshift($groups,"Todos los grupos");
+        $groups = ["Todos los grupos"];
+        $groups += $request->user()->getGroups()->pluck('name','id')->toArray();
+        $group_id  = $request->get('group');
+
+        $group = Group::find($group_id);
+        if (isset($group)){
+            $set = $group->getPhotos($request->get('search'));
+        }else{
+            $set = $request->user()->getPhotos($request->get('search'));
+        }
 
         $locId = $request->get('location');
         $location = Location::find($locId);
@@ -41,10 +55,10 @@ class PhotosController extends Controller
             $consents = $location->consents->pluck('description','id')->toArray();
         }
 
-        $set = $request->user()->getPhotos($request->get('search'));
+
 
         array_unshift($consents,"Todos los consentimientos");
-        return view('common.index', [ 'name' => 'photos','searchable'=>1, 'set' => $set,'groups'=>$groups,'consents'=>$consents]);
+        return view('common.index', [ 'name' => 'photos','searchable'=>1, 'set' => $set,'groups'=>$groups,'group'=>$group_id,'consents'=>$consents]);
     }
 
     public function sendView(Request $request,$element=null)
@@ -125,11 +139,6 @@ class PhotosController extends Controller
         {
             return $this->sendView($request,$photo);
         }
-    }
-
-    public function show($location,$id)
-    {
-        return redirect()->action('ContractsController@index',['location'=>$location,'photo'=>$id]);
     }
 
     public function destroy($location,$id,Request $request)
@@ -322,7 +331,6 @@ class PhotosController extends Controller
         if (isset($photo)&&isset($person)) {
             $photo->removePerson($personId);
             $photo->save();
-            return true;
         }
         return back();
     }

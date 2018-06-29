@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\General;
+use App\Group;
 use App\Http\Requests\CreateRightholderRequest;
 use App\Http\Requests\EditRightholderRequest;
 use App\Location;
@@ -24,6 +25,7 @@ class RightholdersController extends Controller
     {
         $location_id  = $request->get('location');
         $person_id = $request->get('person');
+        $group_id = $request->get('group');
         $request->session()->put('person_id',$person_id);
 
         $location = Location::find($location_id);
@@ -32,21 +34,18 @@ class RightholdersController extends Controller
         }
 
         $set = null;
-
         if(isset($person_id)) {
-            $set = Rightholder::where('person_id',$person_id)->get();
+            $set = Rightholder::where('person_id',$person_id)->paginate(15);
+        }else if (isset($group_id)){
+            $set = $request->user()->getRightholders($request->get('search'),$group_id)->paginate(15);
+        }else{
+            $set = $request->user()->getRightholders($request->get('search'))->paginate(15);
         }
-        else{
 
-            $set = $request->user()->getRightholders();
-            //return json_encode($set);
-        }
+        $groups = ["Todos los grupos"];
+        $groups += $request->user()->getGroups()->pluck('name','id')->toArray();
 
-        $groups = $request->user()->getGroups()->pluck('name','id')->toArray();
-        array_unshift($groups,"Todos los grupos");
-
-
-        return view('common.index', ['name' => 'rightholders', 'set' => $set,'person_id'=>$person_id,'consents'=>$consents,'groups'=>$groups]);
+        return view('common.index', ['name' => 'rightholders', 'set' => $set,'person_id'=>$person_id,'consents'=>$consents,'groups'=>$groups,'group'=>$group_id]);
 
     }
 
@@ -56,7 +55,7 @@ class RightholdersController extends Controller
         if (isset($person_id))
             $persons = Person::where('id',$person_id)->pluck('name','id');
         else
-            $persons = Person::pluck('name','id');
+            $persons = $req->user()->getPersons()->pluck('name','id');
 
 
         if (isset($element)) {
@@ -89,18 +88,16 @@ class RightholdersController extends Controller
         {
             return $this->sendView($req,$rightholder);
         }
-
     }
 
     public function show($location,$id)
     {
         return redirect()->action('RightholdersController@index',['location'=>$location,'rightholder'=>$id]);
-
     }
 
     public function consentimientos(Request $request,$location,$id=null)
     {
-        //dd($request->session()->get('person_id'));
+        $group_id = $request->get('group');
         $person_id = $request->session()->get('person_id');
         $loc = Location::find($request->get('location'));
         $tiposConsentimientos = [];
@@ -113,8 +110,11 @@ class RightholdersController extends Controller
         }
         else if(isset($person_id))
             $set =  Rightholder::where('person_id',$person_id)->get();
-        else{
-            $set = $request->user()->getRightholders();
+        elseif (isset($group_id)) {
+            $group = Group::find($group_id);
+            $set = $group->getRightholders(null)->get();
+        }else{
+            $set = $request->user()->getRightholders(null)->get();
         }
 
 
@@ -179,7 +179,7 @@ class RightholdersController extends Controller
         $count=0;
         try {
             if ($element == 'all'){
-                foreach ($req->user()->getRightholders() as $rh){
+                foreach ($req->user()->getRightholders()->get() as $rh){
                     $this->sendEmail($rh,$consent_id,$email_text,$req->user()->email);
                     $count++;
                 }

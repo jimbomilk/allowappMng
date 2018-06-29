@@ -52,4 +52,8 @@ class Rightholder extends Model
         return $ret;
     }
 
+    public function getGroupAttribute(){
+        return $this->person->group;
+    }
+
 }

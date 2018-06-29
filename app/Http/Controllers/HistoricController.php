@@ -16,10 +16,14 @@ use Illuminate\Support\Facades\Session;
 
 class HistoricController extends Controller
 {
-    //
+    public function __construct()
+    {
+        $this->middleware('role:user');
+    }
+
     public function indexPersons(Request $request)
     {
-        $set = $request->user()->getPersons($request->get('search'));
+        $set = $request->user()->getPersons($request->get('search'))->get();
         return view('common.index', ['searchable' => '1', 'name' => 'historic.persons','hide_new'=>'true', 'set' => $set]);
     }
 
@@ -31,7 +35,7 @@ class HistoricController extends Controller
 
     public function indexRightholders(Request $request)
     {
-        $set = $request->user()->getRightholders($request->get('search'));
+        $set = $request->user()->getRightholders($request->get('search'))->get();
         return view('common.index', ['searchable' => '1', 'name' => 'historic.rightholders','hide_new'=>'true', 'set' => $set]);
     }
 

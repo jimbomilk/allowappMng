@@ -42,8 +42,8 @@ return [
     'locations.CP' => 'Código Postal',
 
     //CONSENTS
-    'consents' => 'Consentimiento',
-    'title.consents' => "Lista de Consentimientos",
+    'consents' => 'Ambito legal',
+    'title.consents' => "Lista de ámbitos legales",
     'consents.description' => 'Titulo',
     'consents.legitimacion' => 'Legitimación',
     'consents.destinatarios' => 'Destinatarios',
@@ -52,12 +52,13 @@ return [
     // USERS
     'users' => 'usuario',
     'title.users' => "Lista de Usuarios",
+    'users.type'=>'Perfil',
     'users.name'=>'Nombre',
     'users.email'=>'Email',
     'users.show' => 'Perfil',
     'users.phone' => 'Teléfono',
     'users.password' => 'Introduzca su password',
-    'users.password2' => 'Vuelva a introducirla',
+    'users.password_confirmation' => 'Confirme su password',
 
     //PROFILES
     'profiles' => 'Perfil',
@@ -206,12 +207,12 @@ return [
     'excel.user_id'=>'Usuario',
     'excel.created_at'=>'Fecha de creación',
     'excel.site_code' => '#',
-    'excel.site_group' => 'Código de grupo',
+    'excel.site_group' => 'Grupo',
     'excel.site_name' => 'Nombre',
     'excel.site_url' => 'Dirección web',
     'excel.status'=> 'Estado',
     'excel.person_code'=> 'Código de persona',
-    'excel.person_group'=> 'Código de grupo',
+    'excel.person_group'=> 'Grupo',
     'excel.person_name'=>'Nombre',
     'excel.person_minor'=>'Menor de 16 años',
     'excel.person_dni'=>'Documento',

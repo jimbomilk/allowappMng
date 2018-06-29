@@ -16,7 +16,10 @@ use Illuminate\Support\Facades\Storage;
 
 class GroupsController extends Controller
 {
-    //
+    public function __construct()
+    {
+        $this->middleware('role:owner');
+    }
 
     public function index(Request $request)
     {

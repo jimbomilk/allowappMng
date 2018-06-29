@@ -61,10 +61,15 @@
 
         });
 
-        function readmultifiles(e) {
-            const files = e.currentTarget.files;
+
+        function readmultifiles(imgFiles,callback) {
+            var files = imgFiles;
+            var errors = [];
+
             $(".loader").show();
-            Object.keys(files).forEach(i => {
+            $(".progress#intermediate_excel_1").show();
+            var count=0;
+             Object.keys(files).forEach(i => {
                 const file = files[i];
                 const reader = new FileReader();
                 reader.onload = (e) => {
@@ -79,18 +84,35 @@
                         name: file.name,
                         file: e.target.result,
                         importId:"{{$current_import}}"}
-                    }).done(function () {
-                        $(".loader").hide();
-                        location.reload();
-                    }).always( function() {
-                        location.reload();
+                    }).done(function (e) {
+                        if (e.response == true) {
+                            count++;
+                            if (count >= files.length) {
+                                $(".progress#intermediate_excel_1").hide();
+                                if (callback && errors.length >0)
+                                    callback.call(errors);
+                                else {
+                                    //$(".loader").hide();
+                                    location.reload();
+                                }
+
+                            } else {
+                                newprogress = ((count * 100) / files.length) + '%';
+                                $('.progress#intermediate_excel_1 .progress-bar').attr('style', "width:" + newprogress);
+                                $('.progress#intermediate_excel_1 .label').text(count + " de " + files.length);
+                            }
+                        }
+                    }).fail(function(response){
+                        count++;
+                        errors.push(file);
                     });
-                }
+                };
                 reader.readAsDataURL(file);
-            })
-        };
+            });
+        }
 
         function importdata(_this){
+
             var action = $(_this).data('table');
             $(".loader").show();
             $.ajax({
@@ -100,13 +122,19 @@
             }).done(function () {
                 $(".loader").hide();
                 location.reload();
+            }).fail( function(e) {
+                alert("Se ha producido un error: " + e.statusMessage);
             }).always( function() {
                 location.reload();
             });
         }
 
         $('#input-images').change(function(e){
-            readmultifiles(e);
+            readmultifiles(e.currentTarget.files,function(){
+                readmultifiles(this,null);// hacemos una segunda llamada con los que dieron error.
+
+            });
+
         });
 
         $('.import').on('click',function(e){

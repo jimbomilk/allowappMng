@@ -12,7 +12,7 @@ class EditLocationRequest extends Request {
 	 */
 	public function authorize()
 	{
-		return true;
+        return Auth::user()->checkRole('super');
 	}
 
     public function rules()

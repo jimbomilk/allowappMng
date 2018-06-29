@@ -47,7 +47,7 @@
         <div class="col-md-offset-2 col-md-8" >
             <div class="panel panel-default" >
                 <div class="panel-heading" style="background-color: rgb(246,216,88);color: #000000">
-                    <h4> Elige el fichero que desees importar (xls/csv) : </h4>
+                    <h4> Elige el fichero que desees importar (xls/csv) : </h4><br>
                 </div>
                 <div class="panel-body">
                     {!! Form::open(array('url' => "locations/excel/import", 'method' => 'POST', 'enctype' => 'multipart/form-data')) !!}
@@ -55,13 +55,13 @@
                         {{ csrf_field() }}
 
                         <div class=" col-sm-8" >
-                            <input type="file" name="file" class="form-control">
+                            <input type="file" name="file">
 
 
                         </div>
 
                       <div class=" col-sm-2" >
-                        <input value="Importar" type="submit" class="form-control btn btn-primary">
+                        <input value="Importar" type="submit" class="btn btn-primary">
                         </div>
                     {!! Form::close() !!}
 

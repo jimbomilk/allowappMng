@@ -4,9 +4,9 @@
             <div class="col-sm-4 text-left " >
                 <span class="label label-primary" >{{$element->group->name}}&nbsp;</span>
             </div>
-            <div class="small col-sm-offset-4 col-sm-4 text-right">
+            <div class="small col-sm-offset-2 col-sm-6 text-right">
                 @if (!$element->minor)
-                <span> <i class="fa fa-vcard-o text-primary"></i> {{$element->documentId}} </span>
+                <span class="small"> <i class="fa fa-vcard-o text-primary"></i> {{$element->documentId}} </span>
                 @endif
             </div>
         </div>

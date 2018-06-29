@@ -1,7 +1,8 @@
 <table class="table table-responsive table-striped">
     <tr>
-        <th>{{Lang::get('label.users.name')}}</th>
-        <th>{{Lang::get('label.users.email')}}</th>
+        <th>{{trans('label.users.name')}}</th>
+        <th>{{trans('label.users.email')}}</th>
+        <th>{{trans('label.users.type')}}</th>
         <th></th>
 
     </tr>
@@ -10,6 +11,7 @@
         <tr data-id="{{$user->id}}">
             <td>{{$user->name}}</td>
             <td>{{$user->email}}</td>
+            <td>{{trans('label.profiles.'.$user->profile->type)}}</td>
             <td>
                 @include("common.controls.btn_edit",array('var'=>$user))
 

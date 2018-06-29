@@ -9,7 +9,7 @@ class Profile extends General
     //id,phone,avatar,type,user_id,location_id
     protected $table='profiles';
 
-    protected $fillable = ['phone','avatar'];
+    protected $fillable = ['type','avatar'];
 
     public function user(){
         return $this->belongsTo('App\User');

@@ -65,35 +65,39 @@ class User extends Authenticatable
         }
     }
 
-    public function getRightholders($search = null){
+    private function getUserPersonsGroup($groupId=null){
+        if(isset($groupId))
+            return Person::with('rightholders.location')->get();
 
-        $set = null;
+    }
+
+    public function getRightholders($search = null,$group_id=null){
+
         // Se selecciona el subconjunto de trabajo...
-        if ($this->checkRole('admin')) {
-            $set =  $this->location->rightholders();
-        }
-        else {
-            $set = $this->location->rightholders()->whereIn('person_id', $this->getGroups()->pluck('id'));
-        }
+
+        $set = $this->location->rightholders()->whereIn('person_id', $this->getPersons(null,$group_id)->pluck('id'));
+        //dd($this->location->rightholders()->pluck('person_id'));
         // Se aplican los search...
         if (isset($search) and $search != "") {
             $where = General::getRawWhere(Rightholder::$searchable,$search);
             $set = $set->whereRaw($where);
         }
-
-        return $set->paginate(15);
+        return $set;
     }
 
-    public function getPersons($search = null){
+    public function getPersons($search = null,$group_id=null){
         $set = null;
 
         // Se selecciona el subconjunto de trabajo...
-        if ($this->checkRole('admin')) {
-            $set =  $this->location->persons();
+        if (isset($group_id) && $group_id!=0){
+            $set =  $this->location->persons()->whereIn('group_id', $this->getGroups()->pluck('id'))
+                                              ->where('group_id', $group_id);
         }
         else {
             $set =  $this->location->persons()->whereIn('group_id', $this->getGroups()->pluck('id'));
         }
+
+
 
         // Se aplican los search...
         if (isset($search) and $search != "") {
@@ -101,8 +105,7 @@ class User extends Authenticatable
             $where = General::getRawWhere(Person::$searchable,$search);
             $set = $set->whereRaw($where);
         }
-        //dd($set);
-        return $set->paginate(15);
+        return $set;
     }
 
     public function getPhotos($search = null,$all=false){

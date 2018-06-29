@@ -16,7 +16,7 @@
                         <div class="row">
                         <div class="col-md-4">
                             <h4>
-                                <i class="{{trans("label.$name.fa_icon")}}"></i> {{trans("label.title.$name")}}
+                                <i class="{{trans("label.$name.fa_icon")}}"></i> {!!trans("label.title.$name")!!}
                             </h4>
                         </div>
                             <div class="col-md-8" style="text-align:right">

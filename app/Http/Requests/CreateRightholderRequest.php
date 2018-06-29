@@ -22,10 +22,11 @@ class CreateRightholderRequest extends Request {
     public function rules()
     {
         return [
+            'person_id'  => 'required',
             'name'      => 'required|bail|string|',
             'phone'     => 'required|bail|numeric',
             'email'     => 'required|bail|email',
-            'documentId' => 'required|bail|alpha_num'
+            'documentId' => 'required|bail|alpha_num',
 
         ];
     }
@@ -35,7 +36,8 @@ class CreateRightholderRequest extends Request {
         return [
             'name' => 'nombre del tutor',
             'phone' => 'teléfono',
-            'documentId' => 'documento de identidad'
+            'documentId' => 'documento de identidad',
+            'person_id' => 'nombre del alumno'
         ];
     }
 

@@ -76,7 +76,7 @@
                                     {{ trans("label.$name.request")}}
                                 </a>
                             </p>
-                            @include('adminlte::layouts.partials.modal',['text'=>"Se va a proceder a enviar ". count($rhs)." emails. "])
+                            @include('adminlte::layouts.partials.modal',['text'=>"Se va a proceder a enviar ". count($rhs)." emails.¿Desea continuar? "])
                             {!! Form::close() !!}
                         </div>
 

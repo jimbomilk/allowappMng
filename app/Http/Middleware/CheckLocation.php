@@ -21,26 +21,22 @@ class CheckLocation
     {
         $user = Auth::user();
         $locationName = Route::current()->parameters['location'];
-        //dd($locationName);
         $location = Location::where('name',$locationName)->first();
-        if (!isset($location))
+        if(!isset($location)){
             $location = Location::where('id',$locationName)->first();
-
-        if($user->role != 'super' && !isset($location)){
-            abort(403,'Enlace incorrecto o no autorizado');
+        }
+        if(!isset($location)){
+            Auth::logout();
+            //abort(403,'Enlace incorrecto o no autorizado');
         }
 
-
-
-        //dd($location);
-
-        if (($user->role == 'super') || (isset($user->location) && ($user->location->name == $locationName))){
+        if (($user->role == 'super') || (isset($user->location) && ($user->location->name == $location->name))){
             if (isset($user->location))
                 $request->merge(array("location" => $location->id));
             return $next($request);
         }
 
-        abort(403,'Usuario no autorizado');
-        return redirect('/');
+        Auth::logout();
+        //return redirect('/');
     }
 }

@@ -23,8 +23,15 @@ return [
 
     'groups.name'=>'Introducir el nombre del grupo',
     'rightholder.dni'=>'Introduzca su DNI como identificación',
-    'locations.name' =>'Introduzca el nombre del colegio todo junto, sin espacios.',
-    'locations.description' =>'Introduzca el nombre del colegio normal.',
+    'locations.name' =>'Introduzca una descripción corta del colegio, sin espacios.',
+    'locations.description' =>'Introduzca el nombre del colegio.',
+    'locations.accountable' => 'Responsable legal del colegio',
+    'locations.CIF' => 'Nº de indentificación',
+    'locations.email' => 'Introduzca un email',
+    'locations.address' => 'Calle y nº',
+    'locations.city' => 'Ciudad',
+    'locations.CP'=>'Código Postal',
+
 
     'consents.description' =>'Introduzca la descripción del consentimiento general',
     'consents.legitimacion'=>'Introduzca las razones de legitimación',

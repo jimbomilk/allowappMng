@@ -13,11 +13,12 @@
                     <h4>{{trans("label.$name.recognition")}} {{$element->label}}#{{$element->id}}</h4>
                 </div>
                 <div class="panel-body">
-                    <div id='loader' style='display: none;'>
+                    <div class='loader' style='display: none;'>
                         <img src="{{asset('img/loading.gif')}}" width='100px' height='100px'>
                     </div>
 
                     <div class="row">
+                        <!-- Foto -->
                         <div class="col-sm-3">
                             <img id="foto" class="img-responsive" src={{$element->urlFinal}}>
                             @foreach(json_decode($element->faces) as $face)
@@ -35,10 +36,11 @@
                                 </a>
                             </div>
                         </div>
+                        <!-- Group -->
                         <div class=" col-sm-9 ">
                             <div class=" panel panel-default">
                                 @if($element->group )
-                                <div class="panel-heading">{{ trans('labels.persons')." ".$element->group->name}} - Pulse en las personas para añadirlas a la fotografía</div>
+                                <div class="panel-heading">{{ trans('labels.persons')." ".$element->group->name}} - Seleccione una de las caras reconocidas y una fotografía para asociarlas.</div>
                                 <div id = "panel-group" class="detected panel-body"  style="padding: 8px">
 
                                     @foreach($element->group->persons as $person)
@@ -57,10 +59,7 @@
                                 @endif
                             </div>
                         </div>
-                    </div>
-
-                    <div  class="row" style="margin-top: 20px;">
-                        <div  class="col-md-12">
+                        <div  class="col-md-9">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     {{ trans('labels.face_detected')}} - Para eliminar una persona de la imagen, pulse sobre ella
@@ -78,9 +77,15 @@
                                 </div>
 
                             </div>
-                            <div class="text-center" style="margin: 12px">
-                                @include("common.controls.btn_other",array('route'=> 'send','icon'=>'glyphicon-envelope','var'=>$element,'label'=>'requests','class'=>'btn btn-primary'))
-                            </div>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            @include("common.controls.btn_other",array('route'=> 'send','icon'=>'glyphicon-envelope','var'=>$element,'label'=>'requests','class'=>'btn btn-primary'))
                         </div>
                     </div>
                 </div>
@@ -162,11 +167,11 @@
             url: action+'/'+photoid,
             data: "",
             success: function (res) {
-                $(".loader").hide();
+
                 location.reload();
                 $('#modal').hide();
                 $('#modal').modal('hide');
-
+                $(".loader").hide();
                 //console.log("exito:"+res);
             },
             error: function (e) {
@@ -210,7 +215,7 @@
             'boxLeft': boxFaceBlinkingLeft
         })
         .done(function () {
-            $(".loader").hide();
+
             location.reload();
 
         })

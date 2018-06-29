@@ -2,5 +2,6 @@
     [   'route'=> 'consentimientos',
         'icon'=>'glyphicon glyphicon-envelope',
         'label'=>"request",
-        'style'=>'btn-danger'])
+        'style'=>'btn-danger',
+        'group'=>$group])
 
