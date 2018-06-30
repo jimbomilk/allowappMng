@@ -119,7 +119,7 @@ class RightholdersController extends Controller
 
 
         $template = trans('label.rightholders.template');
-        return view('rightholders.consentimiento',['name' => 'rightholders','template'=>$template,'set'=>$set,'consents'=>$tiposConsentimientos]);
+        return view('rightholders.consentimiento',['name' => 'rightholders','template'=>$template,'set'=>$set,'consents'=>$tiposConsentimientos,'person_id'=>$person_id,'rightholder_id'=>$id,'group_id'=>$group_id]);
     }
 
     public function update(EditRightholderRequest $request, $location , $id)
@@ -161,7 +161,6 @@ class RightholdersController extends Controller
     private function sendEmail($rh,$consent_id,$email_text,$from){
         //Antes de enviar el email guardamos un registro del tipo de solicitud
         $rhConsent = RightholderConsent::firstOrNew(['rightholder_id'=>$rh->id,'consent_id'=>$consent_id]);
-        //dd($rhConsent);
         $rhConsent->status=Status::RH_PENDING;
         $rhConsent->save();
         //dd($rhConsent);
@@ -175,16 +174,31 @@ class RightholdersController extends Controller
         $element = $req->get('rightholderId');
         $email_text = $req->get('email');
         $consent_id = $req->get('consent_id');
-        //dd($consent_id);
+        $person_id = $req->get('personId');
+        $group_id = $req->get('groupId');
         $count=0;
         try {
-            if ($element == 'all'){
+            if (isset($group_id)){
+                $group = Group::find($group_id);
+                foreach ($group->rightholders as $rh){
+                    $this->sendEmail($rh,$consent_id,$email_text,$req->user()->email);
+                    $count++;
+                }
+            }
+            else if (isset($person_id)){
+                $person = Person::find($person_id);
+                foreach ($person->rightholders as $rh){
+                    $this->sendEmail($rh,$consent_id,$email_text,$req->user()->email);
+                    $count++;
+                }
+            }
+            else if ($element == 'all'){
                 foreach ($req->user()->getRightholders()->get() as $rh){
                     $this->sendEmail($rh,$consent_id,$email_text,$req->user()->email);
                     $count++;
                 }
             }else{
-                $rh = Rightholder::find('element');
+                $rh = Rightholder::find($element);
                 $this->sendEmail($rh,$consent_id,$email_text,$req->user()->email);
                 $count++;
             }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Group;
 use App\Http\Requests\CreatePersonRequest;
 use App\Http\Requests\EditPersonRequest;
+use App\Jobs\PersonFaceUp;
 use App\Person;
 use App\Location;
 use App\Rightholder;
@@ -60,7 +61,7 @@ class PersonsController extends Controller
             if (isset($filename)) {
                 $person->photo = $filename;
                 $person->save();
-                $person->faceUp();
+                $this->dispatch(new PersonFaceUp($person));
 
             }
         }

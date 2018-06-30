@@ -3,22 +3,24 @@
 <br>
 <h2>Datos de registro:</h2>
 @component('mail::panel', ['width' => '100%'])
-<p style="float:left;margin-left: 15px">
-    <strong>#Id:</strong> {{$element->id}}<br>
-    <strong>#Nombre :</strong> {{$element->name}}<br>
-    <strong>#Email :</strong> {{$element->email}}<br>
-    <strong>#Teléfono:</strong>{{$element->phone}}<br>
-    <strong>#{{$element->relation}} de</strong> {{$element->person->name}}<br>
-    <strong>#Consentimiento anual: </strong>
-    @if($element->status == \App\Status::RH_NOTREQUESTED)
-        no solicitado.
-    @elseif($element->status == \App\Status::RH_PENDING)
-        enviado, pendiente de respuesta.
-    @elseif($element->status == \App\Status::RH_PROCESED)
-        activo:{{$element->consentDate}}<br>{{json_encode($element->consent)}}
-    @endif
-
-</p>
+<table width="100%">
+    <tr>
+        <td width="50%">
+            <table>
+                <tr><td><strong>#Id:</strong> {{$element->id}}</td></tr>
+                <tr><td><strong>#Nombre :</strong> {{$element->name}}</td></tr>
+                <tr><td><strong>#Email :</strong> {{$element->email}}</td></tr>
+                <tr><td><strong>#Teléfono:</strong>{{$element->phone}}</td></tr>
+                <tr><td><strong>#{{$element->relation}} de</strong> {{$element->person->name}}</td></tr>
+            </table>
+        </td>
+        <td width="50%">
+            <table>
+                <tr><td>@include("common.controls.consents_table",['consents'=>$consents,'element'=>$element])</td></tr>
+            </table>
+        </td>
+    </tr>
+</table>
 @endcomponent
 <h2>Imagenes relacionadas:</h2>
 <table>

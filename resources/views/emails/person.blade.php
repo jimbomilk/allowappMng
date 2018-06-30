@@ -4,23 +4,38 @@
 <h2>Datos de registro:</h2>
 @component('mail::panel', ['width' => '100%'])
 ![photo]({{$element->photo}})
-<p style="float:left;margin-left: 80px">
-    <strong>#Id: {{$element->id}}<br></strong>
-    <strong>#Nombre : {{$element->name}}<br></strong>
-    <strong>#Curso : {{$element->group->name}}<br></strong>
-    <strong>#Padres y tutores: </strong>
-    @foreach($element->rightholders as $index=>$rh)
-        &emsp;{{$rh->name}}({{$rh->relation}}) @if ($index+1>count($element->rightholders)) , @endif <br>
-        <strong>#Consentimiento anual: <br></strong>
-        @if($rh->status == \App\Status::RH_NOTREQUESTED)
-            No solicitado.
-        @elseif($rh->status == \App\Status::RH_PENDING)
-            Enviado, pendiente de respuesta.
-        @elseif($rh->status == \App\Status::RH_PROCESED)
-            Activo:{{$rh->consentDate}}<br>{{json_encode($rh->consent)}}
-        @endif
-    @endforeach
-</p>
+<div style="float: left">
+    <table >
+        <tr>
+            <td>
+                <table>
+                    <tr><td><strong>#Id: </strong>{{$element->id}}</td></tr>
+                    <tr><td><strong>#Nombre : </strong>{{$element->name}}</td></tr>
+                    <tr><td><strong>#Curso : </strong>{{$element->group->name}}</td></tr>
+                    <tr><td><strong>#Menor de edad: </strong> {{$element->minor?"si":"no"}}</td></tr>
+
+                @if(!$element->minor)
+                    <tr><td><strong>#Email: </strong> {{$element->email}}</td></tr>
+                    <tr><td><strong>#Documento identificativo: </strong> {{$element->documentId}}</td></tr>
+                    <tr><td><strong>#Teléfono </strong> {{$element->phone}}</td></tr>
+                @endif
+                </table>
+
+            </td>
+            <td>
+                <table>
+                    <tr><td><strong>Padres y tutores: </strong></td></tr>
+                    <tr><td>
+                        @foreach($element->rightholders as $index=>$rh)
+                            {{$rh->name}}({{$rh->relation}})<br>
+                            @include("common.controls.consents_table",['consents'=>$consents,'element'=>$rh])
+                        @endforeach
+                    </td></tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
 @endcomponent
 <h2>Imagenes en las que aparece:</h2>
 <table>

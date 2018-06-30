@@ -22,18 +22,20 @@ class CreatePhotoRequest extends Request {
     public function rules()
     {
         return [
-            'group_id'  => 'required',
-            'label'      => 'required|bail|alpha_dash',
-            'origen'      => 'required|bail|image',
+            'group_id'      => 'required',
+            'consent_id'    => 'required',
+            'label'         => 'required|bail|alpha_dash',
+            'origen'        => 'required|bail|image',
         ];
     }
 
     public function attributes()
     {
         return [
-            'group_id' => 'grupo',
-            'label' => 'etiqueta',
-            'origen' => 'imágen'
+            'group_id'      => 'grupo',
+            'consent_id'    => 'ámbito legal',
+            'label'         => 'etiqueta',
+            'origen'        => 'imágen'
         ];
     }
 

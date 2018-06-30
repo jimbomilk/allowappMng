@@ -67,10 +67,7 @@
                             {!! Form::open(array('url' => 'photos/emails', 'method' => 'POST', 'enctype' => 'multipart/form-data')) !!}
                             {!! Form::hidden('photoId', $element->id) !!}
                             @include("common.controls.input_textarea",array('var'=>'email','value'=>$template))
-                            <div><strong>{{trans('labels.responsable')}}: </strong>{{$element->user->name}}</div>
-                            <div><strong>{{trans('labels.finalidad')}}: </strong>{{trans('labels.finalidad_text')}} {{$element->getSharingAsText()}}</div>
-                            <div><strong>{{trans('labels.legitimacion')}}: </strong>{{trans('labels.legitimacion_text')}}</div>
-                            <div><strong>{{trans('labels.derechos')}}: </strong>{{trans('labels.derechos_text')}}</div>
+
                             <p style="text-align: center;margin: 12px">
                                 <a href="#" class="btn btn-primary {{$enabled}}" data-toggle="modal" data-target="#modal" >
                                     {{ trans("label.$name.request")}}

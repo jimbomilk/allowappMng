@@ -9,11 +9,16 @@
                 <div class="panel-heading" style="background-color: rgb(246,216,88);color: #000000">
                     <strong>Marco regulatorio</strong>
                 </div>
-                <div class="panel-body">
-                    <p>Ha recibido este enlaces como responsable de los derechos de imagen de {{$person_name}}.</p>
-                    <p>Se solicita su consentimiento para compartir imágenes en las
-                        bla bla bla</p>
+                <div class="panel-body small" style="margin: 0px;height:50vh;overflow-y: scroll;overflow-x: hidden">
+                    Ha recibido este enlaces como responsable de los derechos de imagen de <strong> {{$person_name}} </strong> <br>
 
+                    <div class="col-sm-12" style="text-align: justify"><br>
+                        <div><strong>{{trans('labels.responsable')}}: </strong>{{$photo->getData('accountable')}}</div><br>
+                        <div><strong>{{trans('labels.finalidad')}}: </strong>{{trans('labels.finalidad_text')}} {{$photo->getSharingAsText()}}</div><br>
+                        <strong>{{trans('labels.legitimacion')}}: </strong>{!!$photo->getData('consent_legitimacion')!!}
+                        <strong>{{trans('labels.destinatario')}}: </strong>{!!$photo->getData('consent_destinatarios')!!}
+                        <strong>{{trans('labels.derechos')}}: </strong>{!!$photo->getData('consent_derechos')!!}
+                    </div>
                 </div>
             </div>
         </div>
@@ -22,7 +27,7 @@
             {!! Form::open(['route'=> 'photo.link.response']) !!}
 
             @include("common.controls.input_hidden",['var'=>'token','val'=>$token])
-            @include("common.controls.input_hidden",['var'=>'photo','val'=>$photo_id])
+            @include("common.controls.input_hidden",['var'=>'photo','val'=>$photo->id])
             @include("common.controls.input_hidden",['var'=>'user_id','val'=>$user_id])
             @include("common.controls.input_hidden",['var'=>'person_id','val'=>$person_id])
             @include("common.controls.input_hidden",['var'=>'rightholder_id','val'=>$rightholder_id])

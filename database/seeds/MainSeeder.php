@@ -44,6 +44,18 @@ class MainSeeder extends Seeder {
 
         ) );
 
+        $idlocation2 = DB::table('locations')->insertGetId( array(
+            'name' => 'colegio2',
+            'description'=> 'Colegio San Antonio',
+            'accountable'=> 'Director Carlos Rodriguez',
+            'CIF'=> '31389238F',
+            'email'=> 'director@gmail.com',
+            'address' => 'Calle de Pez nº 5',
+            'city'=> 'Valencia',
+            'CP'=> '23440'
+
+        ) );
+
         // ** USERS **
         $id = DB::table('users')->insertGetId( array(
             'name' => 'jose',
@@ -53,30 +65,74 @@ class MainSeeder extends Seeder {
             'password' => Hash::make('tec_002!')
         ) );
 
+        $id0 = DB::table('users')->insertGetId( array(
+            'name' => 'director',
+            'email' => 'director1@gmail.com',
+            'phone' => '637755827',
+            'location_id' => $idlocation,
+            'password' => Hash::make('tec_002!')
+        ) );
+
         $id1 = DB::table('users')->insertGetId( array(
-            'name' => 'Profesor de Matemáticas',
-            'email' => 'test1@gmail.com',
+            'name' => 'Profesor1',
+            'email' => 'profesor1@gmail.com',
             'phone' => '637455826',
             'location_id' => $idlocation,
             'password' => Hash::make('tec_002!'),
         ) );
 
         $id2 = DB::table('users')->insertGetId( array(
-            'name' => 'test2',
-            'email' => 'test2@gmail.com',
+            'name' => 'Profesor2',
+            'email' => 'profesor2@gmail.com',
             'phone' => '637455828',
             'location_id' => $idlocation,
             'password' => Hash::make('tec_002!'),
         ) );
 
+        $id3 = DB::table('users')->insertGetId( array(
+            'name' => 'director',
+            'email' => 'director2@gmail.com',
+            'phone' => '637455427',
+            'location_id' => $idlocation2,
+            'password' => Hash::make('tec_002!')
+        ) );
+
+        $id4 = DB::table('users')->insertGetId( array(
+            'name' => 'Profesor21',
+            'email' => 'profesor21@gmail.com',
+            'phone' => '637415826',
+            'location_id' => $idlocation2,
+            'password' => Hash::make('tec_002!'),
+        ) );
+
+        $id5 = DB::table('users')->insertGetId( array(
+            'name' => 'Profesor22',
+            'email' => 'profesor22@gmail.com',
+            'phone' => '607455828',
+            'location_id' => $idlocation2,
+            'password' => Hash::make('tec_002!'),
+        ) );
         // ** PROFILES **
         DB::table('profiles')->delete();
         $this->createProfile($id,$idlocation,'super');
-        $this->createProfile($id1,$idlocation,'admin');
+        $this->createProfile($id0,$idlocation,'admin');
+        $this->createProfile($id1,$idlocation,'owner');
         $this->createProfile($id2,$idlocation,'owner');
+        $this->createProfile($id3,$idlocation2,'admin');
+        $this->createProfile($id4,$idlocation2,'owner');
+        $this->createProfile($id5,$idlocation2,'owner');
 
         // ** GROUPS **
         DB::table('groups')->delete();
+
+        // ** AMBITOS LEGALES
+        DB::table('consents')->delete();
+        $this->createConsent("General",$idlocation);
+        $this->createConsent("Extraescolar",$idlocation);
+        $this->createConsent("General",$idlocation2);
+        $this->createConsent("Extraescolar",$idlocation2);
+
+
         /*$group1 = $this->createGroup($idlocation,$id1,'2B');
         $g1_twitter = $this->addPublicationSite($group1,'twitter');
         $g1_facebook = $this->addPublicationSite($group1,'facebook');
@@ -112,6 +168,18 @@ class MainSeeder extends Seeder {
         }
 */
 
+    }
+
+
+    function createConsent($title, $locationId){
+        DB::table('consents')->insertGetId( array (
+            'description'   => $title,
+            'legitimacion'  => 'texto de legitimacion',
+            'destinatarios' => 'texto de destinatarios',
+            'derechos'      => 'texto de derechos',
+            'location_id'   => $locationId
+
+        ));
     }
 
     function createProfile($userId,$locationid,$type){

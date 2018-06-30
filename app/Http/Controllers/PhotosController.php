@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Consent;
 use App\Group;
 use App\Historic;
 use App\Http\Requests\CreatePhotoRequest;
@@ -95,12 +96,15 @@ class PhotosController extends Controller
 
     public function store(CreatePhotoRequest $request,$location)
     {
+        $loc =Location::byName($location);
+        $consent = Consent::find($request->get('consent_id'));
+
         $photo = new Photo();
         $photo->label = $request->get('label');
-        $photo->location_id = $request->get('location');
+        $photo->location_id = $loc->id;
         $photo->user_id = $request->user()->id;
         $photo->group_id = $request->get('group_id');
-        $photo->consent_id = $request->get('consent_id');
+        $photo->consent_id = $consent->id ;
         $photo->save();
         $box_original=null;
         $box_working=null;
@@ -114,6 +118,7 @@ class PhotosController extends Controller
                 $sharing[] = ['name'=>$site->name,'url'=>$site->url];
         }
 
+        /*** VIP : si cambias algo aquí recuerda modificar la clase PhotoData **/
         $data = ['rowid'=>-1,
             'remoteId'=>$photo->id,
             'remoteSrc'=>$workingfile,
@@ -121,6 +126,15 @@ class PhotosController extends Controller
             'src'=>$filename,
             'owner'=>$request->user()->id,
             'status'=>Status::STATUS_CREADA,
+            'accountable'=> $loc->accountable,
+            'accountable_CIF'=> $loc->CIF,
+            'accountable_email'=> $loc->email,
+            'accountable_address'=> $loc->address,
+            'accountable_city'=> $loc->city,
+            'accountable_cp'=> $loc->CP,
+            'consent_legitimacion'=> $consent->legitimacion,
+            'consent_destinatarios'=> $consent->destinatarios,
+            'consent_derechos' => $consent->derechos,
             'timestamp'=>$photo->created_at,
             'sharing'=>$sharing,
             'people'=>[],

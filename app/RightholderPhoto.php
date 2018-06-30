@@ -53,6 +53,10 @@ class RightholderPhoto extends Model
         return $this->rightholder->name;
     }
 
+    public function getRhphoneAttribute(){
+        return $this->rightholder->phone;
+    }
+
     public function getRhemailAttribute(){
         return $this->rightholder->email;
     }

@@ -2,6 +2,8 @@
 
 
 
+use Illuminate\Support\Facades\Auth;
+
 class EditLocationRequest extends Request {
 
 

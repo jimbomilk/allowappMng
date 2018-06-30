@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class RightholderConsent extends Model
 {
-    protected $fillable = ['consents','rightholder_id','consent_id','consents'];
+    protected $fillable = ['consents','rightholder_id','consent_id','status'];
 
     public function rightholder()
     {

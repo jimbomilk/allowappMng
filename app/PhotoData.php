@@ -18,6 +18,15 @@ class PhotoData {
     public $src;
     public $owner;
     public $status;
+    public $accountable;
+    public $accountable_CIF;
+    public $accountable_email;
+    public $accountable_address;
+    public $accountable_city;
+    public $accountable_cp;
+    public $consent_legitimacion;
+    public $consent_destinatarios;
+    public $consent_derechos;
     public $timestamp;
     public $sharing = [];
     public $people=[];
@@ -25,17 +34,26 @@ class PhotoData {
 
     public function __construct ($data){
         $data = json_decode($data);
-        $this->rowid = $data->rowid;
-        $this->remoteId = $data->remoteId;
-        $this->remoteSrc = $data->remoteSrc;
-        $this->name = $data->name;
-        $this->src = $data->src;
-        $this->owner = $data->owner;
-        $this->status = $data->status;
-        $this->timestamp = $data->timestamp;
-        $this->sharing = $data->sharing;
-        $this->people = $data->people;
-        $this->log = $data->log;
+        $this->rowid                = $data->rowid;
+        $this->remoteId             = $data->remoteId;
+        $this->remoteSrc            = $data->remoteSrc;
+        $this->name                 = $data->name;
+        $this->src                  = $data->src;
+        $this->owner                = $data->owner;
+        $this->status               = $data->status;
+        $this->accountable          = $data->accountable;
+        $this->accountable_CIF      = $data->accountable_CIF;
+        $this->accountable_email    = $data->accountable_email;
+        $this->accountable_address  = $data->accountable_address;
+        $this->accountable_city     = $data->accountable_city;
+        $this->accountable_cp       = $data->accountable_cp;
+        $this->consent_legitimacion = $data->consent_legitimacion;
+        $this->consent_destinatarios= $data->consent_destinatarios;
+        $this->consent_derechos     = $data->consent_derechos;
+        $this->timestamp            = $data->timestamp;
+        $this->sharing              = $data->sharing;
+        $this->people               = $data->people;
+        $this->log                  = $data->log;
 
     }
     public function setRightholderSharing($documentid,$rhId,$sharing){

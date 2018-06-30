@@ -27,19 +27,27 @@
             <!--Card content-->
             <div class="card-body" id="front{{$imagen->id}}" >
                 <!--Card image-->
-                <div class="col-sm-offset-1 col-sm-10">
-                    <img class="img-responsive center-block" src={{$imagen->url}} alt="imagen">
+                <div class="row">
+                    <div class="col-sm-offset-1 col-sm-10">
+                        <img class="img-responsive center-block" src={{$imagen->url}} alt="imagen">
+                    </div>
                 </div>
-                <div><strong>{{trans('labels.responsable')}}: </strong>{{$imagen->user->name}}</div>
-                <div><strong>{{trans('labels.finalidad')}}: </strong>{{trans('labels.finalidad_text')}} {{$imagen->getSharingAsText()}}</div>
-                <div><strong>{{trans('labels.legitimacion')}}: </strong>{{trans('labels.legitimacion_text')}}</div>
-                <div><strong>{{trans('labels.destinatario')}}: </strong>{{trans('labels.destinatario_text')}}</div>
-                <div><strong>{{trans('labels.derechos')}}: </strong>{{trans('labels.derechos_text')}}</div>
+
             </div>
 
-            <div class="card-body" id="back{{$imagen->id}}" style="display: none;margin: 0px;height:4forge
-            tec_002!@append0vh;overflow-y: scroll;overflow-x: hidden">
+            <div class="card-body" id="back{{$imagen->id}}" style="display: none;margin: 0px;height:40vh;overflow-y: scroll;overflow-x: hidden">
                 <div class="row">
+                    <div class="col-xs-12"><h4>Información básica:</h4></div>
+                    <div class="col-sm-12 small" style="text-align: justify"><br>
+                        <p><strong>{{trans('labels.responsable')}}: </strong>{{$imagen->getData('accountable')}}</p>
+                        <p><strong>{{trans('labels.finalidad')}}: </strong>{{trans('labels.finalidad_text')}} {{$imagen->getSharingAsText()}}</p>
+                        <p><strong>{{trans('labels.legitimacion')}}: </strong>{!!$imagen->getData('consent_legitimacion')!!}</p>
+                        <p><strong>{{trans('labels.destinatario')}}: </strong>{!!$imagen->getData('consent_destinatarios')!!}</p>
+                        <p><strong>{{trans('labels.derechos')}}: </strong>{!!$imagen->getData('consent_derechos')!!}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12"><h4>Acciones realizadas:</h4></div>
                     <div class="col-xs-12"><small><strong>{{$imagen->created}}</strong> - Creación de la imagen</small></div>
                 </div>
                 @foreach($imagen->getHistoric() as $action)
@@ -73,7 +81,7 @@
                 @endif
 
                 <a href="#" data-imagenid="{{$imagen->id}}" class="details btn btn-block btn-social btn-openid">
-                    <span class="fa fa-info-circle"></span> Detalles
+                    <span class="fa fa-info-circle"></span> Información adicional
                 </a>
 
             </div>

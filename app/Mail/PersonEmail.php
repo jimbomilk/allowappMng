@@ -23,15 +23,16 @@ class PersonEmail extends Mailable
     public $title;
     public $text;
     public $from_;
+    public $consents;
 
-
-    public function __construct($person,$title,$text,$from)
+    public function __construct($person,$title,$text,$from,$consents)
     {
 
         $this->element = $person;
         $this->title = $title;
         $this->text = $text;
         $this->from_= $from;
+        $this->consents= $consents;
 
     }
 

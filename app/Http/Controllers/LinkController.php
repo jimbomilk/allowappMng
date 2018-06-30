@@ -29,7 +29,7 @@ class LinkController extends Controller
             $person = Person::find($personId);
             if (isset($photo)) {
                 $sharing = $photo->getData('sharing');
-                return view('pages.photo', ['name' => 'response', 'photo_id' => $photo->id, 'url'=>$photo->url , 'user_id' => $userId, 'person_id' => $person->id, 'person_name' => $person->name, 'rightholder_id' => $rightholderId, 'sh' => $sharing, 'token' => $token]);
+                return view('pages.photo', ['name' => 'response', 'photo' => $photo, 'url'=>$photo->url , 'user_id' => $userId, 'person_id' => $person->id, 'person_name' => $person->name, 'rightholder_id' => $rightholderId, 'sh' => $sharing, 'token' => $token]);
             }
         }
 

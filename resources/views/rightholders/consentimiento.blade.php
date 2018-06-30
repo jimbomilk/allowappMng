@@ -6,7 +6,9 @@
 
 @section('main-content')
     {!! Form::open(array('url' => "$name/emails", 'method' => 'POST', 'enctype' => 'multipart/form-data')) !!}
-    {!! Form::hidden('rightholderId', isset($element)?$element->id:'all') !!}
+    {!! Form::hidden('rightholderId', isset($rightholder_id)?$rightholder_id:'all') !!}
+    {!! Form::hidden('personId', isset($person_id)?$person_id:null) !!}
+    {!! Form::hidden('groupId', isset($group_id)?$group_id:null) !!}
 <div class="container-fluid spark-screen">
     <div class="panel panel-primary">
         <div class="panel-heading">

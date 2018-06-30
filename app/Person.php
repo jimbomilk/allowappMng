@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Larareko\Rekognition\RekognitionFacade;
 
@@ -101,20 +102,4 @@ class Person extends General
         $rh->phone = $this->phone;
         $rh->save();
     }
-
-    public function faceUp(){
-
-        try{
-            $result= RekognitionFacade::indexFaces([ 'CollectionId'=>$this->collection,
-                'DetectionAttributes'=>['DEFAULT'],
-                'Image'=>['S3Object'=>[
-                    'Bucket'=>env('AWS_BUCKET'),
-                    'Name'=>$this->photopath]]]);
-            $this->faceId = $result['FaceRecords'][0]['Face']['FaceId'];
-
-        }catch (\Exception $t){
-            //dd($t);
-        };
-    }
-
 }

@@ -7,6 +7,7 @@ use App\Group;
 use App\IntermediateExcel1;
 use App\IntermediateExcel2;
 use App\IntermediateExcel3;
+use App\Jobs\PersonFaceUp;
 use App\Location;
 use App\Person;
 use App\Publicationsite;
@@ -14,7 +15,9 @@ use App\Rightholder;
 use Carbon\Carbon;
 use Illuminate\Http\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -136,8 +139,10 @@ class ExcelController extends Controller
         $groups =array_unique(IntermediateExcel3::where('location_id',$loc->id)->pluck('site_group')->toArray());
         //1º insertamos los grupos
         foreach($groups as $group){
-            $group = Group::firstOrCreate(
-                ['user_id'=>$request->user()->id,'location_id'=>$loc->id,'name'=>$group]);
+            $group = Group::firstOrNew(
+                ['location_id'=>$loc->id,'name'=>$group]);
+            $group->user_id = Auth::user()->id;
+            $group->save();
 
         }
         //2º insertamos los sites
@@ -150,10 +155,12 @@ class ExcelController extends Controller
                     $check_status = $check_status && $site->check($key,$value,$title);
             }
 
-            $group = Group::where('name',$site->site_group)->first();
+            $group = Group::where('location_id',$loc->id)->where('name',$site->site_group)->first();
             if (isset($group)&&$check_status) {
                 Publicationsite::firstOrCreate([
-                'name' => $site->site_name,'url' => $site->site_url,'group_id' => $group->id]);
+                    'name' => $site->site_name,
+                    'url' => $site->site_url,
+                    'group_id' => $group->id]);
                 $site->status='ok';
             }
             $site->save();
@@ -194,10 +201,12 @@ class ExcelController extends Controller
                 $insertPerson->documentId = $person->person_dni;
                 $insertPerson->email = $person->person_email;
                 $insertPerson->phone = $person->person_phone;
-
-                //$insertPerson->faceUp();
-                //dd($insertPerson);
                 $insertPerson->save();
+
+                Log::info("*************** Person dispatch GROUP : ".$insertPerson->collection. " ****************");
+                PersonFaceUp::dispatch($insertPerson);
+
+
 
                 if (!$insertPerson->minor)
                     $insertPerson->createRightholderPropio();
