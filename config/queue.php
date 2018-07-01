@@ -19,7 +19,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Queue Connections
+    | Queue Connectionsdat
     |--------------------------------------------------------------------------
     |
     | Here you may configure the connection information for each server that

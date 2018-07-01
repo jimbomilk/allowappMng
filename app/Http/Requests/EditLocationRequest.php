@@ -20,7 +20,7 @@ class EditLocationRequest extends Request {
     public function rules()
     {
         return [
-            'name'          => 'required|bail|string',
+            'name'          => 'required|bail|alpha_num||unique:locations,name,'.$this->location,
             'accountable'   => 'required|bail|string',
             'CIF'           => 'required|bail|string',
             'email'         => 'required|bail|email',
