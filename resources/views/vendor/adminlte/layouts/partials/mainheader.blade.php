@@ -13,9 +13,14 @@
         <div class="col-sm-1 col-xs-2 " style="color:white;text-align: center">
             <img style="position: relative;top:5px"height="40px"  src="{{Auth::user()->location->icon}}">
         </div>
-        <div class="col-sm-8 col-xs-9 nopadding" style="color:white;text-transform: uppercase;">
+        <div class="col-sm-9 col-xs-9 nopadding" style="color:white;text-transform: uppercase;">
             <span style="font-size:1.2em;position: relative;top:10px">{{Auth::user()->location->description}}</span>
         </div>
+
+        <div class="col-sm-1 col-xs-1 " style="color:white;text-transform: uppercase;">
+            <button style="position: relative;top:6px" data-toggle="control-sidebar" type="button" class="btn btn-info">Ayuda</button>
+        </div>
+
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">

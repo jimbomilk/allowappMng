@@ -17811,8 +17811,8 @@ a:focus {
 .control-sidebar-bg,
 .control-sidebar {
   top: 0;
-  right: -230px;
-  width: 230px;
+  right: -280px;
+  width: 280px;
   transition: right 0.3s ease-in-out;
 }
 .control-sidebar {
@@ -17840,7 +17840,7 @@ a:focus {
   .control-sidebar-open .content-wrapper,
   .control-sidebar-open .right-side,
   .control-sidebar-open .main-footer {
-    margin-right: 230px;
+    margin-right: 280px;
   }
 }
 .fixed .control-sidebar {

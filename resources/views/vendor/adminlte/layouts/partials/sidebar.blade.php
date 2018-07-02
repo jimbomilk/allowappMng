@@ -29,7 +29,9 @@
                 <li class="active ">
                     <a href="{{ url('locations') }}"><i class='fa fa-home'></i> <span>{{ trans('labels.locations') }}</span></a>
                     <ul class="active">
-                        <li><a href="{{ url('consents') }}"><i class='fa fa-legal'></i> <span>{!! trans('labels.consents') !!}</span></a></li>
+                        <li><a href="{{ url('consents') }}"><i class='fa fa-legal'></i> <span>{!! trans('labels.consents') !!}</span></a>
+
+                        </li>
                     </ul>
                 </li>
             @endif
