@@ -19,6 +19,7 @@ use App\Relations;
 use App\Rightholder;
 use App\RightholderPhoto;
 use App\Status;
+use Carbon\Carbon;
 use Chencha\Share\Share;
 use Larareko\Rekognition\RekognitionFacade;
 use Chencha\Share\ShareFacade;
@@ -42,6 +43,7 @@ class PhotosController extends Controller
         $groups = ["Todos los grupos"];
         $groups += $request->user()->getGroups()->pluck('name','id')->toArray();
         $group_id  = $request->get('group');
+        $now = Carbon::now()->timestamp;
 
         $group = Group::find($group_id);
         if (isset($group)){
@@ -59,7 +61,7 @@ class PhotosController extends Controller
 
 
         array_unshift($consents,"Todos los consentimientos");
-        return view('common.index', [ 'name' => 'photos','searchable'=>1, 'set' => $set,'groups'=>$groups,'group'=>$group_id,'consents'=>$consents]);
+        return view('common.index', [ 'name' => 'photos','searchable'=>1, 'set' => $set,'groups'=>$groups,'group'=>$group_id,'consents'=>$consents,'now'=>$now]);
     }
 
     public function sendView(Request $request,$element=null)

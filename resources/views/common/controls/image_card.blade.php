@@ -36,7 +36,7 @@
                     @foreach($imagen->photonetworks as $phNetwork)
                     <div class="col-sm-12">
                         <span style="position: absolute;margin: 2px" class="label label-default">{{$phNetwork->publicationSite->name}}</span>
-                        <img class="img-responsive center-block" src={{$phNetwork->url}} alt="imagen">
+                        <img class="img-responsive center-block" src="{{$phNetwork->url}}?{{$now}}" alt="imagen">
                     </div>
                     @endforeach
                 </div>
