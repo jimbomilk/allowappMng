@@ -35,7 +35,7 @@ return [
     'legitimacion'=>"Legitimación",
     'destinatario'=>"Destinatarios",
     'derechos'=>"Derechos",
-    'finalidad_text'=>"la publicación de imágenes en las siguientes plataformas web",
+    'finalidad_text'=>"La publicación de imágenes en las siguientes plataformas web",
     'images-created' => "Imagenes creadas pendientes de envio",
     'no-data'=>"No hay información",
     'images-pending'=>"Imagenes en proceso",
