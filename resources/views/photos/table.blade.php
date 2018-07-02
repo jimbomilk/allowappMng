@@ -19,5 +19,17 @@
             }, 1000);
 
         });
+
+        $(".preview").click(function () {
+            imagenId = $(this).data("imagenid");
+            $("#current"+imagenId).toggle("slow");
+            $("#preview"+imagenId).toggle("slow");
+            if ($(".preview a").text() == "Volver"){
+                $(".preview a").text("Vista previa por plataforma de difusión");
+            }else{
+                $(".preview a").text("Volver");
+            }
+
+        });
     })
 </script>

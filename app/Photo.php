@@ -38,6 +38,10 @@ class Photo extends General
         return $this->belongsTo('App\User');
     }
 
+    public function photonetworks(){
+        return $this->hasMany('App\Photonetwork');
+    }
+
     public function rightholderphotos(){
         return $this->hasMany('App\RightholderPhoto');
     }

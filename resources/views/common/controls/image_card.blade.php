@@ -27,12 +27,22 @@
             <!--Card content-->
             <div class="card-body" id="front{{$imagen->id}}" >
                 <!--Card image-->
-                <div class="row">
+                <div class="row" id="current{{$imagen->id}}">
                     <div class="col-sm-offset-1 col-sm-10">
                         <img class="img-responsive center-block" src={{$imagen->url}} alt="imagen">
                     </div>
+                </div>
+                <div class="row" id="preview{{$imagen->id}}" style="display: none">
+                    @foreach($imagen->photonetworks as $phNetwork)
+                    <div class="col-sm-6">
+                        <span style="position: absolute;margin: 2px" class="label label-default">{{$phNetwork->publicationSite->name}}</span>
+                        <img class="img-responsive center-block" src={{$phNetwork->url}} alt="imagen">
+                    </div>
+                    @endforeach
+                </div>
 
-                    Vista previa por plataforma de difusión
+                <div data-imagenid="{{$imagen->id}}" class="preview row text-center">
+                    <a href="#"> Vista previa por plataforma de difusión </a>
                 </div>
 
             </div>
