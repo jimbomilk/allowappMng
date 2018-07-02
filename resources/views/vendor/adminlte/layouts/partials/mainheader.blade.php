@@ -11,7 +11,7 @@
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
         <div class="col-sm-1 col-xs-2 " style="color:white;text-align: center">
-            <img width="50px"  src="{{Auth::user()->location->icon}}">
+            <img height="50px"  src="{{Auth::user()->location->icon}}">
         </div>
         <div class="col-sm-8 col-xs-9 nopadding" style="color:white;text-transform: uppercase;">
             <span style="font-size:1.2em;position: relative;top:10px">{{Auth::user()->location->description}}</span>
