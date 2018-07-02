@@ -39,7 +39,7 @@
                 <div class="row">
                     <div class="col-xs-12"><h4>Información básica:</h4></div>
                     <div class="col-sm-12 small" style="text-align: justify"><br>
-                        <p><strong>{{trans('labels.responsable')}}: </strong>{{$imagen->getData('accountable')}}</p>
+                        <p><strong>{{trans('labels.responsable')}}: </strong>{{$imagen->getData('accountable')}} con CIF {{$photo->getData('accountable_CIF')}}</p>
                         <p><strong>{{trans('labels.finalidad')}}: </strong>{{trans('label.finalidad_text')}} {{$imagen->getSharingAsText()}}</p>
                         <p><strong>{{trans('labels.legitimacion')}}: </strong>{!!$imagen->getData('consent_legitimacion')!!}</p>
                         <p><strong>{{trans('labels.destinatario')}}: </strong>{!!$imagen->getData('consent_destinatarios')!!}</p>
