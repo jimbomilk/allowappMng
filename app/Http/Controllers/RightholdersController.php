@@ -176,30 +176,31 @@ class RightholdersController extends Controller
         $consent_id = $req->get('consent_id');
         $person_id = $req->get('personId');
         $group_id = $req->get('groupId');
+        $location = Location::find($req->get('location'));
         $count=0;
         try {
             if (isset($group_id)){
                 $group = Group::find($group_id);
                 foreach ($group->rightholders as $rh){
-                    $this->sendEmail($rh,$consent_id,$email_text,$req->user()->email);
+                    $this->sendEmail($rh,$consent_id,$email_text,$location->email);
                     $count++;
                 }
             }
             else if (isset($person_id)){
                 $person = Person::find($person_id);
                 foreach ($person->rightholders as $rh){
-                    $this->sendEmail($rh,$consent_id,$email_text,$req->user()->email);
+                    $this->sendEmail($rh,$consent_id,$email_text,$location->email);
                     $count++;
                 }
             }
             else if ($element == 'all'){
                 foreach ($req->user()->getRightholders()->get() as $rh){
-                    $this->sendEmail($rh,$consent_id,$email_text,$req->user()->email);
+                    $this->sendEmail($rh,$consent_id,$email_text,$location->email);
                     $count++;
                 }
             }else{
                 $rh = Rightholder::find($element);
-                $this->sendEmail($rh,$consent_id,$email_text,$req->user()->email);
+                $this->sendEmail($rh,$consent_id,$email_text,$location->email);
                 $count++;
             }
         }catch (Exception $e){

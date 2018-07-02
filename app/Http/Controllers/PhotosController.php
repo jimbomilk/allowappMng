@@ -369,13 +369,14 @@ class PhotosController extends Controller
         //return json_encode($req->all());
         $photo = Photo::find($req->get('photoId'));
         $email_text = $req->get('email');
+        $loc = Location::byName($location);
         $count=0;
 
         try {
             foreach ($photo->rightholderphotos as $rhp) {
                 $rh = Rightholder::find($rhp->rightholder_id);
                 if (isset($rh) && $rh->email != "") {
-                    Mail::to($rh->email)->queue(new RequestSignature($rhp, $email_text, $req->user()->email, $photo->getData('remoteSrc')));
+                    Mail::to($rh->email)->queue(new RequestSignature($rhp, $email_text, $loc->email, $photo->getData('remoteSrc')));
                     //Log::debug('email:'.$ret);
                     $count++;
                     $h = new Historic();
