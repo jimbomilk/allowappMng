@@ -40,10 +40,11 @@
                     </div>
                     @endforeach
                 </div>
-
+                @if ($imagen->getData('status') > \App\Status::STATUS_CREADA)
                 <div data-imagenid="{{$imagen->id}}" class="preview row text-center">
                     <a href="#"> Vista previa por plataforma de difusión </a>
                 </div>
+                @endif
 
             </div>
 
