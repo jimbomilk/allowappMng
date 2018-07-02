@@ -28,7 +28,7 @@
             <div class="card-body" id="front{{$imagen->id}}" >
                 <!--Card image-->
                 <div class="row" id="current{{$imagen->id}}">
-                    <div class="col-sm-offset-1 col-sm-10">
+                    <div class="col-sm-12">
                         <img class="img-responsive center-block" src={{$imagen->url}} alt="imagen">
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                     @endforeach
                 </div>
                 @if ($imagen->getData('status') > \App\Status::STATUS_CREADA)
-                <div data-imagenid="{{$imagen->id}}" class="preview row text-center">
+                <div id="{{$imagen->id}}" class="preview row text-center">
                     <a href="#"> Vista previa por plataforma de difusión </a>
                 </div>
                 @endif
