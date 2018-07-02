@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-xs-6">
                     <span class="label label-primary" >{{$element->group->name}}&nbsp;</span><br>
-                    {{$imagen->label}}#{{$imagen->id}}<br>
+                    {{$imagen->label}}<br>
                     {{$imagen->consent->description}} : <span>{{$imagen->pendingRightholders()}}</span>
 
                 </div>
@@ -31,6 +31,8 @@
                     <div class="col-sm-offset-1 col-sm-10">
                         <img class="img-responsive center-block" src={{$imagen->url}} alt="imagen">
                     </div>
+
+                    Vista previa por plataforma de difusión
                 </div>
 
             </div>
@@ -39,7 +41,7 @@
                 <div class="row">
                     <div class="col-xs-12"><h4>Información básica:</h4></div>
                     <div class="col-sm-12 small" style="text-align: justify"><br>
-                        <p><strong>{{trans('labels.responsable')}}: </strong>{{$imagen->getData('accountable')}} con CIF {{$photo->getData('accountable_CIF')}}</p>
+                        <p><strong>{{trans('labels.responsable')}}: </strong>{{$imagen->getData('accountable')}} con CIF {{$imagen->getData('accountable_CIF')}}</p>
                         <p><strong>{{trans('labels.finalidad')}}: </strong>{{trans('label.finalidad_text')}} {{$imagen->getSharingAsText()}}</p>
                         <p><strong>{{trans('labels.legitimacion')}}: </strong>{!!$imagen->getData('consent_legitimacion')!!}</p>
                         <p><strong>{{trans('labels.destinatario')}}: </strong>{!!$imagen->getData('consent_destinatarios')!!}</p>
