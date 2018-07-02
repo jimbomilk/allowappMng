@@ -34,7 +34,7 @@
                 </div>
                 <div class="row" id="preview{{$imagen->id}}" style="display: none">
                     @foreach($imagen->photonetworks as $phNetwork)
-                    <div class="col-sm-6">
+                    <div class="col-sm-12">
                         <span style="position: absolute;margin: 2px" class="label label-default">{{$phNetwork->publicationSite->name}}</span>
                         <img class="img-responsive center-block" src={{$phNetwork->url}} alt="imagen">
                     </div>
