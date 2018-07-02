@@ -12,9 +12,9 @@
             <div class="panel-body" style="margin: 0px;height:50vh;overflow-y: scroll;overflow-x: hidden">
             Ha recibido este enlace como responsable de los derechos de imagen de <strong>{!!$rhConsent->rightholder->person->name!!}.</strong><br><br>
             <strong>Finalidad:</strong>
-                <div class="small">
+                <p>
                     {{trans('labels.finalidad_text')}} {{$rhConsent->rightholder->group->getSharingAsText()}}<br>
-                </div>
+                </p>
             <strong>Legitimación:</strong> {!!$rhConsent->consent->legitimacion!!}<br>
             <strong>Destinatarios:</strong> {!!$rhConsent->consent->destinatarios!!}<br>
             <strong>Derechos:</strong> {!!$rhConsent->consent->derechos!!}<br>
