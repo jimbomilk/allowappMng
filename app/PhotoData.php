@@ -61,7 +61,7 @@ class PhotoData {
             foreach($person->rightholders as $rh){
                 if ($rh->id == $rhId) {
                     $rightholder = Rightholder::find($rh->id);
-                    if (isset($rightholder) && $rightholder->documentId == $documentid) {
+                    if (isset($rightholder) && strtoupper($rightholder->documentId) == strtoupper($documentid)) {
                         $rh->sharing = $sharing;
                         $rh->status = Status::RH_PROCESED; //procesed
                         return $rh;

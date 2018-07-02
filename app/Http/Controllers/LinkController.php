@@ -153,7 +153,7 @@ class LinkController extends Controller
                 foreach ($sites as $site){
                     $sharing[$site]=(int)$req->get($site,'0');
                 }
-                if ($rhConsent->rightholder->documentId == $dni){
+                if (strtoupper($rhConsent->rightholder->documentId) == strtoupper($dni)){
 
                     $rhConsent->status = Status::RH_PROCESED;
                     $rhConsent->consents = json_encode($sharing);
