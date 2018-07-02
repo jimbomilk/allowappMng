@@ -17,6 +17,7 @@ return [
     'historic.rightholders.fa_icon' => 'fa fa-id-card-o',
     'historic.photos.fa_icon' => 'fa fa-camera-retro',
     'consents.fa_icon' => 'fa fa-legal',
+    'finalidad_text'=>"La publicación de la imagen en las siguientes plataformas web",
 
     //PROFILES
     'profiles.super'=> 'Super usuario',
@@ -143,6 +144,7 @@ return [
     'photos.send'=> 'Solicitar consentimientos para la imagen ',
     'photos.warning' => "AVISO",
     'photos.error' => "ERROR",
+
 
 
     //CONTRACTS s

@@ -14,7 +14,7 @@
 
                     <div class="col-sm-12" style="text-align: justify"><br>
                         <div><strong>{{trans('labels.responsable')}}: </strong>{{$photo->getData('accountable')}}</div><br>
-                        <div><strong>{{trans('labels.finalidad')}}: </strong>{{trans('labels.finalidad_text')}} {{$photo->getSharingAsText()}}</div><br>
+                        <div><strong>{{trans('labels.finalidad')}}: </strong>{{trans('label.finalidad_text')}} {{$photo->getSharingAsText()}}</div><br>
                         <strong>{{trans('labels.legitimacion')}}: </strong>{!!$photo->getData('consent_legitimacion')!!}
                         <strong>{{trans('labels.destinatario')}}: </strong>{!!$photo->getData('consent_destinatarios')!!}
                         <strong>{{trans('labels.derechos')}}: </strong>{!!$photo->getData('consent_derechos')!!}
