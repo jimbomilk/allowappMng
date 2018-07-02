@@ -22,7 +22,7 @@ return [
     'face_detected'=>'Caras detectadas',
     'publicationsites' => 'Areas de difusión (web, redes sociales...)',
     'deleteareyousure' => "¿Confirmas que quieres borrar a ",
-    'locations' => "Colegios",
+    'locations' => "Colegio",
     'created'=>"Creada",
     'pending'=>"En proceso",
     'processed'=>"Revisada",
