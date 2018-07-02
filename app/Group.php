@@ -83,4 +83,16 @@ class Group extends Model
 
     }
 
+
+    public function getSharingAsText(){
+        $text = ": ";
+        foreach ($this->publicationsites as $index=>$share){
+            if ($index>0){
+                $text .= ',';
+            }
+            $text .= $share->name. "(".$share->url.")";
+        }
+        return $text;
+    }
+
 }
