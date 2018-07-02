@@ -52,7 +52,7 @@ class Photonetwork extends Model
                     $pixelate[] = $face->Face->BoundingBox;
                 }else{
                     //3. Comprobamos los permisos globales del los rightholders para esa red
-                    if (!$this->checkGlobalConsents($person)){
+                    if (!$this->checkGlobalConsents($person,$network)){
                         //4. Comprobar los permisos de foto de los rightholders de la persona en esa red
                         if (!$this->checkRightholdersByNetwork($person,$network))
                             $pixelate[] = $face->Face->BoundingBox;
@@ -64,7 +64,7 @@ class Photonetwork extends Model
         return $this->pixelate($pixelate);
     }
 
-    private function checkGlobalConsents($person){
+    private function checkGlobalConsents($person,$network){
         $global_consents = true;
         //3. Comprobamos los permisos globales del los rightholders para esa red
         if (isset($person->rightholders) && count($person->rightholders)>0) {
