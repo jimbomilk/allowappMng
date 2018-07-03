@@ -8,19 +8,20 @@
     </ul>
     <!-- Tab panes -->
     <div class="tab-content">
+        @if(isset($name))
         <!-- Home tab content -->
         <div class="tab-pane active" id="control-sidebar-home-tab">
             <h3 class="control-sidebar-heading">Ayuda de {{trans("labels.$name")}}</h3>
-            <div class="form-group">
+            <div class="form-group text-justify">
                 <label class="control-sidebar-subheading">
-                    {{trans("help.$name.title1")}}
+                    {!!trans("help.$name.title1")!!}
                 </label>
                 <p>
                     {!!trans("help.$name.text1")!!}
                 </p>
                 @if (trans("help.$name.title2") != "help.$name.title2")
                     <label class="control-sidebar-subheading">
-                        {{trans("help.$name.title2")}}
+                        {!!trans("help.$name.title2")!!}
                     </label>
                     <p>
                         {!!trans("help.$name.text2")!!}
@@ -28,7 +29,7 @@
                 @endif
                 @if (trans("help.$name.title3") != "help.$name.title3")
                     <label class="control-sidebar-subheading">
-                        {{trans("help.$name.title3")}}
+                        {!!trans("help.$name.title3")!!}
                     </label>
                     <p>
                         {!!trans("help.$name.text3")!!}
@@ -36,10 +37,18 @@
                 @endif
                 @if (trans("help.$name.title4") != "help.$name.title4")
                     <label class="control-sidebar-subheading">
-                        {{trans("help.$name.title4")}}
+                        {!!trans("help.$name.title4")!!}
                     </label>
                     <p>
                         {!!trans("help.$name.text4")!!}
+                    </p>
+                @endif
+                @if (trans("help.$name.title5") != "help.$name.title5")
+                    <label class="control-sidebar-subheading">
+                        {!!trans("help.$name.title5")!!}
+                    </label>
+                    <p>
+                        {!!trans("help.$name.text5")!!}
                     </p>
                 @endif
             </div><!-- /.form-group -->
@@ -84,6 +93,7 @@
             </div><!-- /.form-group -->
 
         </div><!-- /.tab-pane -->
+        @endif
     </div>
 
 
