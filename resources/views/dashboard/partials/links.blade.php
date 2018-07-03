@@ -7,7 +7,7 @@
 
         </div><!-- /.box-header -->
         <div class="box-body" style="height: 190px">
-            <div style="margin: 0px;height:40vh;overflow-y: scroll;overflow-x: hidden">
+            <div style="margin: 0px;height:100%;overflow-y: scroll;overflow-x: hidden">
                 @if(count($links)<=0)
                     <p> {{trans('labels.no-data')}} </p>
                 @endif
