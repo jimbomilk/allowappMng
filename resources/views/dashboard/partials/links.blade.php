@@ -7,7 +7,7 @@
 
         </div><!-- /.box-header -->
         <div class="box-body" style="height: 190px">
-
+            <div style="display: none;margin: 0px;height:40vh;overflow-y: scroll;overflow-x: hidden">
                 @if(count($links)<=0)
                     <p> {{trans('labels.no-data')}} </p>
                 @endif
@@ -32,15 +32,15 @@
                     <div class="col-md-2">
                         @include("common.controls.status",['status'=>$link->photo->status])
                     </div>
-    </div>
+                </div>
+                @endforeach
+            </div>
+            <span class="box-tools pull-right inline">
+            {{ $links->links() }}
+            </span>
 
-    @endforeach
-    <span class="box-tools pull-right inline">
-    {{ $links->links() }}
-    </span>
 
-
-    </div><!-- /.box-body -->
+        </div><!-- /.box-body -->
 
     </div><!-- /.box -->
 </div>
