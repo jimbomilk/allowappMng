@@ -13,12 +13,13 @@ class Historic extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function register($user_id, $texto,$photo_id=null,$person_id=null,$rightholder_id=null){
+    public function register($user_id, $texto,$photo_id=null,$person_id=null,$rightholder_id=null,$arco=null){
 
         $this->user_id = $user_id;
         $this->photo_id = $photo_id;
         $this->person_id = $person_id;
         $this->rightholder_id = $rightholder_id;
+        $this->arco = $arco;
         $this->log = $texto;
         $this->save();
     }

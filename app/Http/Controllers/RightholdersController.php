@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\General;
 use App\Group;
+use App\Historic;
 use App\Http\Requests\CreateRightholderRequest;
 use App\Http\Requests\EditRightholderRequest;
 use App\Location;
@@ -14,6 +15,7 @@ use App\Mail\RequestSignatureRightholder;
 use App\RightholderConsent;
 use App\Status;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
@@ -45,7 +47,7 @@ class RightholdersController extends Controller
         $groups = ["Todos los grupos"];
         $groups += $request->user()->getGroups()->pluck('name','id')->toArray();
 
-        return view('common.index', ['name' => 'rightholders', 'set' => $set,'person_id'=>$person_id,'consents'=>$consents,'groups'=>$groups,'group'=>$group_id]);
+        return view('common.index', ['name' => 'rightholders', 'set' => $set,'person_id'=>$person_id,'consents'=>$consents,'groups'=>$groups,'group'=>$group_id,'arco'=>true]);
 
     }
 
@@ -140,11 +142,17 @@ class RightholdersController extends Controller
     {
         $rightholder = Rightholder::findOrFail($id);
 
+        $arco = $request->get('arco');
+        if (isset($arco) && $arco){
+            $h = new Historic();
+            $h->register(Auth::user()->id,"$rightholder->name y todos sus datos han sido eliminados del sistema en aplicación de sus derechos ARCO",null,null,$rightholder->id,true);
+        }
 
-        //Storage::disk('s3')->delete($rightholder->path);
 
         $rightholder->delete();
-        $message = $rightholder->name. ' deleted';
+        $message = $rightholder->name. ' y todos sus datos han sido eliminados del sistema';
+        if (isset($arco) && $arco)
+            $message .= " en aplicación de los derechos ARCO.";
         if ($request->ajax())
         {
             return response()->json([

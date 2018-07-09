@@ -17,7 +17,7 @@ class Persons extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('code')->nullable(); //código interno de la persona en la organizacion
-            $table->smallInteger('minor');
+            $table->tinyInteger('minor');
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('documentId')->nullable();

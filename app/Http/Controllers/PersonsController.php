@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Group;
+use App\Historic;
 use App\Http\Requests\CreatePersonRequest;
 use App\Http\Requests\EditPersonRequest;
 use App\Jobs\PersonFaceUp;
@@ -10,6 +11,7 @@ use App\Person;
 use App\Location;
 use App\Rightholder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Larareko\Rekognition\Rekognition;
@@ -33,7 +35,7 @@ class PersonsController extends Controller
         }
         $groups = ["Todos los grupos"];
         $groups += $request->user()->getGroups()->pluck('name','id')->toArray();
-        return view('common.index', ['searchable' => '1','name' => 'persons', 'set' => $set,'groups'=>$groups,'group'=>$group_id]);
+        return view('common.index', ['searchable' => '1','name' => 'persons', 'set' => $set,'groups'=>$groups,'group'=>$group_id,'arco'=>true]);
 
     }
 
@@ -139,12 +141,18 @@ class PersonsController extends Controller
     {
         $person = Person::findOrFail($id);
 
-
+        $arco = $request->get('arco');
+        if (isset($arco) && $arco){
+            $h = new Historic();
+            $h->register(Auth::user()->id,"$person->name y todos sus datos han sido eliminados del sistema en aplicación de sus derechos ARCO",null,$person->id,null,true);
+        }
         $res = Storage::disk('s3')->delete($person->photopath);
         //dd($res);
 
         $person->delete();
-        $message = $person->name. ' deleted';
+        $message = $person->name. ' y todos sus datos han sido eliminados';
+        if (isset($arco) && $arco)
+            $message .= " en aplicación de los derechos ARCO.";
         if ($request->ajax())
         {
             return response()->json([

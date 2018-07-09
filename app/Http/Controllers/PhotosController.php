@@ -61,7 +61,7 @@ class PhotosController extends Controller
 
 
         array_unshift($consents,"Todos los consentimientos");
-        return view('common.index', [ 'name' => 'photos','searchable'=>1, 'set' => $set,'groups'=>$groups,'group'=>$group_id,'consents'=>$consents,'now'=>$now]);
+        return view('common.index', [ 'name' => 'photos','searchable'=>1, 'set' => $set,'groups'=>$groups,'group'=>$group_id,'consents'=>$consents,'now'=>$now,'arco'=>true]);
     }
 
     public function sendView(Request $request,$element=null)
@@ -162,11 +162,18 @@ class PhotosController extends Controller
         $photo = Photo::findOrFail($id);
         Storage::disk('s3')->delete($photo->photopath);
 
+        $arco = $request->get('arco');
         $h = new Historic();
-        $h->register($request->user()->id,"Imagen borrada" ,$id);
+        if (isset($arco) && $arco){
+            $h->register($request->user()->id,"$photo->name($photo->id) y todos sus datos han sido eliminados del sistema en aplicación de sus derechos ARCO",$photo->id,null,null,true);
+        }else {
+            $h->register($request->user()->id, "$photo->name($photo->id) y todos sus datos han sido eliminados", $id);
+        }
 
         $photo->delete();
-        $message = "Imagen ". $photo->name. " borrada";
+        $message = "Imagen ". $photo->name. " y todos sus datos han sido eliminados";
+        if (isset($arco) && $arco)
+            $message .= " en aplicación de los derechos ARCO.";
         if ($request->ajax())
         {
             return response()->json([
@@ -409,7 +416,7 @@ class PhotosController extends Controller
         $photo = Photo::find($photoId);
 
         if (isset($photo)) {
-            $photo->setStatus (Status::STATUS_SHARED);
+            $photo->setStatus(Status::STATUS_SHARED);
             $photo->save();
             $group = $photo->group;
             $sites = $group->publicationsites;

@@ -20,6 +20,7 @@ class Rightholders extends Migration
             $table->string('relation');
             $table->string('email');
             $table->string('phone');
+
             $table->integer('person_id')->unsigned();
             $table->foreign('person_id')
                 ->references('id')

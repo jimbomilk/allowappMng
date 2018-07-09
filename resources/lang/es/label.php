@@ -179,9 +179,9 @@ return [
     'historic.persons.group_id' => 'Clase',
     'historic.persons.name' => 'Nombre',
     'historic.persons.photo' => 'Foto',
-    'historic.rightholders' => 'Mostrar historial de este responsable',
-    'historic.photos' => 'Mostrar historial de esta fotografía',
-    'historic.persons' => 'Mostrar historial de esta persona',
+    'historic.rightholders' => 'Historial de responsables',
+    'historic.photos' => 'Historial de fotografías',
+    'historic.persons' => 'Historial de alumnos',
     'historic.persons.download' => 'Descargar informe',
     'historic.photos.download' => 'Descargar informe',
     'historic.rightholders.download' => 'Descargar informe',
@@ -193,6 +193,7 @@ return [
     'historic.person.show.data' => "Historial del alumno",
     'historic.rightholders.show.data' => "Historial del responsable",
     'historic.photo.show.data' => "Historial de la imagen",
+    'historic.person.show' => 'Historial del alumno',
 
 
     'historic.photo.show.to'=>'Enviar a',

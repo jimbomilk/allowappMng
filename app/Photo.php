@@ -53,7 +53,7 @@ class Photo extends General
 
     public function setStatus($status){
         $data = json_decode($this->data);
-        $data->status == $status;
+        $data->status = $status;
         $this->data = json_encode($data);
     }
 

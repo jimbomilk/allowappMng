@@ -11,7 +11,7 @@
                 </div>
                 <div class="col-xs-6 text-right">
                     <div >{{$imagen->created}}</div>
-                    <div style="margin-right: -14px">
+                    <div style="margin-right: -14px" >
                         @include("common.controls.btn_edit",array('var'=>$element))
                         @include("common.controls.btn_delete",array('var'=>$element,'small'=>true))
                     </div>

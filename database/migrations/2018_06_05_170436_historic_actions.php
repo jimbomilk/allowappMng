@@ -20,6 +20,7 @@ class HistoricActions extends Migration
             $table->unsignedInteger('photo_id')->nullable();
             $table->unsignedInteger('person_id')->nullable();
             $table->unsignedInteger('rightholder_id')->nullable();
+            $table->tinyInteger('arco')->nullable();
             $table->string('log')->nullable();
             $table->timestamps();
         });

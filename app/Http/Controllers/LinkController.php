@@ -11,6 +11,7 @@ use App\Photonetwork;
 use App\Publicationsite;
 use App\Rightholder;
 use App\RightholderConsent;
+use App\RightholderPhoto;
 use App\Status;
 use App\Token;
 use Carbon\Carbon;
@@ -159,6 +160,13 @@ class LinkController extends Controller
                     $rhConsent->consents = json_encode($sharing);
                     $rhConsent->save();
                     $userId = $req->user()?$req->user()->id:null;
+
+                    // Hay que buscar las imagenes relacionadas
+                    $rhphotos = RightholderPhoto::where('rightholder_id',$rhConsent->rightholder->id);
+                    foreach($rhphotos as $rhphoto){
+                        $rhphoto->photo->updatePhotobyNetwork();
+                    }
+
 
                     $h = new Historic();
                     $h->register($userId,"Solicitud del consentimiento" .$rhConsent->description . " verificada con DNI :".$dni." y con los siguientes permisos: ".json_encode($sharing),null,$rhConsent->rightholder->person->id, $rhConsent->rightholder->id);
