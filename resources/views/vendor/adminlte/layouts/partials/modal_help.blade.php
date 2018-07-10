@@ -5,7 +5,7 @@
                 <button type="button" class="close" data-dismiss="modal">
                     <span>×</span>
                 </button>
-                <h4>Ayuda</h4>
+                <h4>Información</h4>
             </div>
             <div class="modal-body">
                 {{$text}}
