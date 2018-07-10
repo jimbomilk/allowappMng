@@ -453,7 +453,7 @@ class PhotosController extends Controller
                 $photoNetwork = Photonetwork::where([['publicationsite_id',$site->id],['photo_id',$photo->id]])->first();
 
                 if ($photoNetwork && $site->name == "instagram") {
-                    Mail::to($req->user()->email)->queue(new OnlyPhotoEmail($photoNetwork->url,$photo->route,"Imagen compartida para instagram","Estimado/a: <br>Le enviamos esta imagen para que pueda compartirla en instagram. <br> Un saludo.", $req->user()->email));
+                    Mail::to($req->user()->email)->queue(new OnlyPhotoEmail($photoNetwork->url,$photo->getRoute($site->name),"Imagen compartida para instagram","Estimado/a: <br>Le enviamos esta imagen para que pueda compartirla en instagram. <br> Un saludo.", $req->user()->email));
                 }
             }
         }
