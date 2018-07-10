@@ -1,8 +1,8 @@
 @extends('layouts.error')
 @section('content')
 
-    <h2 style="text-align: center;color:white">
+    <h1 style="text-align: center;color:white">
     Se ha producido un error. El enlace es incorrecto.
-    </h2>
+    </h1>
 
 @stop
