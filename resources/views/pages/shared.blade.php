@@ -10,7 +10,9 @@
     <meta property="og:image"              content="{{$photo->url}}" />
 </head>
 <body>
-<img class="img-responsive center" src="{{$photo->url}}">
+<div style="width: 100%;text-align: center">
+<img style="text-align: center" class="img-responsive center" src="{{$photo->url}}">
 <p>bla bla bla</p>
+</div>
 </body>
 </html>
