@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.error')
 @section('content')
 
     <h2 style="text-align: center;color:white">
