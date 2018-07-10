@@ -85,7 +85,7 @@
                 @if($imagen->getData('status')>10)
                     @foreach($imagen->getData('sharing') as $share)
                         @if ($share->name == "instagram")
-                            @include('adminlte::layouts.partials.modal_help',['text'=>'Se le ha enviado un correo para que pueda subir la imagen a Instagram. Debe descargarse la imagen adjunta y subirla a Instagram desde un dispositivo móvil. Muchas gracias!'])
+                            @include('adminlte::layouts.partials.modal_help',['text'=>'Por la políticas internas de Instagram no se pueden subir las imágenes desde el ordenador. Por ello le hemos enviado un email para que pueda subir la imagen a Instagram. <br> Una vez que reciba el email, siga el enlace adjunto, descargue y comparta la imagen en Instagram desde un dispositivo móvil. Muchas gracias!'])
                             <a style="margin-top: 5px"  href="#" class="btn btn-block btn-social btn-{{$share->name}} btn-reddit" data-imagenid="{{$imagen->id}}" data-toggle="modal" data-target="#modal">
                                 <span class="fa glyphicon-globe fa-envelope-o fa-{{$share->name}}"></span> Compartir en {{$share->name}}
                             </a>
