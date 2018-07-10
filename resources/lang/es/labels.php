@@ -73,4 +73,5 @@ return [
     'historic.photo.show' => 'Historial de la imagen',
     'historic.person.show' => 'Historial personal',
     'historic.rightholders.show' => 'Historial del responsable',
+    'tasks' => 'Tareas Pendientes'
 ];
