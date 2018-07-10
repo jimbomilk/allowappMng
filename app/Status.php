@@ -30,8 +30,24 @@ class Status {
                                 50  => 'en revision');
 
 
+
+
     public static $descRH = array(0   =>'pendiente' ,
                                     10  =>'procesado');
 
+    public static function color($status){
+        switch($status) {
+            case 10:
+                return '#99ccff';
+            case 20 :
+                return '#ffcc00';
+            case 30 :
+                return '#ccff66';
+            case 40 :
+                return '#e600e6';
+            case 50 :
+                return '#ff5050';
+        }
+    }
 }
 

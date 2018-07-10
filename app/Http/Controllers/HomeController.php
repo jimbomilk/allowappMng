@@ -23,10 +23,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $links = Auth::user()->links()->paginate(10);
+        $photos = Auth::user()->getPhotos();
         $this->graph1();
         $this->graph2();
-        return view('dashboard.main',['links'=>$links]);
+        return view('dashboard.main',['photos'=>$photos]);
     }
 
     public function graph1(){

@@ -7,36 +7,30 @@
 
         </div><!-- /.box-header -->
         <div class="box-body" style="height: 190px">
-            <div style="margin: 0px;height:100%;overflow-y: scroll;overflow-x: hidden">
-                @if(count($links)<=0)
+            <div class="col-sm-12 row-striped">
+                @if(count($photos)<=0)
                     <p> {{trans('labels.no-data')}} </p>
                 @endif
-                <div class="row">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-2"></div>
-                    <div class="col-md-2"></div>
-                    <div class="col-md-2"></div>
-                    <div class="col-md-2"></div>
-                </div>
-                @foreach($links as $link)
-                <div class="row">
-                    <div class="col-md-2" style="text-align: center">
-                        <img src="{{$link->photo->url}}" width="75" height="50" alt="add image" class="online"/>
+
+                @foreach($photos as $photo)
+                <div class="row " style="margin-top: 10px;">
+                    <div class="col-md-2" style="text-align: center;">
+                        <img src="{{$photo->url}}" width="75" height="50" alt="add image" class="online"/>
                     </div>
                     <div class="col-md-2">
-                        creada el {{ $link->created_at }}
+                        creada el {{ $photo->created_at }}
                     </div>
                     <div class="col-md-2">
-                        por {{ $link->user->name }}
+                        por {{ $photo->user->name }}
                     </div>
                     <div class="col-md-2">
-                        @include("common.controls.status",['status'=>$link->photo->status])
+                        @include("common.controls.status",['status'=>$photo->status])
                     </div>
                 </div>
                 @endforeach
             </div>
             <span class="box-tools pull-right inline">
-            {{ $links->links() }}
+            {{ $photos->links() }}
             </span>
 
 

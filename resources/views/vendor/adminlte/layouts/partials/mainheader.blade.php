@@ -17,14 +17,57 @@
             <span style="font-size:1.2em;position: relative;top:10px">{{Auth::user()->location->description}}</span>
         </div>
 
-        <div class="col-sm-1 col-xs-1 " style="color:white;text-transform: uppercase;">
-            <button style="position: relative;top:6px" data-toggle="control-sidebar" type="button" class="btn btn-info">Ayuda</button>
-        </div>
 
+
+        <!-- Tasks Menu -->
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
+                <li>
 
+                    <a href="#" class="dropdown-toggle" data-toggle="control-sidebar" title="ayuda">
+                        <i class="fa fa-question-circle"></i>
+
+                    </a>
+                </li>
+                <li class="dropdown tasks-menu">
+                    <!-- Menu Toggle Button -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-flag-o"></i>
+                        <span class="label label-danger">9</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header">{{ trans('labels.tasks') }}</li>
+                        <li>
+                            <!-- Inner menu: contains the tasks -->
+                            <ul class="menu">
+                                <li><!-- Task item -->
+                                    <a href="#">
+                                        <!-- Task title and progress text -->
+                                        <h3>
+                                            Task1
+                                            <span class="label label-danger pull-right">Alta</span>
+                                        </h3>
+
+                                    </a>
+                                </li><!-- end task item -->
+                                <li><!-- Task item -->
+                                    <a href="#">
+                                        <!-- Task title and progress text -->
+                                        <h3>
+                                            Task2
+                                            <span class="label label-warning pull-right">Media</span>
+                                        </h3>
+
+                                    </a>
+                                </li><!-- end task item -->
+                            </ul>
+                        </li>
+                        <li class="footer">
+                            <a href="#">Allowapp © 2018</a>
+                        </li>
+                    </ul>
+                </li>
                 @if (Auth::guest())
                     <li><a href="{{ url('/register') }}">{{ trans('adminlte_lang::message.register') }}</a></li>
                     <li><a href="{{ url('/login') }}">{{ trans('adminlte_lang::message.login') }}</a></li>

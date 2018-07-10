@@ -15,8 +15,6 @@
                         @include("common.controls.btn_edit",array('var'=>$element))
                         @include("common.controls.btn_delete",array('var'=>$element,'small'=>true))
                     </div>
-
-
                 </div>
             </div>
 
@@ -65,7 +63,11 @@
                 </div>
                 @foreach($imagen->getHistoric() as $action)
                     <div class="row">
-                    <div class="col-xs-12"><small><strong>{{$action->created}}</strong> - {{$action->log}}</small></div>
+                        @if(strpos($action->log,"compartida")!==false)
+                        <div class="col-xs-12" style="color: red"><small><strong>{{$action->created}}</strong> - {{$action->log}}</small></div>
+                        @else
+                        <div class="col-xs-12"><small><strong>{{$action->created}}</strong> - {{$action->log}}</small></div>
+                        @endif
                     </div>
                 @endforeach
 

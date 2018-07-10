@@ -171,11 +171,11 @@ class Photo extends General
         $data = json_decode($this->data);
         $label_color="";$label_text="";
         if ($data->status==Status::STATUS_CREADA) {
-            $label_color = 'info';
+            $label_color = 'default';
             $label_text = trans('labels.created');
         }
         else if ($data->status==Status::STATUS_PENDING) {
-            $label_color = 'warning';
+            $label_color = 'primary';
             $label_text = trans('labels.pending');
         }
         elseif ($data->status==Status::STATUS_PROCESED) {
@@ -187,7 +187,7 @@ class Photo extends General
             $label_text = trans('labels.rejected');
         }
         else if ($data->status==Status::STATUS_SHARED) {
-            $label_color = 'success';
+            $label_color = 'warning';
             $label_text = trans('labels.shared');
         }
         else{
