@@ -12,8 +12,7 @@
 <body>
 <div style="width: 100%;text-align: center">
 <img style="text-align: center" class="img-responsive center" src="{{$photo->url}}">
-<small>Imagen compartida por {{$photo->getData('accountable')}}. Si desea ejecer sus derechos de Acceso, rectificación , cancelación u oposición puede
-enviar un correo electrónico a {{$photo->getData('accountable_email')}} indicando su nombre y dni. </small>
+
 </div>
 </body>
 </html>
