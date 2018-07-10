@@ -28,6 +28,7 @@ return [
     'processed'=>"Revisada",
     'rejected'=>"Rechazada",
     'success'=>"Aceptada",
+    'shared'=>"Compartida",
     'unknown'=>"????",
     'group'=>"Personas del grupo",
     'responsable'=>"Responsable",

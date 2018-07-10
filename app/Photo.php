@@ -188,7 +188,7 @@ class Photo extends General
         }
         else if ($data->status==Status::STATUS_SHARED) {
             $label_color = 'success';
-            $label_text = trans('labels.success');
+            $label_text = trans('labels.shared');
         }
         else{
             $label_color = 'default';
