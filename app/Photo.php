@@ -313,6 +313,11 @@ class Photo extends General
         return $sharing_ret;
     }
 
+    public function getRouteAttribute($share)
+    {
+        $token = Token::generateShared($this->id);
+        return route('photo.link.shared', ['id' => $this->id, 'network' => $share, 'token' => $token], true);
+    }
 
     public function getSharedLink($share){
         $token = Token::generateShared($this->id);

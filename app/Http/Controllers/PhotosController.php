@@ -10,10 +10,12 @@ use App\Http\Requests\CreatePhotoRequest;
 use App\Http\Requests\EditPhotoRequest;
 use App\Http\Requests\SendPhotoRequest;
 use App\Location;
+use App\Mail\OnlyPhotoEmail;
 use App\Mail\RequestSignature;
 use App\Person;
 use App\PersonPhoto;
 use App\Photo;
+use App\Photonetwork;
 use App\Publicationsite;
 use App\Relations;
 use App\Rightholder;
@@ -21,6 +23,7 @@ use App\RightholderPhoto;
 use App\Status;
 use Carbon\Carbon;
 use Chencha\Share\Share;
+use Illuminate\Support\Facades\Response;
 use Larareko\Rekognition\RekognitionFacade;
 use Chencha\Share\ShareFacade;
 use Exception;
@@ -414,7 +417,6 @@ class PhotosController extends Controller
 
     public function share(Request $req,$location,$photoId,$share){
         $photo = Photo::find($photoId);
-
         if (isset($photo)) {
             $photo->setStatus(Status::STATUS_SHARED);
             $photo->save();
@@ -425,7 +427,34 @@ class PhotosController extends Controller
                 $h = new Historic();
                 $h->register($req->user()->id, "Imagen compartida en " . $site->name . ": ".$site->url, $photoId);
                 //dd($h);
+
                 return redirect($photo->getSharedLink($site->name));
+
+            }
+        }
+
+        Session::flash('message',"¡Error!, se ha producido un error, inténtelo más tarde.");
+        return redirect('photos');
+    }
+
+    public function byemail(Request $req,$location,$photoId,$share){
+
+        $photo = Photo::find($photoId);
+        if (isset($photo)) {
+            $photo->setStatus(Status::STATUS_SHARED);
+            $photo->save();
+            $group = $photo->group;
+            $sites = $group->publicationsites;
+            $site = $sites->where('name',$share)->first();
+            if (isset($share)) {
+                $h = new Historic();
+                $h->register($req->user()->id, "Imagen compartida en " . $site->name . ": ".$site->url, $photoId);
+                //dd($h);
+                $photoNetwork = Photonetwork::where([['publicationsite_id',$site->id],['photo_id',$photo->id]])->first();
+
+                if ($photoNetwork && $site->name == "instagram") {
+                    Mail::to($req->user()->email)->queue(new OnlyPhotoEmail($photoNetwork->url,$photo->route,"Imagen compartida para instagram","Estimado/a: <br>Le enviamos esta imagen para que pueda compartirla en instagram. <br> Un saludo.", $req->user()->email));
+                }
             }
         }
 
@@ -434,3 +463,5 @@ class PhotosController extends Controller
     }
 
 }
+
+

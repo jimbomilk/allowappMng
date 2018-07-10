@@ -1,4 +1,5 @@
 <div class="row">
+
 @foreach($set as $element)
     @include("common.controls.image_card",array('imagen'=>$element))
 @endforeach
@@ -30,6 +31,25 @@
                 $(".preview#"+imagenId+" a").text("Volver");
             }
 
+        });
+
+        $(".btn-instagram").on('click',function (e){
+            var imagenid = $(".btn-instagram").data('imagenid');
+            var action = "{{$name}}/byemail/"+ imagenid + "/instagram";
+
+            $.ajax({
+                type: "GET",
+                url: action,
+                data: "",
+                success: function (res) {
+                    console.log("success");
+                },
+                error: function (e) {
+                    console.log("error:"+e);
+                    $('#modal').hide();
+                    $('#modal').modal('hide');
+                }
+            })
         });
     })
 </script>

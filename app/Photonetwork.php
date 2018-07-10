@@ -32,7 +32,7 @@ class Photonetwork extends Model
 
     public function getPhotopathAttribute()
     {
-        return $this->photo->path.'/'.$this->networkname.'/'.basename(urldecode($this->url));
+        return $this->photo->path.'/'.$this->networkname.basename(urldecode($this->url));
     }
 
     public function pixelatePhoto($network){
@@ -130,5 +130,36 @@ class Photonetwork extends Model
             return ( Storage::disk('s3')->url($filename));
         }
         return null;
+    }
+
+
+
+    public function downloadFile($filename){
+        $s3FileKey = $this->photopath;
+        $fileName = $filename.".jpg";
+        $adapter = Storage::disk('s3')->getAdapter();
+        $client = $adapter->getClient();
+        $client->registerStreamWrapper();
+        $object = $client->headObject([
+            'Bucket' => $adapter->getBucket(),
+            'Key' => $s3FileKey,
+        ]);
+        /*************************************************************************
+         * Set headers to allow browser to force a download
+         */
+        header('Last-Modified: '.$object['LastModified']);
+        header('Accept-Ranges: '.$object['AcceptRanges']);
+        header('Content-Length: '.$object['ContentLength']);
+        header('Content-Type: '.$object['ContentType']);
+        header('Content-Disposition: attachment; filename='.$fileName);
+
+        if (!($stream = fopen("s3://{$adapter->getBucket()}/{$s3FileKey}", 'r'))) {
+            throw new \Exception('Could not open stream for reading file: ['.$s3FileKey.']');
+        }
+
+        while (!feof($stream)) {
+            echo fread($stream, 1024);
+        }
+        fclose($stream);
     }
 }

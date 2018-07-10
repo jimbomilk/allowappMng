@@ -27,5 +27,12 @@ class CreatePublicationsiteRequest extends Request {
 
 		];
 	}
+    public function attributes()
+    {
+        return [
+            'name' => 'nombre',
+            'url' => 'web',
 
+        ];
+    }
 }

@@ -23,7 +23,7 @@
 
 
         </div>
-        <div class="card">
+        <div class="card" >
             <!--Card content-->
             <div class="card-body" id="front{{$imagen->id}}" >
                 <!--Card image-->
@@ -84,10 +84,17 @@
 
                 @if($imagen->getData('status')>10)
                     @foreach($imagen->getData('sharing') as $share)
+                        @if ($share->name == "instagram")
+                            @include('adminlte::layouts.partials.modal_help',['text'=>'Para subir una imagen a Instagram debe hacerlo desde su propia cuenta en su dispositivo móvil. Para facilitarle la operación se la hemos enviado por email.'])
+                            <a style="margin-top: 5px"  href="#" class="btn btn-block btn-social btn-{{$share->name}} btn-reddit" data-imagenid="{{$imagen->id}}" data-toggle="modal" data-target="#modal">
+                                <span class="fa glyphicon-globe fa-envelope-o fa-{{$share->name}}"></span> Compartir en {{$share->name}}
+                            </a>
+                        @else
+                            <a  target="_blank" href="{{url("$name/share/$imagen->id/$share->name") }}" class="btn btn-block btn-social btn-{{$share->name}}  btn-reddit">
+                                <span class="fa glyphicon-globe fa-envelope-o fa-{{$share->name}}"></span> Compartir en {{$share->name}}
+                            </a>
+                        @endif
 
-                        <a  target="_blank" href="{{url("$name/share/$imagen->id/$share->name") }}" class="btn btn-block btn-social btn-{{$share->name}}  btn-reddit">
-                            <span class="fa glyphicon-globe fa-envelope-o fa-{{$share->name}}"></span> Compartir en {{$share->name}}
-                       </a>
 
 
                     @endforeach

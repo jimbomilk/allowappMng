@@ -94,7 +94,6 @@ class LinkController extends Controller
     public function shared(LinkPhotoRequest $req,$photoId,$network,$token)
     {
         $resToken = Token::generateShared($photoId);
-
         if (hash_equals($resToken,$token)) {
             $photo = Photo::find($photoId);
 
@@ -109,6 +108,7 @@ class LinkController extends Controller
                 return view('pages.error');
 
             $photoNetwork = Photonetwork::where([['publicationsite_id',$site->id],['photo_id',$photo->id]])->first();
+
 
             return view('pages.shared',['photo'=>$photoNetwork]);
         }

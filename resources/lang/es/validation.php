@@ -88,7 +88,7 @@ return [
     'timezone'             => 'The :attribute must be a valid zone.',
     'unique'               => 'El :attribute ya existe y debe ser único.',
     'uploaded'             => 'La :attribute falló al cargarse. Compruebe que es realmente una imagen.',
-    'url'                  => 'The :attribute format is invalid.',
+    'url'                  => 'El formato de :attribute no es válido. Debe ser http://www.loquesea.com o https://www.loquesea.com',
 
     /*
     |--------------------------------------------------------------------------

@@ -160,22 +160,16 @@
     $(".facial_recognition").on('click',function (e){
         var photoid = $(".facial_recognition").data('photoid');
         var action = $(".facial_recognition").data('action');
-        var update = action=='run'?'#panel-detected':'#panel-group';
         $(".loader").show();
         $.ajax({
             type: "GET",
             url: action+'/'+photoid,
             data: "",
             success: function (res) {
-
                 location.reload();
-                $('#modal').hide();
-                $('#modal').modal('hide');
-                $(".loader").hide();
-                //console.log("exito:"+res);
+
             },
             error: function (e) {
-
                 console.log("error:"+e);
                 $('#modal').hide();
                 $('#modal').modal('hide');
