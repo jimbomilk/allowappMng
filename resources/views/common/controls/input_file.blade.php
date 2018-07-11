@@ -3,7 +3,9 @@
 
     <div id="imgdata" class="form-group" style="display:none">
         {!! Html::image(isset($element)?$element->$var:null, $var,array('id'=>$var.'-image-tag', 'width' => $width, 'height' => $height,'float'=>'left')) !!}
-        <a class="btn btn-remove" id="{{$var}}-remove"><span class="glyphicon glyphicon-trash form-control-feedback"></span></a>
+        <span style="position: absolute;top: 30px;right: 20px">
+            <a class="btn btn-remove" id="{{$var}}-remove"><span class="glyphicon glyphicon-trash form-control-feedback"></span></a>
+        </span>
     </div>
     <div id="imgfile" class="form-group dash-box center inputfile" style="text-align:center;height: {{$height}}px; width:{{$width}}px ">
         <input type="file" name="{{$var}}" id="{{$var}}" class="hidden"/>
