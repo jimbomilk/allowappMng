@@ -1,2 +1,0 @@
-
-@includeIf("$name.filters")

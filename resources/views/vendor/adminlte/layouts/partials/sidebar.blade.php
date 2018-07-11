@@ -6,7 +6,7 @@
 
         <!-- Sidebar user panel (optional) -->
         @if (! Auth::guest())
-            <div class="user-panel">
+            <div class="user-panel hide-mobile">
                 <div class="pull-left image">
                     <img src="{{isset(Auth::user()->profile->avatar)? Auth::user()->profile->avatar:Gravatar::get($user->email)}}" class="img-circle" alt="User Image" />
                 </div>
@@ -26,7 +26,7 @@
             <!-- Optionally, you can add icons to the links -->
 
             @if(Auth::user()->checkRole('admin'))
-                <li class="active ">
+                <li class="active hide-mobile">
                     <a href="{{ url('locations') }}"><i class='fa fa-home'></i> <span>{{ trans('labels.locations') }}</span></a>
                     <ul class="active">
                         <li><a href="{{ url('consents') }}"><i class='fa fa-legal'></i> <span>{!! trans('labels.consents') !!}</span></a>
@@ -37,9 +37,10 @@
             @endif
 
             @if(Auth::user()->checkRole('admin'))
-            <li class="active">
+            <li class="active hide-mobile">
                 <a href="{{ url('users') }}">
-                    <i class='fa fa-key'></i> <span>{{ trans('labels.users') }}</span></a></li>
+                    <i class='fa fa-key'></i> <span>{{ trans('labels.users') }}</span></a>
+            </li>
             @endif
 
             <li class="active">
@@ -69,7 +70,7 @@
             </li>
 
 
-            <li class="active treeview">
+            <li class="active treeview hide-mobile">
                 <a href="#"><i class='fa fa-history'></i> <span>{{ trans('labels.historial') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ url('historic/persons')}}"><i class='fa fa-users'></i> <span>{{ trans('labels.byperson') }}</span></a></li>

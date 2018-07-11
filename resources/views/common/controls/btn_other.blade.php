@@ -5,7 +5,7 @@
 @else
     <a href="{{ url("$name/$route/all") }}" class="{{isset($class)?$class:((isset($small)&&$small)?"btn-sm":"btn")}} btn-warning" style="margin-left: 5px" title="{{trans("label.$name.$label")}}">
 @endif
-<span>
-    <i  class="glyphicon {{$icon}}"></i> {{(isset($onlyicon)&&$onlyicon)?"":trans("label.$name.$label")}}
+<span >
+    <i  class="glyphicon {{$icon}}"></i> <span class="hide-mobile">{{(isset($onlyicon)&&$onlyicon)?"":trans("label.$name.$label")}}</span>
 </span>
 </a>

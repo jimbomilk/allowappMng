@@ -16,7 +16,7 @@
             <td>{{$element->user->name}}</td>
             @endif
             <td class="text-center">{{count($element->persons)}}</td>
-            <td>
+            <td class="nopadding">
                 @include("common.controls.btn_edit",array('var'=>$element))
 
                 @include("common.controls.btn_show",array('var'=>$element))

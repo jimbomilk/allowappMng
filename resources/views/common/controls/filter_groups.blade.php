@@ -1,6 +1,6 @@
-<div style="float: right">
+
 @include('common.controls.input_select',['var'=>'filter-grupos','val'=>$group,'col'=>$groups,'nolabel'=>true,'class'=>'select-control'])
-</div>
+
 @section('scripts')
     @parent
     <script>

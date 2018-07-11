@@ -2,19 +2,27 @@
 <header class="main-header">
 
     <!-- Logo -->
+    <div class="hide-mobile">
+        <a href="{{ url('/home') }}" class="logo " >
 
-    <a href="{{ url('/home') }}" class="logo " >
+            <img src="{{ asset('/img/logo_white200x50.png') }}">
 
-        <img src="{{ asset('/img/logo_white200x50.png') }}">
-
-    </a>
+        </a>
+    </div>
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
-        <div class="col-sm-1 col-xs-2 " style="color:white;text-align: center">
-            <img style="position: relative;top:5px"height="40px"  src="{{Auth::user()->location->icon}}">
+        <!-- Sidebar toggle button-->
+        <div class="col-sm-1 col-xs-1 nopadding" style="line-height: 1.4">
+            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                <span class="sr-only">{{ trans('adminlte_lang::message.togglenav') }}</span>
+            </a>
         </div>
-        <div class="col-sm-9 col-xs-9 nopadding" style="color:white;text-transform: uppercase;">
-            <span style="font-size:1.2em;position: relative;top:10px">{{Auth::user()->location->description}}</span>
+
+        <div class="col-sm-1 col-xs-2 " style="color:white;text-align: center">
+            <img style="position: relative;top:5px" height="40px"  src="{{Auth::user()->location->icon}}">
+        </div>
+        <div class="col-sm-6 col-xs-4 nopadding" style="color:white;text-transform: uppercase;">
+            <span style="font-size:1.2em;">{{Auth::user()->location->description}}</span>
         </div>
 
 
