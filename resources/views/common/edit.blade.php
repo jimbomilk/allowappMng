@@ -4,7 +4,7 @@
 @section('main-content')
     <div class="container">
         <div class="row">
-            <div class="col-md-11">
+            <div class="col-md-11 col-xs-12 ">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h4>

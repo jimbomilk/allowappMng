@@ -22731,6 +22731,13 @@ label,
     padding-right: 0px;
 }
 
+.container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
 
 /* PERSON CARD */
 .userprofile {
