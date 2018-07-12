@@ -189,7 +189,8 @@
 
 /* Sticky footer */
 .main-footer {
-    position: relative;
+    position: absolute;
+    width: 100%;
     margin-top: -30px;
     height: 30px;
     clear: both;
@@ -221,6 +222,9 @@
     margin:0px;
     font-size: 12px;
 }
+body{
+    overflow:hidden;
+}
 
 /* Ocultar las cosas que no queremos que salgan en los móviles */
 @media screen and (min-width: 0px) and (max-width: 550px) {
@@ -239,8 +243,15 @@
         padding-top: 0 !important;
     }
     .panel-primary > .panel-body{
-        height: calc(100vh - 216px);
+        height: calc(100vh - 181px);
         overflow: auto;
+    }
+
+    .panel{
+        margin-bottom: 0px !important;
+    }
+    .form-control{
+        padding: 6px 2px;
     }
 
 }

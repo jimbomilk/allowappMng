@@ -12,7 +12,7 @@
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
         <!-- Sidebar toggle button-->
-        <div class="col-sm-1 col-xs-1 nopadding" style="line-height: 1.4">
+        <div class="col-sm-1 col-xs-1 nopadding" style="line-height: ">
             <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                 <span class="sr-only">{{ trans('adminlte_lang::message.togglenav') }}</span>
             </a>

@@ -18,12 +18,17 @@
             </div>
         @endif
 
-
-
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu" data-widget="tree">
-            <li class="header">{{ trans('labels.header') }}</li>
+            <li class="header"><h4>{{ trans('labels.header') }}</h4></li>
             <!-- Optionally, you can add icons to the links -->
+            <li class="active">
+                <a href="{{ url('/home') }}" class="logo " >
+
+                    <i class='fa fa-dashboard'></i> <span>{{ trans('labels.dashboard') }}</span>
+
+                </a>
+            </li>
 
             @if(Auth::user()->checkRole('admin'))
                 <li class="active hide-mobile">

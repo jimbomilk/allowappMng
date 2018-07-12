@@ -1,7 +1,7 @@
 <div class="col-sm-12">
 
         <div class="col-sm-3">
-            @include("common.controls.input_file",array('var'=>'photo','width'=>200,'height'=>200))
+            @include("common.controls.input_file",array('var'=>'photo','width'=>'100%','height'=>200))
 
         </div>
         <div class="col-sm-2">

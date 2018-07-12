@@ -126,7 +126,7 @@ class User extends Authenticatable
             $where = General::getRawWhere(Photo::$searchable,$search);
             $set = $set->whereRaw($where);
         }
-        return $set->paginate(15);
+        return $set->paginate(12);
     }
 
     public function countPhotosByStatus($status){
