@@ -14,12 +14,12 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <div class="row" style="padding-bottom: 8px">
-                            <div class="col-sm-3 col-xs-8 " style="line-height: 1.5em ">
+                            <div class="col-sm-3 col-xs-7 " style="line-height: 1.5em ">
                                 <span style="font-size: 1.5em">
                                     <i class="{{trans("label.$name.fa_icon")}}"></i> {!!trans("label.title.$name")!!}
                                 </span>
                             </div>
-                            <div class="col-sm-4 col-xs-4 pull-right text-right">
+                            <div class="col-sm-4 col-xs-5 pull-right text-right">
                                 @if(!isset($hide_new) || !$hide_new)
                                     @include ("common.buttons")
                                 @endif
