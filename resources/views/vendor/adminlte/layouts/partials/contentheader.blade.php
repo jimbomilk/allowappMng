@@ -1,7 +1,7 @@
 <!-- Content Header (Page header) -->
-<section class="content-header">
+<section class="content-header hide-mobile">
     @if(isset($name))
-    <h1>
+    <h1 >
         <i class='{{trans("design.".$name)}}'></i>
         {!! trans('labels.'.(strpos($name,".")? substr($name,0,strpos($name,".")):$name))!!}
     </h1>

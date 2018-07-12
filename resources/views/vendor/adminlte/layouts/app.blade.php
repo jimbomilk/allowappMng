@@ -43,7 +43,7 @@ desired effect
         @include('adminlte::layouts.partials.contentheader')
 
         <!-- Main content -->
-        <section class="content">
+        <section class="content noppadingtop-mobile">
 
             @if (Session::has('message'))
                 @if (strpos(Session::get('message'),'error')==false)

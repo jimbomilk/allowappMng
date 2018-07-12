@@ -22700,15 +22700,6 @@ label,
     -ms-transform: translateY(-50%);
 }
 
-/* Ocultar las cosas que no queremos que salgan en los móviles */
-@media screen and (min-width: 0px) and (max-width: 550px) {
-    .breadcrumb {
-        display: none;
-    }
-    .hide-mobile{
-        display: none;
-    }
-}
 /* Sticky footer */
 .main-footer {
     position: relative;
@@ -22719,9 +22710,12 @@ label,
     padding: 0px;
     background-color: #3c8dbc;
 }
-.content{
-    height: calc(100vh - 90px);
-    overflow-y: auto;
+.panel-primary > .panel-heading{
+    height: 112px;
+}
+.panel-primary > .panel-body{
+    height: calc(100vh - 268px);
+    overflow: auto;
 }
 
 .container-fluid {
@@ -22734,6 +22728,33 @@ label,
 .container {
     padding-left: 0px;
     padding-right: 0px;
+}
+
+.pagination{
+    margin:0px;
+}
+
+/* Ocultar las cosas que no queremos que salgan en los móviles */
+@media screen and (min-width: 0px) and (max-width: 550px) {
+    .breadcrumb {
+        display: none;
+    }
+    .hide-mobile{
+        display: none;
+    }
+
+    .nopadding-mobile{
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    .noppadingtop-mobile{
+        padding-top: 0 !important;
+    }
+    .panel-primary > .panel-body{
+        height: calc(100vh - 216px);
+        overflow: auto;
+    }
+
 }
 
 
