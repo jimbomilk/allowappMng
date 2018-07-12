@@ -1,6 +1,6 @@
 <strong>CONSENTIMIENTOS</strong><br>
 @foreach($consents as $consent)
-    <div class="col-sm-6">
+    <div class="col-sm-6 col-xs-6">
         <h5>{{$consent->description}}</h5>
 
         @if (($rhConsent = $element->getRhConsent($consent->id)))
