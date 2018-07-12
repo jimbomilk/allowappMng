@@ -19,7 +19,7 @@
                                     <i class="{{trans("label.$name.fa_icon")}}"></i> {!!trans("label.title.$name")!!}
                                 </h4>
                             </div>
-                            <div class="col-sm-3 col-xs-5 pull-right text-right">
+                            <div class="col-sm-4 col-xs-5 pull-right text-right">
                                 @if(!isset($hide_new) || !$hide_new)
                                     @include ("common.buttons")
                                 @endif
@@ -31,7 +31,7 @@
                                 @endif
                             </div>
 
-                            <div class="col-sm-3 col-xs-5 nopadding">
+                            <div class="col-sm-2 col-xs-5">
                             @includeIf("$name.filters")
                             </div>
 
