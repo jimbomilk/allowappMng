@@ -37,11 +37,11 @@ class RightholdersController extends Controller
 
         $set = null;
         if(isset($person_id)) {
-            $set = Rightholder::where('person_id',$person_id)->paginate(15);
+            $set = Rightholder::where('person_id',$person_id)->paginate(30);
         }else if (isset($group_id)){
-            $set = $request->user()->getRightholders($request->get('search'),$group_id)->paginate(15);
+            $set = $request->user()->getRightholders($request->get('search'),$group_id)->paginate(30);
         }else{
-            $set = $request->user()->getRightholders($request->get('search'))->paginate(15);
+            $set = $request->user()->getRightholders($request->get('search'))->paginate(30);
         }
 
         $groups = ["Todos los grupos"];
