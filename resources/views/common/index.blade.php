@@ -14,7 +14,7 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <div class="row" style="padding-bottom: 8px">
-                            <div class="col-sm-3 col-xs-8 " style="line-height: 1.5em">
+                            <div class="col-sm-3 col-xs-8 " style="line-height: 1.5em ">
                                 <span style="font-size: 1.5em">
                                     <i class="{{trans("label.$name.fa_icon")}}"></i> {!!trans("label.title.$name")!!}
                                 </span>
