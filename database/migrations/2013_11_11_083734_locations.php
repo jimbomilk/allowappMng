@@ -24,6 +24,8 @@ class Locations extends Migration
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('CP')->nullable();
+            $table->string('delegate_name');
+            $table->string('delegate_email');
             $table->timestamps();
         });
     }

@@ -38,6 +38,8 @@ class User extends Authenticatable
         }
     }
 
+
+
     public function checkRole($reference)
     {
         if ($this->roleVal($this->profile->type) >= $this->roleVal($reference)) {
@@ -85,6 +87,16 @@ class User extends Authenticatable
         return $set;
     }
 
+    public function getRightholderConsents($consentId=null){
+        $set = $this->location->rightholderconsents;
+        if (isset($consentId) and $consentId != "") {
+            $set = $set->where('consent_id', $consentId);
+        }
+        return $set;
+    }
+
+
+
     public function getPersons($search = null,$group_id=null){
         $set = null;
 
@@ -108,17 +120,17 @@ class User extends Authenticatable
         return $set;
     }
 
-    public function getPhotos($search = null,$all=false){
+    public function getPhotos($search = null){
 
         $set = null;
 
         // Se selecciona el subconjunto de trabajo...
         if ($this->checkRole('admin')) {
-            $set =  !$all?$this->location->photos():$this->location->photos()->orderBy('created_at','desc');
+            $set =  $this->location->photos()->orderBy('created_at','desc');
         }
         else {
             //dd($this->location->groups->where('user_id', $this->id));
-            $set = $all?$this->location->photos()->whereIn('group_id', $this->getGroups()->pluck('id')):$this->location->photos()->whereIn('group_id', $this->getGroups()->pluck('id'))->orderBy('created_at','desc');
+            $set = $this->location->photos()->whereIn('group_id', $this->getGroups()->pluck('id'))->orderBy('created_at','desc');
         }
         // Se aplican los search...
         if (isset($search) and $search != "") {
@@ -126,13 +138,13 @@ class User extends Authenticatable
             $where = General::getRawWhere(Photo::$searchable,$search);
             $set = $set->whereRaw($where);
         }
-        return $set->paginate(12);
+        return $set;
     }
 
     public function countPhotosByStatus($status){
         $count =0;
 
-        $photos = $this->getPhotos(null,true);
+        $photos = $this->getPhotos();
         foreach($photos as $photo){
             $data = json_decode($photo->data);
             if($data->status==$status){
@@ -155,4 +167,7 @@ class User extends Authenticatable
         return RightholderPhoto::where('user_id',$this->id);
     }
 
+    public function tasks(){
+        return Task::all()->where('done',0)->whereIn('group_id', $this->getGroups()->pluck('id'))->sortBy('priority');
+    }
 }

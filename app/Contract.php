@@ -17,10 +17,6 @@ class Contract extends Model
         return $this->belongsTo('App\Person');
     }
 
-    public function acks(){
-        return $this->hasMany('App\Ack');
-    }
-
     public function getCollectionAttribute(){
         return "$this->table-$this->id";
     }

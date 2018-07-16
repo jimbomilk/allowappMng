@@ -26,10 +26,10 @@ return [
     'profiles.user'=>'Usuario',
 
     // LOCATIONS
-    'locations' => "Colegio",
-    'title.locations' => "Lista de Colegios",
-    'locations.icon'=> "Escudo del colegio",
-    "locations.name" => "Nombre del colegio",
+    'locations' => "Datos generales",
+    'title.locations' => "Organizaciones",
+    'locations.icon'=> "Logo de la Organización",
+    "locations.name" => "Nombre de la Organización",
     'locations.description' => 'Descripción',
     'locations.logo' => 'Logo',
     'locations.show' => 'Mostrar',
@@ -73,9 +73,9 @@ return [
     'groups' => 'Grupo',
     'title.groups' => "Lista de Grupos",
     'groups.name' => 'Curso',
-    'groups.count' => 'Nº de alumnos',
-    'groups.show' => 'Alumnos',
-    'groups.user_id' => 'Profesor encargado',
+    'groups.count' => 'Nº de personas',
+    'groups.show' => 'Personas',
+    'groups.user_id' => 'Persona encargada',
     'groups.sites' => 'Lugares de publicación',
 
     // PUBLICATIONSITES
@@ -85,8 +85,8 @@ return [
     'publicationsites.url' => 'Dirección web',
 
     // PERSONS
-    'persons' => 'Alumno',
-    'title.persons' => "Lista de alumnos",
+    'persons' => 'Personas',
+    'title.persons' => "Lista de personas",
     'persons.name' => 'Nombre',
     'persons.minor' => 'Menor de 16 años',
     'persons.email' => 'DNI/NIE/Pasaporte',
@@ -103,14 +103,14 @@ return [
     'rightholders' => 'Responsables',
     'title.rightholders' => "Lista de responsables",
     'rightholders.name' => 'Nombre del responsable',
-    'rightholders.person' => 'Nombre del alumno',
+    'rightholders.person' => 'Nombre de la persona',
     'rightholders.title' => 'Relación',
     'rightholders.mother' => 'Madre',
     'rightholders.father' => 'Padre',
     'rightholders.tutor' => 'Tutor',
     'rightholders.email' => 'Email',
     'rightholders.phone' => 'Teléfono',
-    'rightholders.person_id'=>'Nombre del alumno',
+    'rightholders.person_id'=>'Persona',
     'rightholders.relation' =>'Relación',
     'rightholders.request' => 'Solicitar consentimientos',
     'rightholders.consents' => 'Consentimientos',
@@ -121,7 +121,7 @@ return [
     // PHOTOS
     'photos' => 'Foto',
     'title.photos' => "Lista de imagenes",
-    'photos.group_id' => 'Curso',
+    'photos.group_id' => 'Grupo',
     'photos.name' => 'Etiqueta',
     'photos.photo' => 'Foto',
     'photos.show' => 'Contratos',
@@ -149,11 +149,11 @@ return [
 
     //CONTRACTS s
     'contracts' => 'Contrato',
-    'contracts.person' => 'Alumno reconocido',
-    'contracts.group' => 'Clase del Alumno',
+    'contracts.person' => 'Persona identificada',
+    'contracts.group' => 'Grupo de la Persona',
     'contracts.show' => 'Firmas',
     'contracts.photo'=> 'Foto',
-    'contracts.rightholders'=>'Tutores',
+    'contracts.rightholders'=>'Resp. Legales',
 
     //Acks
     'acks' => 'Consentimiento',
@@ -176,12 +176,12 @@ return [
     'historic.photos.name' => 'Etiqueta',
     'historic.photos.date' => 'Fecha de captura',
     'historic.photos.people' => 'Personas identificadas',
-    'historic.persons.group_id' => 'Clase',
+    'historic.persons.group_id' => 'Grupo',
     'historic.persons.name' => 'Nombre',
     'historic.persons.photo' => 'Foto',
     'historic.rightholders' => 'Historial de responsables',
     'historic.photos' => 'Historial de fotografías',
-    'historic.persons' => 'Historial de alumnos',
+    'historic.persons' => 'Historial de personas',
     'historic.persons.download' => 'Descargar informe',
     'historic.photos.download' => 'Descargar informe',
     'historic.rightholders.download' => 'Descargar informe',
@@ -190,10 +190,10 @@ return [
     'historic.rightholders.phone' => 'Teléfono',
     'historic.rightholders.relation' => 'Relación',
     'historic.rightholders.consents' => 'Consentimientos',
-    'historic.person.show.data' => "Historial del alumno",
+    'historic.person.show.data' => "Historial de la persona",
     'historic.rightholders.show.data' => "Historial del responsable",
     'historic.photo.show.data' => "Historial de la imagen",
-    'historic.person.show' => 'Historial del alumno',
+    'historic.person.show' => 'Historial de la persona',
 
 
     'historic.photo.show.to'=>'Enviar a',

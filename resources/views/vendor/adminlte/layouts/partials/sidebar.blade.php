@@ -23,7 +23,7 @@
             <li class="header"><h4>{{ trans('labels.header') }}</h4></li>
             <!-- Optionally, you can add icons to the links -->
             <li class="active">
-                <a href="{{ url('/home') }}" class="logo " >
+                <a href="{{ url('/') }}" class="logo " >
 
                     <i class='fa fa-dashboard'></i> <span>{{ trans('labels.dashboard') }}</span>
 
@@ -73,7 +73,12 @@
                     <span>{{ trans('labels.photos') }}</span>
                 </a>
             </li>
-
+            <li class="active">
+                <a href="{{ url('tasks') }}">
+                    <i class='fa fa-flag-o'></i>
+                    <span>{{ trans('labels.tasks') }}</span>
+                </a>
+            </li>
 
             <li class="active treeview hide-mobile">
                 <a href="#"><i class='fa fa-history'></i> <span>{{ trans('labels.historial') }}</span> <i class="fa fa-angle-left pull-right"></i></a>

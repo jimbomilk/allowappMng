@@ -121,7 +121,7 @@ class RightholdersController extends Controller
 
 
         $template = trans('label.rightholders.template');
-        return view('rightholders.consentimiento',['name' => 'rightholders','template'=>$template,'set'=>$set,'consents'=>$tiposConsentimientos,'person_id'=>$person_id,'rightholder_id'=>$id,'group_id'=>$group_id]);
+        return view('rightholders.consentimiento',['name' => 'rightholders','template'=>$template,'set'=>$set,'loc'=>$loc,'consents'=>$tiposConsentimientos,'person_id'=>$person_id,'rightholder_id'=>$id,'group_id'=>$group_id]);
     }
 
     public function update(EditRightholderRequest $request, $location , $id)

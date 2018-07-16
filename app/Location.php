@@ -10,7 +10,7 @@ class Location extends General
     //id,name
     protected $table = 'locations';
 
-    protected $fillable = ['name','description','accountable','CIF','email','address','city','CP'];
+    protected $fillable = ['name','description','accountable','CIF','email','address','city','CP','delegate_name','delegate_email'];
 
     public function users(){
         return $this->hasMany('App\User');
@@ -43,6 +43,11 @@ class Location extends General
 
     public function rightholders(){
         return $this->hasMany('App\Rightholder');
+    }
+
+    public function rightholderconsents()
+    {
+        return $this->hasManyThrough('App\RightholderConsent', 'App\Rightholder');
     }
 
     public function getTimezoneAttribute(){

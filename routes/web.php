@@ -18,12 +18,14 @@ Route::group([
     'middleware' => ['auth','location']], function ($location) {
 
     Route::resource('/', 'HomeController');
+    Route::resource('/home', 'HomeController');
     Route::resource('users', 'UsersController');
     Route::resource('profiles', 'ProfilesController');
     Route::resource('groups', 'GroupsController');
     Route::resource('persons', 'PersonsController');
     Route::resource('locations', 'LocationsController');
     Route::resource('consents', 'ConsentController');
+    Route::resource('tasks', 'TasksController');
     Route::post('locations/excel/import', 'ExcelController@import')->name('import');
     Route::get('locations/excel/create', 'ExcelController@create')->name('create');
     Route::get('locations/excel/show/{id}', 'ExcelController@index')->name('excel');

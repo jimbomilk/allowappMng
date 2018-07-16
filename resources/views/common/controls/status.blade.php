@@ -1,1 +1,1 @@
-<h3 class='status label label-{{$status['color']}}'>{{$status['text']}}</h3>
+<span class='label label-{{$status['color']}}'>{{$status['text']}}</span>

@@ -24,6 +24,10 @@ class Group extends Model
         return $this->hasMany('App\Person');
     }
 
+    public function tasks(){
+        return $this->hasMany('App\Task');
+    }
+
     public function rightholders(){
         return $this->hasManyThrough('App\Rightholder','App\Person');
     }
@@ -61,13 +65,13 @@ class Group extends Model
     }
 
     public function getPhotos($search = null){
+        $set = $this->photos();
         if (isset($search) and $search != "") {
 
             $where = General::getRawWhere(Photo::$searchable,$search);
-            $set = $this->photos()->whereRaw($where);
-            return $set;
+            $set = $set->whereRaw($where);
         }
-        return $this->photos()->paginate(15);
+        return $set->orderBy('created_at','desc');
 
     }
 

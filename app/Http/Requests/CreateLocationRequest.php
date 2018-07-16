@@ -30,6 +30,8 @@ class CreateLocationRequest extends Request {
             'address'       => 'required|bail|string',
             'city'          => 'required|bail|string',
             'CP'            => 'required|bail|numeric',
+            'delegate_name' => 'required|bail|string',
+            'delegate_email' => 'required|bail|email',
 		];
 	}
 
@@ -42,8 +44,9 @@ class CreateLocationRequest extends Request {
             'email'=>'email',
             'address'=>'dirección',
             'city'=>'ciudad',
-            'CP'=>'código postal'
-
+            'CP'=>'código postal',
+            'delegate_name'=>'nombre del delegado de proteccion de datos',
+            'delegate_email'=>'email del delegado de proteccion de datos'
         ];
     }
 

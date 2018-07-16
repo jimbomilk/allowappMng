@@ -29,7 +29,7 @@ class HistoricController extends Controller
 
     public function indexPhotos(Request $request)
     {
-        $set = $request->user()->getPhotos($request->get('search'));
+        $set = $request->user()->getPhotos($request->get('search'))->get();
         return view('common.index', ['searchable' => '1', 'name' => 'historic.photos', 'hide_new' => 'true', 'set' => $set]);
     }
 

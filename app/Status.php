@@ -32,8 +32,8 @@ class Status {
 
 
 
-    public static $descRH = array(0   =>'pendiente' ,
-                                    10  =>'procesado');
+    public static $descRH = array(10   =>'pendiente' ,
+                                    20  =>'procesado');
 
     public static function color($status){
         switch($status) {
@@ -47,6 +47,15 @@ class Status {
                 return '#e600e6';
             case 50 :
                 return '#ff5050';
+        }
+    }
+
+    public static function descRH($status){
+        switch($status) {
+            case 10:
+                return 'pendiente';
+            case 20 :
+                return 'recibidos';
         }
     }
 }

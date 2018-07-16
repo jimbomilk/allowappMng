@@ -50,11 +50,12 @@ class PhotosController extends Controller
 
         $group = Group::find($group_id);
         if (isset($group)){
-            $set = $group->getPhotos($request->get('search'));
+            $set = $group->getPhotos($request->get('search'))->paginate(15);
         }else{
-            $set = $request->user()->getPhotos($request->get('search'));
+            $set = $request->user()->getPhotos($request->get('search'))->paginate(15);
         }
 
+        //$set = $set->sortBy('created');
         $locId = $request->get('location');
         $location = Location::find($locId);
         if (isset($location)){

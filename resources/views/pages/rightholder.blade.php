@@ -3,7 +3,6 @@
 
 
 <div class="row" >
-
     <div class="col-md-5 legal" >
         <div class="panel panel-default" >
             <div class="panel-heading" style="background-color: rgb(246,216,88);color: #000000">
@@ -11,13 +10,12 @@
             </div>
             <div class="panel-body" style="margin: 0px;height:50vh;overflow-y: scroll;overflow-x: hidden">
             Ha recibido este enlace como responsable de los derechos de imagen de <strong>{!!$rhConsent->rightholder->person->name!!}.</strong><br><br>
-            <strong>Finalidad:</strong>
-                <p>
-                    {{trans('labels.finalidad_text')}} {{$rhConsent->rightholder->group->getSharingAsText()}}<br>
-                </p>
-            <strong>Legitimación:</strong> {!!$rhConsent->consent->legitimacion!!}<br>
-            <strong>Destinatarios:</strong> {!!$rhConsent->consent->destinatarios!!}<br>
-            <strong>Derechos:</strong> {!!$rhConsent->consent->derechos!!}<br>
+            <strong>Responsable:</strong>
+                <p> {{$rhConsent->rightholder->location->accountable}} con documento {{$rhConsent->rightholder->location->CIF}}.</p>
+            <strong>Finalidad:</strong><p>{{trans('labels.finalidad_text')}} {{$rhConsent->rightholder->group->getSharingAsText()}}.</p>
+            <strong>Legitimación:</strong><p>{!!$rhConsent->consent->legitimacion!!}.</p>
+            <strong>Destinatarios:</strong><p>{!!$rhConsent->consent->destinatarios!!}.</p>
+            <strong>Derechos:</strong> <p>{!!$rhConsent->consent->derechos!!}.</p>
 
             </div>
         </div>

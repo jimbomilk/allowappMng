@@ -40,7 +40,9 @@ class MainSeeder extends Seeder {
             'email'=> 'jmgarciacarrasco@gmail.com',
             'address' => 'Calle de Martillo nº 45',
             'city'=> 'Cáceres',
-            'CP'=> '10001'
+            'CP'=> '10001',
+            'delegate_name' => 'Chema García',
+            'delegate_email' => 'jmgarciacarrasco@gmail.com',
 
         ) );
 
@@ -52,7 +54,9 @@ class MainSeeder extends Seeder {
             'email'=> 'director@gmail.com',
             'address' => 'Calle de Pez nº 5',
             'city'=> 'Valencia',
-            'CP'=> '23440'
+            'CP'=> '23440',
+            'delegate_name' => 'Chema García',
+            'delegate_email' => 'jmgarciacarrasco@gmail.com',
 
         ) );
 
@@ -131,6 +135,7 @@ class MainSeeder extends Seeder {
         $this->createConsent("Extraescolar",$idlocation);
         $this->createConsent("General",$idlocation2);
         $this->createConsent("Extraescolar",$idlocation2);
+
 
 
         /*$group1 = $this->createGroup($idlocation,$id1,'2B');

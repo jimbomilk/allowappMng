@@ -22,6 +22,7 @@ class ResetPasswordController extends Controller
     */
 
     use ResetsPasswords;
+    protected $redirectTo = '/';
 
     /**
      * Reset the given user's password.

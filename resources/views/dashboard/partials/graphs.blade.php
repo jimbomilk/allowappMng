@@ -11,10 +11,15 @@
         </div>
 
         <div class="col-sm-6">
-            <div id="michart2"></div>
+            @foreach($consents as $consent)
+            <div id = "chartConsent{{$consent->id}}" class="col-sm-12"></div>
+            @endforeach
         </div>
     </div>
 </div>
 
 {!!  \Lava::render('LineChart','chart1','michart1') !!}
-{!!  \Lava::render('ColumnChart','chart2','michart2') !!}
+
+@foreach($consents as $consent)
+    {!!  \Lava::render('DonutChart',"chartConsent$consent->id","chartConsent$consent->id") !!}
+@endforeach

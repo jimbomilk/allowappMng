@@ -3,7 +3,7 @@
 
     <!-- Logo -->
     <div class="hide-mobile">
-        <a href="{{ url('/home') }}" class="logo " >
+        <a href="{{ url('/') }}" class="logo " >
 
             <img src="{{ asset('/img/logo_white200x50.png') }}">
 
@@ -42,33 +42,33 @@
                     <!-- Menu Toggle Button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-flag-o"></i>
-                        <span class="label label-danger">9</span>
+                        <span class="label label-danger">{{count(Auth::user()->tasks())}}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="header">{{ trans('labels.tasks') }}</li>
                         <li>
                             <!-- Inner menu: contains the tasks -->
                             <ul class="menu">
-                                <li><!-- Task item -->
-                                    <a href="#">
+                                @foreach(Auth::user()->tasks() as $task)
+                                <div class="row" style="padding: 4px;border-bottom: 1px solid lightgray">
+                                    <a href="{{ url("tasks/$task->id/edit") }}">
                                         <!-- Task title and progress text -->
-                                        <h3>
-                                            Task1
-                                            <span class="label label-danger pull-right">Alta</span>
-                                        </h3>
-
+                                        <div class="col-sm-10 col-xs-10 " >
+                                            <p style="color: black">{{$task->description}}</p>
+                                        </div>
+                                        <div class="col-sm-2 col-xs-2 nopadding " >
+                                            @if($task->priority <=10)
+                                                <span class="label label-danger">{{trans('label.tasks.priority_high')}}</span>
+                                            @elseif ($task->priority <=20)
+                                                <span class="label label-warning">{{trans('label.tasks.priority_medium')}}</span>
+                                            @else
+                                                <span class="label label-default">{{trans('label.tasks.priority_low')}}</span>
+                                            @endif
+                                        </div>
                                     </a>
-                                </li><!-- end task item -->
-                                <li><!-- Task item -->
-                                    <a href="#">
-                                        <!-- Task title and progress text -->
-                                        <h3>
-                                            Task2
-                                            <span class="label label-warning pull-right">Media</span>
-                                        </h3>
+                                </div>
+                                @endforeach
 
-                                    </a>
-                                </li><!-- end task item -->
                             </ul>
                         </li>
                         <li class="footer">

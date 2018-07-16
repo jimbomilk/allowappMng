@@ -18,6 +18,7 @@ class Tasks extends Migration
             $table->mediumText('description')->nullable();
             $table->smallInteger('priority')->default(10);
             $table->tinyInteger('done')->default(false);
+            $table->tinyInteger('arco')->default(false);
             $table->integer('group_id')->unsigned();
             $table->foreign('group_id')
                 ->references('id')
