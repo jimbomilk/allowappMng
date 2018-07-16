@@ -22,19 +22,20 @@
     <div class="col-sm-5">
         @include("common.controls.input_text",array('var'=>'address'))
     </div>
-
-    <div class="col-sm-offset-3 col-sm-6">
-        @include("common.controls.input_text",array('var'=>'delegate_name'))
-    </div>
-    <div class="col-sm-offset-3 col-sm-6">
-        @include("common.controls.input_text",array('var'=>'delegate_email'))
-    </div>
-
-    <div class="col-sm-offset-3 col-sm-2">
+    <div class="col-sm-2">
         @include("common.controls.input_text",array('var'=>'city'))
     </div>
     <div class="col-sm-2">
         @include("common.controls.input_text",array('var'=>'CP'))
     </div>
+
+    <div class="col-sm-offset-3 col-sm-3">
+        @include("common.controls.input_text",array('var'=>'delegate_name'))
+    </div>
+    <div class="col-sm-3">
+        @include("common.controls.input_text",array('var'=>'delegate_email'))
+    </div>
+
+
 </div>
 
