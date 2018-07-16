@@ -18,7 +18,6 @@ Route::group([
     'middleware' => ['auth','location']], function ($location) {
 
     Route::resource('/', 'HomeController');
-    Route::resource('/home', 'HomeController');
     Route::resource('users', 'UsersController');
     Route::resource('profiles', 'ProfilesController');
     Route::resource('groups', 'GroupsController');
