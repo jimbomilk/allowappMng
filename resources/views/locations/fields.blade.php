@@ -23,6 +23,13 @@
         @include("common.controls.input_text",array('var'=>'address'))
     </div>
 
+    <div class="col-sm-6">
+        @include("common.controls.input_text",array('var'=>'delegate_name'))
+    </div>
+    <div class="col-sm-6">
+        @include("common.controls.input_text",array('var'=>'delegate_email'))
+    </div>
+
     <div class="col-sm-2">
         @include("common.controls.input_text",array('var'=>'city'))
     </div>
