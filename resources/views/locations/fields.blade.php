@@ -33,7 +33,7 @@
     <div class="col-sm-offset-3 col-sm-2">
         @include("common.controls.input_text",array('var'=>'city'))
     </div>
-    <div class="col-sm-offset-3 col-sm-2">
+    <div class="col-sm-2">
         @include("common.controls.input_text",array('var'=>'CP'))
     </div>
 </div>
