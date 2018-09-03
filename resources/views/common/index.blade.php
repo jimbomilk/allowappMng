@@ -14,23 +14,24 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <div class="row">
-                            <div class="col-sm-3 col-xs-7">
+                            <div class="col-sm-3 col-xs-12">
                                 <span style="font-size: 1.5em">
                                     <i class="{{trans("label.$name.fa_icon")}}"></i> {!!trans("label.title.$name")!!}
                                 </span>
                             </div>
-                            <div class="col-sm-9 col-xs-5 pull-right text-right">
+                            <div class="col-sm-9 col-xs-12 pull-right text-right">
                                 @if(!isset($hide_new) || !$hide_new)
                                     @include ("common.buttons")
                                 @endif
 
-
                                 @if (isset($searchable))
-
+                                    <div class="col-sm-4 col-xs-5 no-padding">
                                         @include ("common.searcher")
+                                    </div>
                                 @endif
-                                <div class="col-sm-4">
-                                @includeIf("$name.filters")
+
+                                <div class="col-sm-4 col-xs-5 no-padding">
+                                    @includeIf("$name.filters")
                                 </div>
                             </div>
                         </div>
