@@ -1,4 +1,4 @@
-
+<div class="col-sm-4">
 {!! Form::model(Request::all(), array('url' => str_replace(".","/",$name), 'method' => 'GET', 'enctype' => 'multipart/form-data')) !!}
     <div class="input-group">
         <input type="text" name="search" class="form-control" placeholder={{trans("labels.search.$name")}}>
@@ -9,3 +9,4 @@
     </div><!-- /input-group -->
 {!! Form::close() !!}
 
+</div>

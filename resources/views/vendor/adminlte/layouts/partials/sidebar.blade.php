@@ -80,7 +80,7 @@
                 </a>
             </li>
 
-            <li class="active treeview hide-mobile">
+            <li class="treeview hide-mobile">
                 <a href="#"><i class='fa fa-history'></i> <span>{{ trans('labels.historial') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ url('historic/persons')}}"><i class='fa fa-users'></i> <span>{{ trans('labels.byperson') }}</span></a></li>

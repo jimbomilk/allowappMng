@@ -22712,7 +22712,7 @@ label,
     background-color: #3c8dbc;
 }
 .panel-primary > .panel-heading{
-    height: 112px;
+    //height: 112px;
 }
 .panel-primary > .panel-body{
     height: calc(100vh - 268px);
