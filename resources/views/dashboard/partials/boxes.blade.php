@@ -3,7 +3,7 @@
     <!-- small box -->
     <div class="small-box bg-aqua">
         <div class="inner">
-            <h3>{{$user->countPhotosByStatus(10)}}</h3>
+            <h3>{{$user->countPhotosByStatus(\App\Status::STATUS_CREADA)}}</h3>
             <p>{{trans('labels.images-created')}}</p>
         </div>
         <div class="icon">
@@ -16,7 +16,7 @@
     <!-- small box -->
     <div class="small-box bg-yellow">
         <div class="inner">
-            <h3>{{$user->countPhotosByStatus(20)+$user->countPhotosByStatus(30)}}</h3>
+            <h3>{{$user->countPhotosByStatus(\App\Status::STATUS_PENDING)+$user->countPhotosByStatus(\App\Status::STATUS_PROCESED)}}</h3>
             <p>{{trans('labels.images-pending')}}</p>
         </div>
         <div class="icon">
