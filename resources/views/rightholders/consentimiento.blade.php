@@ -24,8 +24,8 @@
                         <div class="col-sm-12" >
                             @include("common.controls.input_select",array('var'=>'consent_id','nolabel'=>true,'col'=>$consents))
                             @foreach($loc->consents as $consent)
-                            <p class="consent small" id="consent{{$consent->id}}" style="display: none;padding: 12px">
-                                <strong>Responsable:</strong><p>{{$loc->accountable}}</p>
+                            <p class="consent" id="consent{{$consent->id}}" style="display: none;">
+                                <strong>Responsable:</strong><span>{{$loc->accountable}}</span>
                                 <strong>Finalidad:</strong><p> {!!trans("labels.finalidad_general")!!}</p>
                                 <strong>Legitimación:</strong><p> {!!$consent->legitimacion!!}</p>
                                 <strong>Destinatarios:</strong><p> {!!$consent->destinatarios!!}</p>
