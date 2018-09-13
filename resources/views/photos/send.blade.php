@@ -8,7 +8,7 @@
 
 
 
-    <div class="panel panel-primary" >
+    <div class="panel panel-primary nopadding" >
         <div class="panel-heading" >
             <h4>{{trans("label.$name.send")}}</h4>
         </div>
@@ -27,7 +27,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12 panel panel-default">
+            <div class="col-sm-12 panel panel-default ">
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-6"><span style="padding-top: 15px">Destinatarios: </span></div>
