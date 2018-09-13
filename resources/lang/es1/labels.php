@@ -74,5 +74,5 @@ return [
     'historic.person.show' => 'Historial personal',
     'historic.rightholders.show' => 'Historial del responsable',
     'tasks' => 'Tareas Pendientes',
-    'finalidad_general'=> 'captación y publicación de las imágenes en las areas de difusión seleccionadas para cada grupo.'
+    'finalidad_general'=> 'Tratamiento (captación y publicación en las redes sociales y plataformas sociales autorizadas) de imágenes cuando se realicen actividades en relación a la función educativa del curso lectivo 2018/2019.'
 ];
