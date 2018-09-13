@@ -59,6 +59,9 @@
 
                 </div>
                 <div class="row" style="margin-top: 20px">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <p>{{ trans('label.persons.label_enviar')}}</p>
+                    </div>
                     <div class="col-sm-offset-2 col-sm-7" style="padding: 0">
                         @include("common.controls.input_text_nolabel",['var'=>'dni','class'=>'social'])
                     </div>
