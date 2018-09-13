@@ -26,10 +26,10 @@
                             @foreach($loc->consents as $consent)
                             <p class="consent small" id="consent{{$consent->id}}" style="display: none;border-bottom: 1px dashed #add8e6;padding: 12px">
                                 <strong>Responsable:</strong> {{$loc->accountable}} con documento {{$loc->CIF}}.<br>
-                                <strong>Finalidad:</strong><span id="finalidad"> {{trans("labels.finalidad_general")}}</span><br>
-                                <strong>Legitimación:</strong><span id="legitimacion"> {{$consent->legitimacion}}</span><br>
-                                <strong>Destinatarios:</strong><span id="destinatarios"> {{$consent->destinatarios}}</span><br>
-                                <strong>Derechos:</strong><span id="derechos"> {{$consent->derechos}}</span><br>
+                                <strong>Finalidad:</strong><span id="finalidad"> {!!trans("labels.finalidad_general")!!}</span><br>
+                                <strong>Legitimación:</strong><span id="legitimacion"> {!!$consent->legitimacion!!}</span><br>
+                                <strong>Destinatarios:</strong><span id="destinatarios"> {!!$consent->destinatarios!!}</span><br>
+                                <strong>Derechos:</strong><span id="derechos"> {!!$consent->derechos!!}</span><br>
                             </p>
                             @endforeach
 
