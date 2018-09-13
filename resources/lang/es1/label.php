@@ -143,7 +143,7 @@ A través de este correo les solicitamos autorización para el tratamiento de im
     'photos.origen' => 'Imagen',
     'photos.name-email'=>'Email',
     'photos.consent_id'=>'Ámbito legal',
-    'photos.send'=> 'Solicitar consentimientos para la imagen ',
+    'photos.send'=> 'Solicitar consentimiento de esta imagen',
     'photos.warning' => "AVISO",
     'photos.error' => "ERROR",
 

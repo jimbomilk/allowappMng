@@ -10,7 +10,7 @@
 
     <div class="panel panel-primary" >
         <div class="panel-heading" >
-            <h4>{{trans("label.$name.send")}} {{$element->label}}#{{$element->id}}</h4>
+            <h4>{{trans("label.$name.send")}}</h4>
         </div>
         <div class="panel-body">
             <div class="col-sm-12 panel panel-default">
@@ -39,7 +39,7 @@
                     <div class=" col-md-4 col-xs-12 nopadding">
                         <img  class="img-responsive center-block " src={{$element->url}}>
                     </div>
-                    <div class=" col-md-8 col-xs-12 nopadding">
+                    <div class=" col-md-8 col-xs-12">
                         <div class="row">
                             <div class="col-xs-6"><strong>{{trans("label.$name.name-rightholder")}}</strong></div>
                             <div class="col-xs-6"><strong>{{trans("label.$name.name-email")}}</strong></div>
