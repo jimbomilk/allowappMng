@@ -45,6 +45,9 @@
         </div>
 
         @endforeach
+        <div>
+            <p>{{ trans('rightholder.label_enviar')}}</p>
+        </div>
         <div class="row" style="margin-top: 20px">
             <div class="col-sm-offset-3 col-sm-5" style="padding: 0">
                 @include("common.controls.input_text_nolabel",['var'=>'dni','class'=>'social'])
