@@ -23,9 +23,9 @@ return [
 
     'groups.name'=>'Introducir el nombre del grupo',
     'rightholder.dni'=>'Introduzca su DNI como identificación',
-    'locations.name' =>'Introduzca una descripción corta de la organización, sin espacios.',
-    'locations.description' =>'Introduzca el nombre de la organización.',
-    'locations.accountable' => 'Responsable legal de la organiación',
+    'locations.name' =>'Introduzca una descripción corta del colegio, sin espacios.',
+    'locations.description' =>'Introduzca el nombre del colegio.',
+    'locations.accountable' => 'Responsable legal del colegio',
     'locations.CIF' => 'Nº de indentificación',
     'locations.email' => 'Introduzca un email',
     'locations.address' => 'Calle y nº',
