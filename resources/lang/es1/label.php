@@ -118,7 +118,7 @@ return [
     'rightholders.template' => 'Estimados padres y/o tutores legales:
 A través de este correo les solicitamos autorización para el tratamiento de imágenes, captación y publicación, del alumno/a como participante/es en los eventos que se realicen y organicen en el centro escolar, en relación con la función educativa, durante el curso 2018/2019.
 ',
-    'rightholder.label_enviar' => 'Declaro que dispongo de las facultades legales para otorgar la presente autorización sobre la captación y utilización de las imágenes indicadas, y después de leer la información básica y adicional autorizo dando mi consentimiento a que las imágenes sean captadas, a través de procedimiento fotográfico y/o audiovisual, y puedan aparecer en los siguientes soportes autorizados:',
+    'rightholders.label_enviar' => 'Declaro que dispongo de las facultades legales para otorgar la presente autorización sobre la captación y utilización de las imágenes indicadas, y después de leer la información básica y adicional autorizo dando mi consentimiento a que las imágenes sean captadas, a través de procedimiento fotográfico y/o audiovisual, y puedan aparecer en los siguientes soportes autorizados:',
 
     // PHOTOS
     'photos' => 'Foto',
