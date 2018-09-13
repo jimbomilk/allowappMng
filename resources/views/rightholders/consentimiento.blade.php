@@ -24,13 +24,13 @@
                         <div class="col-sm-12" >
                             @include("common.controls.input_select",array('var'=>'consent_id','nolabel'=>true,'col'=>$consents))
                             @foreach($loc->consents as $consent)
-                            <p class="consent small" id="consent{{$consent->id}}" style="display: none;">
+                            <div class="consent" id="consent{{$consent->id}}" style="display: none;">
                                 <strong>Responsable:</strong> {{$loc->accountable}}.<br><br>
                                 <strong>Finalidad:</strong><p id="finalidad"> {!!trans("labels.finalidad_general")!!}</p>
                                 <strong>Legitimación:</strong><p id="legitimacion"> {!!$consent->legitimacion!!}</p>
                                 <strong>Destinatarios:</strong><p id="destinatarios"> {!!$consent->destinatarios!!}</p>
                                 <strong>Derechos:</strong><p id="derechos"> {!!$consent->derechos!!}</p>
-                            </p>
+                            </div>
                             @endforeach
 
                         </div>
