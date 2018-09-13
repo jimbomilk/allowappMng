@@ -41,6 +41,8 @@ return [
     'locations.address' => 'Dirección',
     'locations.city' => 'Ciudad',
     'locations.CP' => 'Código Postal',
+    'locations.delegate_name' => 'Delegado de protección de datos',
+    'locations.delegate_email' => 'Email del delegado',
 
     //CONSENTS
     'consents' => 'Ambito legal',
