@@ -103,7 +103,7 @@
                 @endif
 
                 <a href="#" data-imagenid="{{$imagen->id}}" class="details btn btn-block btn-social btn-openid">
-                    <span class="fa fa-info-circle"></span> Información adicional
+                    <span class="fa fa-info-circle"></span> Información básica e historial
                 </a>
 
             </div>
