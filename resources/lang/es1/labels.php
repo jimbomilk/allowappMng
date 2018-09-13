@@ -43,7 +43,7 @@ return [
     'images-rejected'=>"Imagenes a revisar",
     'images-approved'=>"Imagenes compartidas",
     'message'=> 'Mensaje a enviar',
-    'template.consentimiento'=>'Estimados padres/madres y tutores, <br><br> Solicito vuestro consentimiento para la publicación en redes sociales de esta imagen. Para realizarlo debéis pulsar el botón y seguir las instrucciones. Muchas gracias. <br><br> Recibid un cordial saludo,<br>',
+    'template.consentimiento'=>'Estimados padres y/o tutores legales: <br><br>A través de este correo les solicitamos autorización para publicación de la fotografía adjunta, del alumno que se tomó en la actividad/evento............y que fue organizado por................con la finalidad de promoción del centro escolar durante el día ............<br> Muchas gracias. <br><br> Recibid un cordial saludo,<br>',
     'send'=>'Enviar',
     'explanation.badgepending'=>'Consentimientos recibidos/Totales',
     'historial'=>'Historial',
