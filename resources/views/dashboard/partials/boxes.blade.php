@@ -42,7 +42,7 @@
     <!-- small box -->
     <div class="small-box bg-red">
         <div class="inner">
-            <h3>{{$user->countPhotosByStatus(100)}}</h3>
+            <h3>{{$user->countPhotosByStatus(\App\Status::STATUS_REVIEW)}}</h3>
             <p>{{trans('labels.images-rejected')}}</p>
         </div>
         <div class="icon">
