@@ -16,7 +16,7 @@
                     <div > {{ $photos->links() }} </div>
                 </div>
                 @foreach($photos as $photo)
-                <div class="col-sm-1 col-xs-6" >
+                <div class="col-sm-2 col-xs-6" >
 
                         <div style="position: absolute;top: 1px; left:20px"> @include("common.controls.status",['status'=>$photo->status])</div>
                         <img class="img-thumbnail" src="{{$photo->url}}" />
