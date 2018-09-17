@@ -4,18 +4,7 @@
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
 
-        <!-- Sidebar user panel (optional) -->
-        @if (! Auth::guest())
-            <div class="user-panel hide-mobile">
-                <div class="pull-left image">
-                    <img src="{{isset(Auth::user()->profile->avatar)? Auth::user()->profile->avatar:Gravatar::get($user->email)}}" class="img-circle" alt="User Image" />
-                </div>
-                <div class="pull-left info">
-                    <small>{{ Auth::user()->name }}</small>
-                    <!-- Status -->
-               </div>
-            </div>
-        @endif
+
 
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu" data-widget="tree">
