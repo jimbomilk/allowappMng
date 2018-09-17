@@ -22779,6 +22779,11 @@ body{
     }
 }
 
+.card-basic span{
+    font-size: inherit !important;
+    color: grey !important;
+}
+
 
 /* PERSON CARD */
 .userprofile {

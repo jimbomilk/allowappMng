@@ -265,3 +265,8 @@ body{
         width: 1100px;
     }
 }
+
+.card-basic span{
+    font-size: inherit !important;
+    color: grey !important;
+}

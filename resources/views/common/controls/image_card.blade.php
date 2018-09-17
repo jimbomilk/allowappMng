@@ -49,7 +49,7 @@
             <div class="card-body" id="back{{$imagen->id}}" style="display: none;margin: 0px;height:40vh;overflow-y: scroll;overflow-x: hidden">
                 <div class="row">
                     <div class="col-xs-12"><h4>Información básica:</h4></div>
-                    <div class="col-sm-12 small" style="text-align: justify"><br>
+                    <div class="col-sm-12 small card-basic" style="text-align: justify"><br>
                         <p><strong>{{trans('labels.responsable')}}: </strong>{{$imagen->getData('accountable')}} con CIF {{$imagen->getData('accountable_CIF')}}</p>
                         <p><strong>{{trans('labels.finalidad')}}: </strong>{{trans('label.finalidad_text')}} {{$imagen->getSharingAsText()}}</p>
                         <p><strong>{{trans('labels.legitimacion')}}: </strong>{!!$imagen->getData('consent_legitimacion')!!}</p>
