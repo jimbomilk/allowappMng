@@ -145,13 +145,17 @@ class Photo extends General
 
     public function getData($field){
         $data = json_decode($this->data);
-        return $data->$field;
+        if (isset($data->$field))
+            return $data->$field;
+        return "";
     }
 
     public function setData($field,$value){
         $data = json_decode($this->data);
-        $data->$field=$value;
-        $this->data = json_encode($data);
+        if (isset($data->$field)) {
+            $data->$field = $value;
+            $this->data = json_encode($data);
+        }
     }
 
     //Recogemos el valor UTC de la BBDD y devolvemos el valor local.
