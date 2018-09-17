@@ -13,6 +13,7 @@ use App\Rightholder;
 use App\RightholderConsent;
 use App\RightholderPhoto;
 use App\Status;
+use App\Task;
 use App\Token;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -61,8 +62,12 @@ class LinkController extends Controller
                 $photoData  = new PhotoData($photo->data);
 
                 if ($rh = $photoData->setRightholderSharing($dni,$rightholderId,$sharing)){
-
-                    if ($photoData->allRightholdersProcessed())
+                    // Si el estado es compartida y alguno de los rightholders han denegado pasamos a estado REJECTED
+                    if ($photoData->status == Status::STATUS_SHARED){
+                        $photoData->status = Status::STATUS_REVIEW;
+                    }
+                    // Si todos los tutores la han revisado cambiamos de estado a procesada
+                    else if ($photoData->allRightholdersProcessed())
                         $photoData->status = Status::STATUS_PROCESED;
                     $photo->data = json_encode($photoData);
                     $photo->save();
@@ -70,9 +75,21 @@ class LinkController extends Controller
 
                     $userId = $req->user()?$req->user()->id:null;
                     $rightholder = Rightholder::find($rightholderId);
-                    $h = new Historic();
-                    $h->register($userId,"Solicitud recibida de $rightholder->name con DNI : $dni y contiene los siguientes permisos: ".$this->sharingText($sharing),$photo->id,$personId, $rightholderId);
 
+
+                    $h = new Historic();
+
+                    if ($photoData->status == Status::STATUS_REVIEW){
+                        $desc = "$rightholder->name con DNI: $dni ha cambiado los permisos concedidos. Ahora son: ". $this->sharingText($sharing);
+                        $h->register($userId, $desc, $photo->id, $personId, $rightholderId);
+                        // Además se genera una notificacion
+                        $notification = new Task();
+                        $notification->description= $desc;
+                        $notification->group_id = $rightholder->group->id;
+                        $notification->save();
+                    } else {
+                        $h->register($userId, "Solicitud recibida de $rightholder->name con DNI : $dni y contiene los siguientes permisos: " . $this->sharingText($sharing), $photo->id, $personId, $rightholderId);
+                    }
                     return view('pages.photook',['link'=>$photo->link]);
                 }else{
                     return view('pages.errordni',['link'=>URL::previous()]);

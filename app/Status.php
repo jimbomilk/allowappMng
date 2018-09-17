@@ -22,6 +22,7 @@ class Status {
     const RH_NOTREQUESTED = 0;
     const RH_PENDING = 10;
     const RH_PROCESED = 20;
+    const RH_REVIEW = 30;
 
     public static $desc = array(10  => 'creada' ,
                                 20  => 'pendiente',

@@ -25,7 +25,7 @@ return [
     'locations' => "Colegio",
     'created'=>"Creada",
     'pending'=>"En proceso",
-    'processed'=>"Revisada",
+    'processed'=>"Procesada",
     'rejected'=>"Rechazada",
     'success'=>"Aceptada",
     'shared'=>"Compartida",
