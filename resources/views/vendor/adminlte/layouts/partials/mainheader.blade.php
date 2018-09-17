@@ -10,7 +10,7 @@
         </a>
     </div>
     <!-- Header Navbar -->
-    <nav class="navbar navbar-static-top" role="navigation">
+    <nav class="navbar navbar-static-top" role="navigation" >
         <!-- Sidebar toggle button-->
 
         <div class="col-sm-1 col-xs-1 nopadding" style="line-height: ">
