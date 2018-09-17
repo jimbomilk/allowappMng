@@ -33,5 +33,5 @@ footer .copyright{
 }
 
 .MsoNormal span{
-    font-size: inherit;
+    font-size: inherit !important;
 }
