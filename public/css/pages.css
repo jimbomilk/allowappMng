@@ -34,4 +34,5 @@ footer .copyright{
 
 .informacion-basica span{
     font-size: inherit !important;
+    color: inherit !important;
 }
