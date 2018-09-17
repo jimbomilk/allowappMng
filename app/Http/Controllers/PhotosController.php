@@ -141,6 +141,7 @@ class PhotosController extends Controller
             'consent_legitimacion'=> $consent->legitimacion,
             'consent_destinatarios'=> $consent->destinatarios,
             'consent_derechos' => $consent->derechos,
+            'consent_additional' => $consent->additional,
             'timestamp'=>$photo->created_at,
             'sharing'=>$sharing,
             'people'=>[],

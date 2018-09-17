@@ -55,6 +55,7 @@
                         <p><strong>{{trans('labels.legitimacion')}}: </strong>{!!$imagen->getData('consent_legitimacion')!!}</p>
                         <p><strong>{{trans('labels.destinatario')}}: </strong>{!!$imagen->getData('consent_destinatarios')!!}</p>
                         <p><strong>{{trans('labels.derechos')}}: </strong>{!!$imagen->getData('consent_derechos')!!}</p>
+                        <p><strong>{{trans('labels.additional')}}: </strong>{!!$imagen->getData('consent_additional')!!}</p>
                     </div>
                 </div>
                 <div class="row">

@@ -11,6 +11,7 @@
             <div><strong>{{trans('labels.legitimacion')}}: </strong>{!!$photo->getData('consent_legitimacion')!!}</div>
             <div><strong>{{trans('labels.destinatario')}}: </strong>{!!$photo->getData('consent_destinatarios')!!}</div>
             <div><strong>{{trans('labels.derechos')}}: </strong>{!!$photo->getData('consent_derechos')!!}</div>
+            <div><strong>{{trans('labels.adicional')}}: </strong>{!!$photo->getData('consent_additional')')!!}</div>
         </div>
     </div>
 </div>
