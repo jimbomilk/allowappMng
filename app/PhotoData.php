@@ -51,7 +51,8 @@ class PhotoData {
         $this->consent_legitimacion = $data->consent_legitimacion;
         $this->consent_destinatarios= $data->consent_destinatarios;
         $this->consent_derechos     = $data->consent_derechos;
-        $this->consent_additional   = $data->consent_additional;
+        if (isset($data->consent_additional))
+            $this->consent_additional   = $data->consent_additional;
         $this->timestamp            = $data->timestamp;
         $this->sharing              = $data->sharing;
         $this->people               = $data->people;

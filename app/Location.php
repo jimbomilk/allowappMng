@@ -24,6 +24,9 @@ class Location extends General
         return $this->hasMany('App\Profile');
     }
 
+    public function templates(){
+        return $this->hasMany('App\Template');
+    }
 
     public function persons(){
         return $this->hasMany('App\Person');
