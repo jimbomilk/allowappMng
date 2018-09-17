@@ -19,7 +19,7 @@
                 <div class="col-sm-2 col-xs-6" >
 
                         <div style="position: absolute;top: 1px; left:20px"> @include("common.controls.status",['status'=>$photo->status])</div>
-                        <img class="img-thumbnail" src="{{$photo->url}}" />
+                        <img class="img-thumbnail"  src="{{$photo->url}}" style="height: 10vw;"/>
                         <p class="text-left small">{{ $photo->created_at }}</p>
 
                 </div>
