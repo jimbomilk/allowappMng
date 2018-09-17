@@ -63,10 +63,4 @@
 
 
 
-@endsection
-
-@section('scripts')
-    @parent
-    <script>
-    </script>
-@endsection
+@stop

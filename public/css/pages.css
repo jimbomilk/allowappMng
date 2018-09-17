@@ -31,3 +31,7 @@ footer .copyright{
     text-align: center;
     color: #808080;
 }
+
+.MsoNormal span{
+    font-size: inherit;
+}
