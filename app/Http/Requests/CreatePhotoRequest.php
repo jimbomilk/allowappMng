@@ -24,7 +24,7 @@ class CreatePhotoRequest extends Request {
         return [
             'group_id'      => 'required',
             'consent_id'    => 'required',
-            'label'         => 'required|bail|alpha_dash',
+            'label'         => 'required|bail|string',
             'origen'        => 'required|bail|image',
         ];
     }
