@@ -17,7 +17,7 @@
             @include("common.controls.input_hidden",['var'=>'person_id','val'=>$person_id])
             @include("common.controls.input_hidden",['var'=>'rightholder_id','val'=>$rightholder_id])
 
-            <div class="panel col-md-12">
+            <div class="panel col-md-12 informacion-basica">
                 <div  class="row" style="margin-top: 10px">
                     <div class="col-sm-5">
                         <img class="img-responsive center" src="{{$url}}">
