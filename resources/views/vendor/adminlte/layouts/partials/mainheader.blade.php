@@ -55,7 +55,7 @@
                                     <a href="{{ url("tasks/$task->id/edit") }}">
                                         <!-- Task title and progress text -->
                                         <div class="col-sm-10 col-xs-10 " >
-                                            <h5 style="color: black">{{$task->description}}</h5>
+                                            <small style="color: black;line-height: 1.2;">{{$task->description}}</small>
                                         </div>
                                         <div class="col-sm-2 col-xs-2 nopadding " >
                                             @if($task->priority <=10)
