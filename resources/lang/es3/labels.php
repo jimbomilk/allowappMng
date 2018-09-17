@@ -26,7 +26,7 @@ return [
     'created'=>"Creada",
     'pending'=>"En proceso",
     'processed'=>"Revisada",
-    'rejected'=>"Rechazada",
+    'rejected'=>"En revisión",
     'success'=>"Aceptada",
     'shared'=>"Compartida",
     'unknown'=>"????",
