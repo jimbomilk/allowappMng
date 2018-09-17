@@ -141,10 +141,11 @@ class User extends Authenticatable
         return $set;
     }
 
+
     public function countPhotosByStatus($status){
         $count =0;
 
-        $photos = $this->getPhotos();
+        $photos = $this->getPhotos()->get();
         foreach($photos as $photo){
             $data = json_decode($photo->data);
             if($data->status==$status){

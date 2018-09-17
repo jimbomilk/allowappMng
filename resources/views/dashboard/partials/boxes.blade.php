@@ -3,7 +3,7 @@
     <!-- small box -->
     <div class="small-box bg-aqua">
         <div class="inner">
-            <h3>{{$user->countPhotosByStatus(\App\Status::STATUS_CREADA)}}</h3>
+            <h3>{{count($user->getPhotos()->get())}}</h3>
             <p>{{trans('labels.images-created')}}</p>
         </div>
         <div class="icon">

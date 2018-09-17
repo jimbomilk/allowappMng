@@ -51,6 +51,7 @@ return [
     'consents.legitimacion' => 'Legitimación',
     'consents.destinatarios' => 'Destinatarios',
     'consents.derechos' => 'Derechos',
+    'consents.additional' => 'Información adicional',
 
     // USERS
     'users' => 'usuario',

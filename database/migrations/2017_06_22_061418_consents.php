@@ -19,6 +19,7 @@ class Consents extends Migration
             $table->longText('legitimacion')->nullable();
             $table->longText('destinatarios')->nullable();
             $table->longText('derechos')->nullable();
+            $table->longText('additional')->nullable();
 
             $table->integer('location_id')->unsigned();
             $table->foreign('location_id')

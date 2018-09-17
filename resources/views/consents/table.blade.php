@@ -4,6 +4,7 @@
         <th>{{trans('label.consents.legitimacion')}}</th>
         <th>{{trans('label.consents.destinatarios')}}</th>
         <th>{{trans('label.consents.derechos')}}</th>
+        <th>{{trans('label.consents.additional')}}</th>
         <th></th>
 
     </tr>
@@ -14,6 +15,7 @@
             <td>{!!$element->legitimacion!!}</td>
             <td>{!!$element->destinatarios!!}</td>
             <td>{!!$element->derechos!!}</td>
+            <td>{!!$element->additional!!}</td>
             <td>
                 @include("common.controls.btn_edit",array('var'=>$element))
                 @include("common.controls.btn_delete",array('var'=>$element))

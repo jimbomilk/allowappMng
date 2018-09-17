@@ -187,11 +187,15 @@
     -ms-transform: translateY(-50%);
 }
 
+.main-header{
+    line-height: 1.4px;
+}
+
 /* Sticky footer */
 .main-footer {
     position: absolute;
     width: 100%;
-    margin-top: -30px;
+    margin-top: 0px;
     height: 30px;
     clear: both;
     text-align: center;
@@ -202,7 +206,7 @@
     //height: 112px;
 }
 .panel-primary > .panel-body{
-    height: calc(100vh - 268px);
+    height: calc(100vh - 168px);
     overflow: auto;
 }
 
@@ -254,4 +258,10 @@ body{
         padding: 6px 2px;
     }
 
+}
+
+@media (min-width: 1200px) {
+    .container {
+        width: 1100px;
+    }
 }

@@ -109,7 +109,7 @@ class Photonetwork extends Model
         $photoData = json_decode($this->photo->data);
         $img = Image::make($photoData->src);
         $pixelated = Image::make($photoData->src);
-        $pixelated->pixelate(12);
+        $pixelated->pixelate(35);
         $streamPixelated = $pixelated->stream();
         $img_width = $img->width();
         $img_height = $img->height();

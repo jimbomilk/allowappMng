@@ -12,6 +12,7 @@
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
         <!-- Sidebar toggle button-->
+
         <div class="col-sm-1 col-xs-1 nopadding" style="line-height: ">
             <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                 <span class="sr-only">{{ trans('adminlte_lang::message.togglenav') }}</span>
@@ -21,8 +22,8 @@
         <div class="col-sm-1 col-xs-2 " style="color:white;text-align: center">
             <img style="position: relative;top:5px" height="40px"  src="{{Auth::user()->location->icon}}">
         </div>
-        <div class="col-sm-6 col-xs-4 nopadding" style="color:white;text-transform: uppercase;">
-            <span style="font-size:1.2em;">{{Auth::user()->location->description}}</span>
+        <div class="col-sm-6 col-xs-4 nopadding" style="color:white;line-height: 1.4px">
+            <span style="position:relative;font-size:2.6vw;top: 22px">{{Auth::user()->location->description}}</span>
         </div>
 
 
@@ -93,12 +94,10 @@
                             <!-- The user image in the menu -->
                             <li class="user-header">
                                 <img src="{{isset(Auth::user()->profile->avatar)? Auth::user()->profile->avatar:Gravatar::get($user->email)}}" class="user-image" alt="User Image"/>
-                                <p>
+                                <h4 style="color: white">
                                     {{ Auth::user()->name }}
-                                    <small>{{ trans('adminlte_lang::message.login') }} Nov. 2012</small>
-                                </p>
+                                </h4>
                             </li>
-                            <!-- Menu Body -->
 
                             <!-- Menu Footer-->
                             <li class="user-footer">

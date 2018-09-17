@@ -61,7 +61,6 @@ desired effect
 
     @include('adminlte::layouts.partials.controlsidebar')
 
-    @include('adminlte::layouts.partials.footer')
 
 
 </div><!-- ./wrapper -->

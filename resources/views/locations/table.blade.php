@@ -10,6 +10,7 @@
         <th>{{trans('label.locations.address')}}</th>
         <th>{{trans('label.locations.city')}}</th>
         <th>{{trans('label.locations.CP')}}</th>
+        <th>{{trans('label.locations.delegate_name')}}</th>
 
         <th></th>
 
@@ -29,6 +30,7 @@
             <td>{{$element->address}}</td>
             <td>{{$element->city}}</td>
             <td>{{$element->CP}}</td>
+            <td>{{$element->delegate_name}}</td>
 
             <td>
                 <div class="col-sm-12">
