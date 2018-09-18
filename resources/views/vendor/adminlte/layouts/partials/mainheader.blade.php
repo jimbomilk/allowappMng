@@ -5,7 +5,7 @@
     <div class="hide-mobile">
         <a href="{{ url('/') }}" class="logo " >
 
-            <img src="{{ asset('/img/logo_white200x50.png') }}">
+            <img src="{{ asset('/img/logo_white200x50.png') }}" style="height: 50px;">
 
         </a>
     </div>
@@ -13,7 +13,7 @@
     <nav class="navbar navbar-static-top" role="navigation" >
         <!-- Sidebar toggle button-->
 
-        <div class="col-sm-1 col-xs-1 nopadding" style="line-height: ">
+        <div class="col-sm-1 col-xs-1 nopadding" >
             <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                 <span class="sr-only">{{ trans('adminlte_lang::message.togglenav') }}</span>
             </a>

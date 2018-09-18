@@ -80,7 +80,7 @@ class LinkController extends Controller
                     $h = new Historic();
 
                     if ($photoData->status == Status::STATUS_REVIEW){
-                        $desc = "$rightholder->name con DNI: $dni ha cambiado los permisos concedidos de la imagen ya PUBLICADA con etiqueta:".$photo->label.". Ahora los permisos concedidos son: ". $this->sharingText($sharing);
+                        $desc = "$rightholder->name con DNI: $dni, tutor/a de $rightholder->person->name ha cambiado los permisos concedidos de la imagen ya PUBLICADA con etiqueta:".$photo->label.". Ahora los permisos concedidos son: ". $this->sharingText($sharing);
                         $h->register($userId, $desc, $photo->id, $personId, $rightholderId);
                         // Además se genera una notificacion
                         $notification = new Task();
