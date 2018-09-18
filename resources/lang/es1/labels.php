@@ -55,6 +55,7 @@ return [
     'legal'=> ' Textos legales',
     'consents' => 'Ambitos legales',
     'config' => 'Configuración global',
+    'import' => 'Importación de datos',
 
     'excel' => 'Importación de datos',
 

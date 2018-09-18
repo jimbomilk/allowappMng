@@ -19,12 +19,12 @@
             </li>
 
             @if(Auth::user()->checkRole('admin'))
-                <li class="active hide-mobile">
-                    <a href="{{ url('locations') }}"><i class='fa fa-home'></i> <span>{{ trans('labels.locations') }}</span></a>
-                    <ul class="active">
-                        <li><a href="{{ url('consents') }}"><i class='fa fa-legal'></i> <span>{!! trans('labels.consents') !!}</span></a>
-
-                        </li>
+                <li class="treeview hide-mobile">
+                    <a href="#"><i class='fa fa-home'></i> <span>{{ trans('labels.config') }}</span><i class="fa fa-angle-left pull-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{ url('locations') }}"><i class='fa fa-legal'></i> <span>{!! trans('labels.locations') !!}</span></a></li>
+                        <li><a href="{{ url('consents') }}"><i class='fa fa-legal'></i> <span>{!! trans('labels.consents') !!}</span></a></li>
+                        <li><a href="{{ url('locations/excel/show/'. Auth::user()->location->id) }}"><i class='fa fa-legal'></i> <span>{!! trans('labels.import') !!}</span></a></li>
                     </ul>
                 </li>
             @endif
