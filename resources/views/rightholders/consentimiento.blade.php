@@ -17,16 +17,7 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-sm-6">
-                    <div class="row" >
-                        <div class="col-sm-12">
-                            <h4>Tipo de consentimiento a solicitar:</h4>
-                        </div>
-                        <div class="col-sm-12" >
-                            @include("common.controls.input_select",array('var'=>'consent_id','nolabel'=>true,'col'=>$consents))
 
-
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <h4>Enviar a:</h4>
@@ -51,6 +42,16 @@
                     @endif
                 </div>
                 <div class="col-sm-6">
+                    <div class="row" >
+                        <div class="col-sm-12">
+                            <h4>Tipo de consentimiento a solicitar:</h4>
+                        </div>
+                        <div class="col-sm-12" >
+                            @include("common.controls.input_select",array('var'=>'consent_id','nolabel'=>true,'col'=>$consents))
+
+
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-sm-12">
                         <h4>Mensaje:</h4>
