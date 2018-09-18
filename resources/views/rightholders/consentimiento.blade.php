@@ -23,15 +23,7 @@
                         </div>
                         <div class="col-sm-12" >
                             @include("common.controls.input_select",array('var'=>'consent_id','nolabel'=>true,'col'=>$consents))
-                            @foreach($loc->consents as $consent)
-                            <div class="consent" id="consent{{$consent->id}}" style="display: none;">
-                                <br><strong>Responsable:</strong> {{$loc->accountable}}.<br>
-                                <strong>Finalidad:</strong><p id="finalidad"> {!!trans("labels.finalidad_general")!!}</p>
-                                <strong>Legitimación:</strong><p id="legitimacion"> {!!$consent->legitimacion!!}</p>
-                                <strong>Destinatarios:</strong><p id="destinatarios"> {!!$consent->destinatarios!!}</p>
-                                <strong>Derechos:</strong><p id="derechos"> {!!$consent->derechos!!}</p>
-                            </div>
-                            @endforeach
+
 
                         </div>
                     </div>
@@ -84,19 +76,3 @@
     {!! Form::close() !!}
 @endsection
 
-
-@section('scripts')
-@parent
-
-    <script>
-        // SHOW SELECTED VALUE.
-        $(document).ready(function(){
-            $('#consent'+$('select[name=consent_id]').val()).show();
-        });
-
-        $('#consent_id').change(function () {
-            $('.consent').hide();
-            $('#consent'+$('select[name=consent_id]').val()).show();
-        });
-    </script>
-@endsection
