@@ -40,7 +40,7 @@
 
             <div class="panel panel-default" >
                 <div class="panel-heading" style="background-color: rgb(246,216,88);color: #000000">
-                    Fotografías en las que aparece: {{count($element->photos)}}
+                    Otras fotografías en las que aparece y de las que ha solicitado consentimiento: {{count($element->photos)}}
                 </div>
                 <div class="panel-body">
                     @foreach($element->photos as $photo)
