@@ -66,7 +66,7 @@ return [
     'search.photos' => 'Por etiqueta',
     'search.historic.photos' => 'Búsqueda por etiqueta',
     'search.historic.persons' => 'Búsqueda por nombre',
-    'search.historic.rightholders' => 'Búsqueda por nombre,email,teléfono',
+    'search.historic.rightholders' => 'Búsqueda por nombre o email',
     'search' => ' Buscar',
     'no-rightholders' => 'No se han definido destinatarios',
 

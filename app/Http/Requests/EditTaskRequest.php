@@ -25,6 +25,7 @@ class EditTaskRequest extends Request {
 		return [
             'description'   => 'required|bail|string',
             'group_id'      => 'required',
+            'priority'      => 'numeric|max:20|min:1'
 		];
 	}
 
