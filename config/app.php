@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => env('APP_NAME', 'Allowapp'),
+    'name' => env('APP_NAME', 'ContactApp'),
 
     /*
     |--------------------------------------------------------------------------
@@ -25,7 +25,7 @@ return [
     |
     */
 
-    'env' => env('APP_ENV', 'production'),
+    'env' => env('APP_ENV', 'local'),
 
     /*
     |--------------------------------------------------------------------------
@@ -51,7 +51,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', '*.allowapp.eu'),
+    'url' => env('APP_URL', '*.contactApp.test'),
 
     /*
     |--------------------------------------------------------------------------
@@ -183,13 +183,10 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Larareko\Rekognition\RekognitionServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        Waavi\UrlShortener\UrlShortenerServiceProvider::class,
         \Eduardokum\LaravelMailAutoEmbed\ServiceProvider::class,
-        Chencha\Share\ShareServiceProvider::class,
-        NickSynev\MakeObserverCommand\MakeObserverCommandServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
-        Khill\Lavacharts\Laravel\LavachartsServiceProvider::class
-
+        Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
+        Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
     ],
 
     /*
@@ -243,8 +240,6 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Rekognition' => Larareko\Rekognition\RekognitionFacade::class,
         'Image' => Intervention\Image\Facades\Image::class,
-        'UrlShortener' => Waavi\UrlShortener\Facades\UrlShortener::class,
-        'Share' => Chencha\Share\ShareFacade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Lava' => Khill\Lavacharts\Laravel\LavachartsFacade::class,
 

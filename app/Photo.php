@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use Intervention\Image\Facades\Image;
 use Share;
 use Illuminate\Support\Facades\Storage;
-use Waavi\UrlShortener\Facades\UrlShortener;
+//use Waavi\UrlShortener\Facades\UrlShortener;
 
 class Photo extends General
 {

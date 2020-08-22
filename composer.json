@@ -5,28 +5,26 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": "^7.0",
-        "acacha/admin-lte-template-laravel": "4.*",
-        "aws/aws-sdk-php": "~3.0",
-        "chencha/share": "^5.2",
+        "php": "^7.2.5",
+        "acacha/admin-lte-template-laravel": "7.*",
+        "aws/aws-sdk-php": "^3.0",
         "eduardokum/laravel-mail-auto-embed": "^1.0",
         "fzaninotto/faker": "^1.7",
         "guzzlehttp/guzzle": "^6.3",
         "intervention/image": "^2.4",
+        "khill/lavacharts": "^3.1",
+        "kyslik/column-sortable": "^6.0",
         "larareko/aws-rekognition": "^0.1.0",
-        "laravel/framework": "5.4.*",
-        "laravel/tinker": "~1.0",
-        "laravelcollective/html": "^5.4.0",
-        "league/flysystem-aws-s3-v3": "~1.0",
-        "maatwebsite/excel": "~2.1.0",
-        "nicksynev/make-observer-command": "^0.0.4",
-        "waavi/url-shortener": "1.0.x",
-        "khill/lavacharts" : "3.0.*"
+        "laravel/framework": "^7.0",
+        "laravel/tinker": "^2.4",
+        "laravel/ui": "^2.0",
+        "laravelcollective/html": "^6.1",
+        "league/flysystem-aws-s3-v3": "^1.0",
+        "maatwebsite/excel": "^3.1.0"
     },
     "require-dev": {
-        "laravel/dusk": "^1.0",
-        "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~5.7"
+      "mockery/mockery": "^1.4",
+      "phpunit/phpunit": "^9.3"
     },
     "autoload": {
         "classmap": [
@@ -49,12 +47,14 @@
             "php artisan key:generate"
         ],
         "post-install-cmd": [
-            "Illuminate\\Foundation\\ComposerScripts::postInstall",
-            "php artisan optimize"
+            "Illuminate\\Foundation\\ComposerScripts::postInstall"
         ],
         "post-update-cmd": [
-            "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "php artisan optimize"
+            "Illuminate\\Foundation\\ComposerScripts::postUpdate"
+        ],
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover"
         ]
     },
     "config": {

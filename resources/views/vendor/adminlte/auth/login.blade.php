@@ -9,32 +9,32 @@
     <div id="app" v-cloak>
         <div class="login-box">
             <div class="login-logo" style="color: white">
-                <img class="img-responsive" src="{{ asset('/img/allowapp400x100.png') }}" alt="">
+                <img class="img-responsive" src="{{ asset('/img/contactapp_logo400x200.png') }}" alt="">
             </div><!-- /.login-logo -->
 
-        @if (count($errors) > 0)
-            <div class="alert alert-danger">
-                <strong>Whoops!</strong> {{ trans('adminlte_lang::message.someproblems') }}<br><br>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+            @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    <strong>Whoops!</strong> {{ trans('adminlte_lang::message.someproblems') }}<br><br>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <div class="login-box-body">
+
+            <login-form name="{{ config('auth.providers.users.field','email') }}"
+                        domain="{{ config('auth.defaults.domain','') }}"></login-form>
+
+            <!-- @include('adminlte::auth.partials.social_login')-->
+
+            <a href="{{ url('/password/reset') }}">{{ trans('adminlte_lang::message.forgotpassword') }}</a><br>
+
             </div>
-        @endif
 
-        <div class="login-box-body">
-
-        <login-form name="{{ config('auth.providers.users.field','email') }}"
-                    domain="{{ config('auth.defaults.domain','') }}"></login-form>
-
-        <!-- @include('adminlte::auth.partials.social_login')
-
-        <a href="{{ url('/password/reset') }}">{{ trans('adminlte_lang::message.forgotpassword') }}</a><br>
-
-    </div>
-
-    </div>
+        </div>
     </div>
     @include('adminlte::layouts.partials.scripts_auth')
 

@@ -8,7 +8,7 @@
                     <div class="panel-heading">
                         <h3>
                         <i class="fa {{trans('design.main')}}"></i>
-                        {{trans('labels.dashboard')}}
+                        <!--{{trans('labels.dashboard')}}-->
                         </h3>
                     </div>
                     <div class="panel-body">
@@ -19,13 +19,13 @@
 
                         <div class="row">
                             <div class="col-sm-12">
-                            @include ('dashboard.partials.graphs')
+                            <!-- @ include ('dashboard.partials.graphs') -->
                             </div>
 
                         </div>
 
                         <div class="row" >
-                            @include ('dashboard.partials.links')
+                           <!-- @ include ('dashboard.partials.links') -->
                         </div>
                     </div>
                 </div>

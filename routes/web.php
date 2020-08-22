@@ -1,17 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\URL;
-/*
-Route::get('/', function(){
-    return "hola";
-});*/
+use Illuminate\Support\Facades\Route;
+
 
 // Customer routes
-if (env('APP_ENV') == 'local'){
-    $domain = '{location}.allowapp.test';
-}else{
-    $domain = '{location}.allowapp.eu';
-}
+    $domain = '{location}.contactApp.test';
+Auth::routes();
 
 Route::group([
     'domain' => $domain,
@@ -25,8 +19,9 @@ Route::group([
     Route::resource('locations', 'LocationsController');
     Route::resource('consents', 'ConsentController');
     Route::resource('tasks', 'TasksController');
+    Route::get('zzperson', ['uses'=>'ZZPersonController@index', 'as'=>'zzperson.index']);
     Route::post('locations/excel/import', 'ExcelController@import')->name('import');
-    Route::get('locations/excel/create', 'ExcelController@create')->name('create');
+    //Route::get('locations/excel/create', 'ExcelController@create')->name('create');
     Route::get('locations/excel/show/{id}', 'ExcelController@index')->name('excel');
     Route::post('locations/excel/show/updateImport', 'ExcelController@updateImport')->name('updateImport');
     Route::post('locations/excel/show/importPhoto', 'ExcelController@importPhoto')->name('importPhoto');

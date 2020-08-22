@@ -1,0 +1,50 @@
+Usos comunes:
+
+para actualizar el composer
+composer self-update
+
+para actualizar las dependencias
+composer update
+
+para crear las tablas de la base de datos se utiliza el comando :
+php artisan migrate
+
+php artisan migrate:refresh
+
+
+para importar los datos :
+
+php artisan db:seed
+
+Pero antes recordar que hay que recargar las clases con : composer dump-autoload
+
+crear nuevas tablas:
+php artisan make:migration usuarios --create="users"
+
+Crear nuevo seeder:
+php artisan make:seeder UsersTableSeeder
+
+Crear controller:
+
+// Sin metodos
+php artisan make:controller ExampleController 
+// Con metodos
+php artisan make:controller ExampleController --resource
+
+
+Crear model:
+php artisan make:model User
+
+Lanzar las QUEUES:
+php artisan queue:listen --queue=SCREENS,smallpack,bigpack,default
+
+
+Comando GIT para hacer un refresh
+git rm -r --cached .
+git add .
+git commit -m "fixed untracked files"
+
+//Actualizar css
+npm run dev
+
+php artisan route:list

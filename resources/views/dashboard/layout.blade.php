@@ -4,8 +4,8 @@
 @section('main-content')
 
     <!-- Content Wrapper. Contains page content -->
-        <!-- Content Header (Page header) -->
+    <!-- Content Header (Page header) -->
 
-        @yield('dashboard_content')
+    @yield('dashboard_content')
 
 @endsection

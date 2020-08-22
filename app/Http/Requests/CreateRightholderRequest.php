@@ -37,7 +37,7 @@ class CreateRightholderRequest extends Request {
             'name' => 'nombre del tutor',
             'phone' => 'teléfono',
             'documentId' => 'documento de identidad',
-            'person_id' => 'nombre del alumno'
+            'person_id' => 'nombre del contacto'
         ];
     }
 

@@ -5,7 +5,7 @@
     <div class="hide-mobile">
         <a href="{{ url('/') }}" class="logo " >
 
-            <img src="{{ asset('/img/logo_white200x50.png') }}" style="height: 50px;">
+            <img src="{{ asset('/img/contactapp_logo200x50.png') }}" style="height: 50px;">
 
         </a>
     </div>
@@ -20,10 +20,10 @@
         </div>
 
         <div class="col-sm-1 col-xs-2 " style="color:white;text-align: center">
-            <img style="position: relative;top:5px" height="40px"  src="{{Auth::user()->location->icon}}">
+            <img style="position: relative;" height="40px"  src="{{Auth::user()->location->icon}}">
         </div>
         <div class="col-sm-6 col-xs-4 nopadding" style="color:white;line-height: 1.4px">
-            <span style="position:relative;font-size:2.6vw;top: 22px">{{Auth::user()->location->description}}</span>
+            <span style="position:relative;font-size:2.6vw;top: 2px">{{Auth::user()->location->description}}</span>
         </div>
 
 
@@ -31,7 +31,7 @@
         <!-- Tasks Menu -->
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbarup">
                 <li>
 
                     <a href="#" class="dropdown-toggle" data-toggle="control-sidebar" title="ayuda">
@@ -73,7 +73,7 @@
                             </ul>
                         </li>
                         <li class="footer">
-                            <a href="#">Allowapp Â© 2018</a>
+                            <a href="#">ContactApp © 2020</a>
                         </li>
                     </ul>
                 </li>
@@ -86,7 +86,6 @@
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <!-- The user image in the navbar-->
-                            <img src="{{isset(Auth::user()->profile->avatar)? Auth::user()->profile->avatar:Gravatar::get($user->email)}}" class="user-image" alt="User Image"/>
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
                             <span class="hidden-xs">{{ Auth::user()->name }}</span>
                         </a>

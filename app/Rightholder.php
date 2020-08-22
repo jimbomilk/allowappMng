@@ -5,7 +5,7 @@ namespace App;
 use Carbon\Carbon;
 use Share;
 use Illuminate\Database\Eloquent\Model;
-use Waavi\UrlShortener\Facades\UrlShortener;
+//use Waavi\UrlShortener\Facades\UrlShortener;
 
 class Rightholder extends Model
 {

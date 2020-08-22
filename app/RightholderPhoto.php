@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Waavi\UrlShortener\Facades\UrlShortener;
+//use Waavi\UrlShortener\Facades\UrlShortener;
 
 class RightholderPhoto extends Model
 {
@@ -32,7 +32,7 @@ class RightholderPhoto extends Model
     public function getLink(){
         $token = Token::generate($this->photo_id,$this->user_id,$this->person_id,$this->rightholder_id);
         $route = route('photo.link', ['id' => $this->photo_id,'user'=>$this->user_id, 'person'=>$this->person_id, 'rightholder'=>$this->rightholder_id,'token' => $token],true);
-        return  UrlShortener::shorten($route);
+        //return  UrlShortener::shorten($route);
 
     }
 

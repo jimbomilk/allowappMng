@@ -14,14 +14,14 @@
             <div class="userprofile ">
                 <div class="userpic"> <img src="{{$element->photo}}" alt="" class="userpicimg"> </div>
                 <h3 class="username">{{$element->name}}</h3>
-                <div style="margin-bottom: 10px">
+                <!-- <div style="margin-bottom: 10px">
                 @if ($element->minor)
                     <p class="page-subtitle small"><i class="fa fa-check"></i> Menor de edad </p>
 
                 @endif
-                </div>
+                </div>-->
 
-                <div style="height: 70px">
+                <!-- <div style="height: 70px">
                     @if ($element->minor)
                     <strong>Responsables</strong><br>
 
@@ -36,15 +36,15 @@
                     <p><i class="fa fa-envelope text-primary"></i> {{$element->email}} <br>
                         <i class="fa fa-phone text-primary"></i> {{$element->phone}} </p>
                     @endif
-                </div>
+                </div> -->
             </div>
 
         </div>
         <div class="panel-footer">
 
-            <div class="btn btn-link">
+            <!--<div class="btn btn-link">
                 @include("common.controls.btn_show",array('var'=>$element))
-            </div>
+            </div>-->
 
             <div class="btn btn-link pull-right">
                 @include("common.controls.btn_edit",array('var'=>$element))

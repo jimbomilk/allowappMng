@@ -278,3 +278,10 @@ body{
     font-size: inherit !important;
     color: grey !important;
 }
+
+.navbarup{
+    display: flex;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}

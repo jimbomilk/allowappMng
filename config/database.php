@@ -60,6 +60,17 @@ return [
             'engine' => null,
         ],
 
+        'sqlsrv' => [
+            'driver' => 'sqlsrv',
+            'host' => env('DB_HOST_SECOND', 'localhost'),// usually localhost, or sql server database ip address
+            'port' => env('DB_PORT_SECOND', '1433'), //default port 1433, or mention port in which it run on your server if it different
+            'database' => env('DB_DATABASE_SECOND', 'forge'), // mention your sql server database name here
+            'username' => env('DB_USERNAME_SECOND', 'forge'), //mssql database username
+            'password' => env('DB_PASSWORD_SECOND', ''),  //mssql database password
+            'charset' => 'utf8',
+            'prefix' => '',
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', '127.0.0.1'),

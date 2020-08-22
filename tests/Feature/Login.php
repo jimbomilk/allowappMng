@@ -17,7 +17,7 @@ class Login extends TestCase
     public function login()
     {
         dump('testLogin');
-        $response = $this->get('http://colegio1.allowapp.test');
+        $response = $this->get('http://cwc2020.contactapp.test');
 
         $response->assertStatus(200);
     }

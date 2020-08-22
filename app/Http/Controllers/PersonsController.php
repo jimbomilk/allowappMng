@@ -82,10 +82,10 @@ class PersonsController extends Controller
         $this->photoUp($request,$person);
 
         // Si no es menor damos de alta un rightholder
-        if (!$person->minor){
+        /*if (!$person->minor){
             $person->createRightholderPropio();
 
-        }
+        }*/
         return redirect('persons');
     }
 
@@ -129,9 +129,9 @@ class PersonsController extends Controller
             $this->photoUp($request,$person);
 
 
-            if($create){
+            /*if($create){
                 $person->createRightholderPropio();
-            }
+            }*/
 
         }
         return redirect('persons');

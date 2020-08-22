@@ -14,7 +14,7 @@ class Person extends General
     protected $table = 'persons';
     static $searchable = ['name'];
 
-    protected $fillable = ['name','location_id','photo','group_id','email','minor','documentId'];
+    protected $fillable = ['name','location_id','photo','group_id','email','phone','minor','documentId'];
 
     public function location(){
         return $this->belongsTo('App\Location');

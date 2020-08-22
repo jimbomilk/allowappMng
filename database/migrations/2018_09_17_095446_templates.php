@@ -17,7 +17,6 @@ class Templates extends Migration
             $table->increments('id');
             $table->string('title');
             $table->longText('body')->nullable();
-            $table->integer('location_id')->unsigned();
             $table->foreign('location_id')
                 ->references('id')
                 ->on('locations')
